@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">TaskSource</string>
+    <string name="title_task_detail">task Detail</string>
+    <string name="title_task_list">tasks</string>
+
+</resources>
