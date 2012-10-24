@@ -12,3 +12,6 @@ Eddie puts random stuff all up in this file
 
 It's not random if you know the story behind it!
     - Bronte
+
+I'm just testing that my windows setup is working
+	-Neil
