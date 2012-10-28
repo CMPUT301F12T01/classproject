@@ -1,16 +1,16 @@
-package ca.ualberta.cs.c301f12t01;
+package ca.ualberta.cs.c301f12t01.gui;
 
 import ca.ualberta.cs.c301f12t01.dummy.DummyContent;
 
 import android.R;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class taskListFragment extends ListFragment {
+public class TaskListFragment extends ListFragment {
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
@@ -28,7 +28,7 @@ public class taskListFragment extends ListFragment {
         }
     };
 
-    public taskListFragment() {
+    public TaskListFragment() {
     }
 
     @Override

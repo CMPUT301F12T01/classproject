@@ -1,21 +1,24 @@
-package ca.ualberta.cs.c301f12t01;
+package ca.ualberta.cs.c301f12t01.gui;
 
+import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.R.id;
+import ca.ualberta.cs.c301f12t01.R.layout;
 import ca.ualberta.cs.c301f12t01.dummy.DummyContent;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class taskDetailFragment extends Fragment {
+public class TaskDetailFragment extends Fragment {
 
     public static final String ARG_ITEM_ID = "item_id";
 
     DummyContent.DummyItem mItem;
 
-    public taskDetailFragment() {
+    public TaskDetailFragment() {
     }
 
     @Override

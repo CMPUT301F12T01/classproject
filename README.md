@@ -1,7 +1,7 @@
-classproject
-============
+TaskSource
+==========
 
-Welcome to the as-of-yet unnamed CMPUT 301 project. This project
+Welcome to TaskSource, our CMPUT 301 project. This project
 brought to you by:
 
  - Neil Borle

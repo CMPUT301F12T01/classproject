@@ -1,13 +1,15 @@
-package ca.ualberta.cs.c301f12t01;
+package ca.ualberta.cs.c301f12t01.gui;
 
+import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.R.id;
+import ca.ualberta.cs.c301f12t01.R.layout;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
+import android.app.Activity;
 import android.view.MenuItem;
 
-public class taskListActivity extends FragmentActivity
-        implements taskListFragment.Callbacks {
+public class TaskListActivity extends Activity
+        implements TaskListFragment.Callbacks {
 
     private boolean mTwoPane;
 
@@ -18,7 +20,7 @@ public class taskListActivity extends FragmentActivity
 
         if (findViewById(R.id.task_detail_container) != null) {
             mTwoPane = true;
-            ((taskListFragment) getSupportFragmentManager()
+            ((TaskListFragment) getFragmentManager()
                     .findFragmentById(R.id.task_list))
                     .setActivateOnItemClick(true);
         }
@@ -27,16 +29,16 @@ public class taskListActivity extends FragmentActivity
     public void onItemSelected(String id) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putString(taskDetailFragment.ARG_ITEM_ID, id);
-            taskDetailFragment fragment = new taskDetailFragment();
+            arguments.putString(TaskDetailFragment.ARG_ITEM_ID, id);
+            TaskDetailFragment fragment = new TaskDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.task_detail_container, fragment)
                     .commit();
 
         } else {
-            Intent detailIntent = new Intent(this, taskDetailActivity.class);
-            detailIntent.putExtra(taskDetailFragment.ARG_ITEM_ID, id);
+            Intent detailIntent = new Intent(this, TaskDetailActivity.class);
+            detailIntent.putExtra(TaskDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }

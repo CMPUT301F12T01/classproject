@@ -18,12 +18,22 @@
 package ca.ualberta.cs.c301f12t01.common;
 
 /**
- * MediaType -- identify what kind of media a request requests or what kind of
- * media is attached to a response. As of now, the types that exist are text,
- * audio, or photos. More may be added.
- * 
- * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * NOT IMPLEMENTED
+ * TODO IMPLEMENT THIS CLASS
  */
-public enum MediaType {
-    TEXT, AUDIO, PHOTO;
+public class AudioResponse extends Response {
+
+    
+    public AudioResponse() {
+        super();
+    }
+    
+    /* (non-Javadoc)
+     * @see ca.ualberta.cs.c301f12t01.common.Response#getMediaType()
+     */
+    @Override
+    public MediaType getMediaType() {
+        return MediaType.AUDIO;
+    }
+
 }
