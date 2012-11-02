@@ -31,6 +31,7 @@ public class TaskManager extends Observable{
 	private TaskCollection localTasks;
 	private TaskCollection globalTasks;
 	//our instance
+	// TODO: Add singleton accessor class method.
 	private static final TaskManager instance =	new TaskManager();
 
 	//private constructor
@@ -41,10 +42,10 @@ public class TaskManager extends Observable{
 	//adds a new task
 	//puts in either localTasks or globalTasks
 	public void addTask(Task newTask){
-		if (Task.isLocal()){
+		if (newTask.isLocal()){
 			localTasks.add(newTask);
 		}
-		else if (Task.isGlobal()){
+		else if (newTask.isGlobal()){
 			globalTasks.add(newTask);
 		}
 		else{
