@@ -32,19 +32,21 @@ public abstract class Response {
     private Timestamp timestamp;
 
     /**
-     * Construct a new Response with a Timestamp set to the current time.
+     * Construct a new Response with a Timestamp set to the current time. This
+     * constructor should not be used, except from inherited classes.
      */
-    public Response() {
+    protected Response() {
         /* Get a timestamp for the current time. */
         setTimestamp(new Timestamp(new Date().getTime()));
     }
 
     /**
-     * Construct a new Response with the given Timestamp.
+     * Construct a new Response with the given Timestamp. This constructor
+     * should not be used, except from inherited classes.
      * 
      * @param timestamp
      */
-    public Response(Timestamp timestamp) {
+    protected Response(Timestamp timestamp) {
         setTimestamp(timestamp);
     }
 
@@ -62,7 +64,7 @@ public abstract class Response {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-    
+
     /** Returns the MediaType of this subclass of Response. */
     public abstract MediaType getMediaType();
 
