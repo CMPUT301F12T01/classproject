@@ -4,36 +4,49 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/*
+ * This class will instantiate a database
+ * with four tables, one for tasks, reports
+ * requests and responses.
+ * 
+ * @author Neil Borle
+ */
+
 public class DBInstance extends SQLiteOpenHelper{
 	/*
+	 * This class is a basic implementation of a SQLlite
+	 * helper to create a database
 	 * 
+	 * Resources used to construct this code
+	 * http://www.vogella.com/articles/AndroidSQLite/article.html
 	 */
 	
 	private static final String DATABASE_NAME = "TaskSource.db";
 	
 	private static final String DATABASE_CREATE = "CREATE TABLE Tasks "
-		      + "(user INTEGER NOT NULL,"
-		      + "shared INTEGER,"
-			  + "id INTEGER PRIMARY KEY,"
-		      + "summary TEXT"
+		      + "(userid TEXT NOT NULL, " //have to store UUIDs as Text
+			  + "id TEXT PRIMARY KEY, " //have to store UUIDs as Text
+		      + "shared INTEGER, "
+		      + "summary TEXT, "
 		      + "description TEXT); "
+		      
 		      + "CREATE TABLE Request "
-		      + "(request_id INTEGER PRIMARY KEY," 
-		      + "description TEXT,"
-		      + "mediatype TEXT,"
-			  + "quantity INTEGER,"
-			  + "amountfulfilled INTEGER,"
-			  + "task_id INTEGER NOT NULL ,"
-		      + "foreign key(task_id) references Tasks(id) NOT NULL; "
+		      + "(description TEXT, "
+		      + "mediatype TEXT, "
+			  + "quantity INTEGER, "
+			  + "amountfulfilled INTEGER, "
+			  + "task_id TEXT NOT NULL, " //have to store UUIDs as Text
+		      + "foreign key(task_id) references Tasks(id) NOT NULL); "
+		      
 		      + "CREATE TABLE Report "
-		      + "(scope INTEGER,"
-		      + "id INTEGER PRIMARY KEY,"
-			  + "task_id INTEGER NOT NULL,"
-		      + "foreign key(task_id) references Tasks(id) NOT NULL;"
+		      + "(scope INTEGER, "
+		      + "id TEXT PRIMARY KEY, " //have to store UUIDs as Text
+			  + "task_id TEXT NOT NULL, " //have to store UUIDs as Text
+		      + "foreign key(task_id) references Tasks(id) NOT NULL);"
+		      
 		      + "CREATE TABLE Response "
-		      + "(response_id INTEGER PRIMARY KEY,"
-		      + "mediatype TEXT,"
-			  + "report_id INTEGER,"
+		      + "(mediatype TEXT, "
+			  + "report_id TEXT, " //have to store UUIDs as Texts
 		      + "foreign key(report_id) references Report(id) NOT NULL, " 
 			  + "media BLOB);";
 	
@@ -43,12 +56,13 @@ public class DBInstance extends SQLiteOpenHelper{
 	
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		//TODO make this into a singleton? 	
+		// This method is called IF the database does not exist
 		database.execSQL(DATABASE_CREATE);
 	}
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// Drop all tables and create a new table
 	    db.execSQL("DROP TABLE IF EXISTS Tasks");
 	    db.execSQL("DROP TABLE IF EXISTS Reports");
 	    db.execSQL("DROP TABLE IF EXISTS Request");

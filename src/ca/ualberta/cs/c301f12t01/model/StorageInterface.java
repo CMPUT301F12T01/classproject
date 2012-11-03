@@ -1,5 +1,13 @@
 package ca.ualberta.cs.c301f12t01.model;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
+import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Request;
+import ca.ualberta.cs.c301f12t01.common.Response;
+import ca.ualberta.cs.c301f12t01.common.Task;
+
 /*
  *Class to interface between the model and the storage
  *@author Mitchell Home
@@ -8,16 +16,30 @@ package ca.ualberta.cs.c301f12t01.model;
 
 public interface StorageInterface {
 	
-	public void storeTask();
+	// Storage and retrieval of Tasks
+	public void storeTask(Task taskToStore);
 	
-	public void getLocalTasks();
+	public ArrayList<Task> getOwnTasks(UUID userid);
 	
-	public void getGlobalTasks();
+	public ArrayList<Task> getLocalTasks();
 	
-	public void storeReport();
+	public ArrayList<Task> getGlobalTasks();
 	
-	public void getLocalReports();
+	// Storage and retrieval of reports
+	public void storeReport(Report reportToStore);
 	
-	public void getGlobalReports();
+	public ArrayList<Report> getLocalReports(UUID taskid);
+	
+	public ArrayList<Report> getGlobalReports(UUID taskid);
+	
+	// Storage and retrieval of requests
+	public void storeRequest(Request requestToStore);
+	
+	public ArrayList<Request> getRequests(UUID taskId);
+	
+	// Storage and retrieval of responses
+	public void storeResponse(Response responseToStore);
+	
+	public ArrayList<Response> getResponses(UUID reportId);
 
 }
