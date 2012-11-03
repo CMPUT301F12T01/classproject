@@ -17,7 +17,6 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Observable;
 
@@ -63,5 +62,10 @@ public class TaskManager extends Observable{
 	//returns iterator for all global tasks
 	public Iterator<Task> getGlobalTasks(){
 		return globalTasks.iterator();
+	}
+	
+	//let them get our instance
+	public TaskManager getInstance(){
+		return instance;
 	}
 }
