@@ -23,13 +23,14 @@ import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 
-/*Class to mangage all of our tasks
+/**
+ * Class to mangage all of our tasks
  * @author Mitchell Home
  */
 public class TaskManager extends Observable{
 	//our collections
-	private TaskCollection localTasks;
-	private TaskCollection globalTasks;
+	private TaskCollection localTasks = new TaskCollection();
+	private TaskCollection globalTasks = new TaskCollection();
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
 
@@ -90,7 +91,7 @@ public class TaskManager extends Observable{
 	}
 	
 	//let them get our instance
-	public TaskManager getInstance(){
+	public static TaskManager getInstance(){
 		return instance;
 	}
 }

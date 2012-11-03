@@ -15,35 +15,35 @@
  * limitations under the License.
  * 
  */
-package ca.ualberta.cs.c301f12t01.model;
+package ca.ualberta.cs.c301f12t01.testing;
 
-import java.util.AbstractCollection;
-import java.util.ArrayList;
+import static org.junit.Assert.*;
+
 import java.util.Iterator;
-import java.util.List;
+
+import org.junit.Test;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
-/*Task collection class	
- * @author Mitchell Home
+/**
+ * Contains test for testing the TaskManager class
+ * 
+ * @author home
+ *
  */
-public class TaskCollection extends AbstractCollection<Task>{
+public class TaskManagerTest {
 
 
-
-	List<Task> taskCollection = new ArrayList<Task>();
-
-	public boolean add(Task t){
-		taskCollection.add(t);
-		return true;
-	}
-
-	public Iterator<Task> iterator() {
-		return taskCollection.iterator();
-	}
-
-	public int size() {
-		return taskCollection.size();
+	@Test
+	public void add_global_task() {
+		TaskManager tm = TaskManager.getInstance();
+		Task t = TestUtils.makeSimpleGlobalTask();
+		tm.addTask(t); //now we should have one global task
+		Iterator<Task> iter = tm.getGlobalTasks();
+		Task t2 = iter.next();
+		assertTrue(t == t2);
+		
 	}
 
 }

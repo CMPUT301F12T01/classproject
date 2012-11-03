@@ -15,35 +15,30 @@
  * limitations under the License.
  * 
  */
-package ca.ualberta.cs.c301f12t01.model;
+package ca.ualberta.cs.c301f12t01.testing;
 
-import java.util.AbstractCollection;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 
-/*Task collection class	
- * @author Mitchell Home
+/**
+ * Provides utilities for testing
+ * 
+ * @author home
+ *
  */
-public class TaskCollection extends AbstractCollection<Task>{
+public class TestUtils {
 
-
-
-	List<Task> taskCollection = new ArrayList<Task>();
-
-	public boolean add(Task t){
-		taskCollection.add(t);
-		return true;
+	
+	/**
+	 * @return A simple task meant for testing
+	 */
+	public static Task makeSimpleGlobalTask(){
+		Task t = new Task(UUID.randomUUID());
+		t.setDescription("This is a longer description");
+		t.setSummary("A short summary");
+		return t;
+		
 	}
-
-	public Iterator<Task> iterator() {
-		return taskCollection.iterator();
-	}
-
-	public int size() {
-		return taskCollection.size();
-	}
-
+	
 }
