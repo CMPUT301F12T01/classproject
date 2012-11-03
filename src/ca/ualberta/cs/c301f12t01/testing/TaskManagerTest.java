@@ -27,10 +27,8 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
- * Contains test for testing the TaskManager class
- * 
- * @author home
- *
+ * Contains test for testing the TaskManager class * 
+ * @author home *
  */
 public class TaskManagerTest {
 
