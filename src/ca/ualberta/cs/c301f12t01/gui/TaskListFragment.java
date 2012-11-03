@@ -1,6 +1,9 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
-import ca.ualberta.cs.c301f12t01.dummy.DummyContent;
+import java.util.UUID;
+
+import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
 import android.R;
 import android.app.Activity;
@@ -14,17 +17,17 @@ public class TaskListFragment extends ListFragment {
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-    private Callbacks mCallbacks = sDummyCallbacks;
-    private int mActivatedPosition = ListView.INVALID_POSITION;
+    private Callbacks callbacks = doNothingCallbacks;
+    private int activatedPosition = ListView.INVALID_POSITION;
 
     public interface Callbacks {
 
-        public void onItemSelected(String id);
+        public void onItemSelected(UUID taskId);
     }
 
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static Callbacks doNothingCallbacks = new Callbacks() {
         
-        public void onItemSelected(String id) {
+        public void onItemSelected(UUID taskId) {
         }
     };
 
@@ -34,10 +37,10 @@ public class TaskListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+        setListAdapter(new ArrayAdapter<Task>(getActivity(),
                 R.layout.simple_list_item_activated_1,
                 R.id.text1,
-                DummyContent.ITEMS));
+                DummyTasks.ITEMS));
     }
 
     @Override
@@ -56,26 +59,26 @@ public class TaskListFragment extends ListFragment {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        callbacks = (Callbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        callbacks = doNothingCallbacks;
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mActivatedPosition != ListView.INVALID_POSITION) {
-            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+        if (activatedPosition != ListView.INVALID_POSITION) {
+            outState.putInt(STATE_ACTIVATED_POSITION, activatedPosition);
         }
     }
 
@@ -87,11 +90,11 @@ public class TaskListFragment extends ListFragment {
 
     public void setActivatedPosition(int position) {
         if (position == ListView.INVALID_POSITION) {
-            getListView().setItemChecked(mActivatedPosition, false);
+            getListView().setItemChecked(activatedPosition, false);
         } else {
             getListView().setItemChecked(position, true);
         }
 
-        mActivatedPosition = position;
+        activatedPosition = position;
     }
 }

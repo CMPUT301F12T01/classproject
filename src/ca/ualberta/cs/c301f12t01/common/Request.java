@@ -20,7 +20,7 @@ package ca.ualberta.cs.c301f12t01.common;
 /**
  * Request -- Represents one of (possibly many) request of a Task.
  * 
- * @author easantos
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
  * @see Task Not to be confused with a Response.
  */
@@ -43,7 +43,18 @@ public class Request {
      * @param type
      */
     public Request(MediaType type) {
-        this(type, "", 0);
+        this(type, "");
+
+    }
+    
+    /**
+     * Constructs a new Request with only its MediaType.
+     * 
+     * @param type
+     * @param description
+     */
+    public Request(MediaType type, String newDescription) {
+        this(type, newDescription, 0);
 
     }
 

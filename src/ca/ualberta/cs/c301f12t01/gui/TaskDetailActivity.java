@@ -20,8 +20,8 @@ public class TaskDetailActivity extends Activity {
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(TaskDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(TaskDetailFragment.ARG_ITEM_ID));
+            arguments.putString(TaskDetailFragment.ARG_TASK_ID,
+                    getIntent().getStringExtra(TaskDetailFragment.ARG_TASK_ID));
             TaskDetailFragment fragment = new TaskDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
