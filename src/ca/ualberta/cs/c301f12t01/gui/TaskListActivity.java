@@ -3,17 +3,15 @@ package ca.ualberta.cs.c301f12t01.gui;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.R.id;
-import ca.ualberta.cs.c301f12t01.R.layout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.MenuItem;
+//import android.view.MenuItem;
 
 public class TaskListActivity extends Activity
         implements TaskListFragment.Callbacks {
 
-    /** @deprecated Please find a better way to notify that the screen has two panes. Somehow. */
+    /** @deprecated Please find a better way to denote that the screen has two panes. Somehow. */
     private boolean hasTwoPanes;
 
     @Override
