@@ -30,7 +30,7 @@ public class DBInstance extends SQLiteOpenHelper{
 		      + "summary TEXT, "
 		      + "description TEXT); "
 		      
-		      + "CREATE TABLE Request "
+		      + "CREATE TABLE Requests "
 		      + "(description TEXT, "
 		      + "mediatype TEXT, "
 			  + "quantity INTEGER, "
@@ -38,13 +38,13 @@ public class DBInstance extends SQLiteOpenHelper{
 			  + "task_id TEXT NOT NULL, " //have to store UUIDs as Text
 		      + "foreign key(task_id) references Tasks(id) NOT NULL); "
 		      
-		      + "CREATE TABLE Report "
+		      + "CREATE TABLE Reports "
 		      + "(scope INTEGER, "
 		      + "id TEXT PRIMARY KEY, " //have to store UUIDs as Text
 			  + "task_id TEXT NOT NULL, " //have to store UUIDs as Text
 		      + "foreign key(task_id) references Tasks(id) NOT NULL);"
 		      
-		      + "CREATE TABLE Response "
+		      + "CREATE TABLE Responses "
 		      + "(mediatype TEXT, "
 			  + "report_id TEXT, " //have to store UUIDs as Texts
 		      + "foreign key(report_id) references Report(id) NOT NULL, " 
