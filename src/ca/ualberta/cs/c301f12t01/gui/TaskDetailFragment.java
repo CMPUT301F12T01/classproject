@@ -3,6 +3,7 @@ package ca.ualberta.cs.c301f12t01.gui;
 import java.util.UUID;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,8 @@ import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 /**
  * Fragment that displays details about a Task. Uses the `fragment_task_detail`
  * for displaying an actual fragment, or if no fragment was specified, uses
- * `fragment_no_task_detail` for displaying the "sorry, t'ere ain't no task
- * to display" screen. layout.
+ * `fragment_no_task_detail` for displaying the "sorry, t'ere ain't no task to
+ * display" screen. layout.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
@@ -40,8 +41,7 @@ public class TaskDetailFragment extends Fragment {
          * later.
          */
         if (getArguments().containsKey(ARG_TASK_ID)) {
-            UUID taskId = (UUID) getArguments().get(ARG_TASK_ID);
-
+            UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
             task = DummyTasks.ITEM_MAP.get(taskId);
         }
     }
@@ -64,10 +64,11 @@ public class TaskDetailFragment extends Fragment {
          */
         /* TODO: refactor into new methods or entirely new classes. */
 
-        if (task == null) {
-            detail_layout_resource_id = R.layout.fragment_no_task_detail;
-        } else {
+        if (task != null) {
             detail_layout_resource_id = R.layout.fragment_task_detail;
+
+        } else {
+            detail_layout_resource_id = R.layout.fragment_no_task_detail;
         }
         
         rootView = inflater.inflate(detail_layout_resource_id,
@@ -75,8 +76,16 @@ public class TaskDetailFragment extends Fragment {
 
         /* We need to do a little bit more work for actual tasks. */
         if (task != null) {
-            ((TextView) rootView.findViewById(R.id.task_detail))
-                .setText(task.getDescription());
+            TextView detailView = (TextView) rootView.findViewById(R.id.task_detail);
+            String description = task.getDescription();
+            
+            if (description.equals("")) {
+                /* Description is empty. Say so instead of giving the user a blank screen. */
+                detailView.setText("No description");
+                detailView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+            } else {
+                detailView.setText(description);
+            }
         }
         
         return rootView;

@@ -1,8 +1,6 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.R.id;
-import ca.ualberta.cs.c301f12t01.R.layout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -19,14 +17,16 @@ public class TaskDetailActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
+            /* TODO: Template method this shiz, yo! */
             Bundle arguments = new Bundle();
-            arguments.putString(TaskDetailFragment.ARG_TASK_ID,
-                    getIntent().getStringExtra(TaskDetailFragment.ARG_TASK_ID));
+            arguments.putSerializable(TaskDetailFragment.ARG_TASK_ID,
+                    getIntent().getSerializableExtra(TaskDetailFragment.ARG_TASK_ID));
             TaskDetailFragment fragment = new TaskDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
                     .add(R.id.task_detail_container, fragment)
                     .commit();
+
         }
     }
 

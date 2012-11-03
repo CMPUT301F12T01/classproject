@@ -2,16 +2,14 @@ package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.UUID;
 
-import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
-
-import android.R;
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.ListFragment;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
 public class TaskListFragment extends ListFragment {
 
@@ -26,7 +24,6 @@ public class TaskListFragment extends ListFragment {
     }
 
     private static Callbacks doNothingCallbacks = new Callbacks() {
-        
         public void onItemSelected(UUID taskId) {
         }
     };
@@ -38,8 +35,8 @@ public class TaskListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setListAdapter(new ArrayAdapter<Task>(getActivity(),
-                R.layout.simple_list_item_activated_1,
-                R.id.text1,
+                android.R.layout.simple_list_item_activated_1,
+                android.R.id.text1,
                 DummyTasks.ITEMS));
     }
 
