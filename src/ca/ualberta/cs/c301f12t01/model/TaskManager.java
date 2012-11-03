@@ -19,6 +19,7 @@ package ca.ualberta.cs.c301f12t01.model;
 
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 
@@ -30,7 +31,6 @@ public class TaskManager extends Observable{
 	private TaskCollection localTasks;
 	private TaskCollection globalTasks;
 	//our instance
-	// TODO: Add singleton accessor class method.
 	private static final TaskManager instance =	new TaskManager();
 
 	//private constructor
@@ -53,7 +53,32 @@ public class TaskManager extends Observable{
 		//notify that we changed
 		notifyObservers();
 	}
-
+	
+	//given a UUID, return the task
+	public Task get(UUID id){
+		//This is a little ugly
+		//first check local tasks
+		Iterator<Task> i = getLocalTasks();
+		while (i.hasNext()){
+			Task t = i.next();
+			if (t.getId() == id){
+				return t;
+			}
+		}
+		//If we didn't find it in our local tasks
+		//check our global tasks
+		i = getGlobalTasks();
+		while (i.hasNext()){
+			Task t = i.next();
+			if (t.getId() == id){
+				return t;
+			}
+		}
+		//If we got here, we didn't find the task
+		return null;
+		
+	}
+	
 	//returns iterator for all local tasks
 	public Iterator<Task> getLocalTasks(){
 		return localTasks.iterator();
