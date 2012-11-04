@@ -17,14 +17,13 @@
  */
 package ca.ualberta.cs.c301f12t01.common;
 
-import java.sql.Timestamp;
 
 /**
  * NOT IMPLEMENTED
  * TODO IMPLEMENT THIS CLASS
  */
 
-public class PhotoResponse extends Response {
+public class PhotoResponse implements Response {
 
     /**
      * 
@@ -33,18 +32,9 @@ public class PhotoResponse extends Response {
     public PhotoResponse() {
     }
 
-    /**
-     * @param timestamp
-     */
-    public PhotoResponse(Timestamp timestamp) {
-        super(timestamp);
-        // TODO Auto-generated constructor stub
-    }
-
     /* (non-Javadoc)
      * @see ca.ualberta.cs.c301f12t01.common.Response#getMediaType()
      */
-    @Override
     public MediaType getMediaType() {
         return MediaType.PHOTO;
     }

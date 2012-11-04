@@ -23,9 +23,17 @@ import java.util.Iterator;
 import java.util.UUID;
 
 /**
- * Task -- a mission to be fulfilled by users.
+ * Task -- A quest to be fulfilled by users.
+ * 
+ * This should be instantiated when you create a Task or reconstruct a task from storage.
+ * Each task has its own id and a creator id to distinguish between various tasks. Tasks
+ * are made up of Summary, Description, Requests and whether it is shared. The summary is a
+ * brief description of the task. The description is a lengthy description of the task.
+ * The requests are one or more of the following three types, Text, Audio and Photo {@link Request}.
+ * The shared is a boolean true or false whether to be shared or not.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Neil Borle
  * 
  */
 public class Task implements Iterable<Request> {
@@ -187,9 +195,8 @@ public class Task implements Iterable<Request> {
     }
 
     /**
-     * Will grab the Id and change it to a string combined with
-     * the task summary.
-     * @return Returns the UUID and the summary of the task.
+     * Will create a new string of id concatenated with the summary.
+     * @return Returns the UUID and the summary of the task as a string.
      * @deprecated For debug use only!
      */
     @Override

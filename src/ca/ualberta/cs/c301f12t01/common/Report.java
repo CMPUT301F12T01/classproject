@@ -17,12 +17,19 @@
  */
 package ca.ualberta.cs.c301f12t01.common;
 
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.UUID;
 
+
 /**
- * Report -- contains Responses that fulfill Tasks.
+ * Report -- Contains Responses that fulfill Tasks.
+ * 
+ * This should be instantiated when a user makes a report for a task.
+ * A report is given a timestamp upon creation and is given a 
+ * collection of responses.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
@@ -32,12 +39,32 @@ public class Report implements Iterable<Response> {
     final private UUID id = UUID.randomUUID();
     private UUID taskID;
     private Collection<Response> responses;
+    private Timestamp timestamp;
 
-    /** Create a new Report for the given Task. */
+    /** 
+     * Construct a new Report for the given Task. It also 
+     * handles the timestamp. This is for the GUI to call
+     * where it doesn't have a timestamp yet.
+     * 
+     *  @param task
+     */
     public Report(Task task) {
-        setTaskID(task.getId());
+        this(task, new Timestamp(new Date().getTime()));
+    }
+    
+    /**
+     * Construct a Report from storage. This is what storage would
+     * call to reconstruct a Report from stored data.
+     *  
+     * @param task
+     * @param timestamp
+     */
+    public Report(Task task, Timestamp timestamp) {
+    	setTaskID(task.getId());
+    	setTimestamp(timestamp);
     }
 
+    
     /**
      * @return the id
      */
@@ -101,5 +128,27 @@ public class Report implements Iterable<Response> {
     public Iterator<Response> iterator() {
         return responses.iterator();
     }
+
+
+	
+	/**
+	 * @return the timestamp
+	 */
+	public Timestamp getTimestamp()
+	{
+	
+		return timestamp;
+	}
+
+
+	
+	/**
+	 * @param timestamp the timestamp to set
+	 */
+	public void setTimestamp(Timestamp timestamp)
+	{
+	
+		this.timestamp = timestamp;
+	}
 
 }

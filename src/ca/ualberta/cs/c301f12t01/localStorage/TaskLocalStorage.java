@@ -32,6 +32,9 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  * and retrieval of Tasks from Device storage
  * in the interest of flexible code
  * 
+ * This assembles and disassembles the Tasks
+ * and the associated requests
+ * 
  * @author Neil Borle
  *
  */

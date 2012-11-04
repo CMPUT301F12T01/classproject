@@ -22,7 +22,7 @@ package ca.ualberta.cs.c301f12t01.common;
  * NOT IMPLEMENTED
  * TODO IMPLEMENT THIS CLASS
  */
-public class AudioResponse extends Response {
+public class AudioResponse implements Response {
 
     
     public AudioResponse() {
@@ -32,7 +32,6 @@ public class AudioResponse extends Response {
     /* (non-Javadoc)
      * @see ca.ualberta.cs.c301f12t01.common.Response#getMediaType()
      */
-    @Override
     public MediaType getMediaType() {
         return MediaType.AUDIO;
     }

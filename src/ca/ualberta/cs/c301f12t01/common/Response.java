@@ -17,53 +17,17 @@
  */
 package ca.ualberta.cs.c301f12t01.common;
 
-import java.sql.Timestamp;
-import java.util.Date;
 
 /**
- * Response -- part of the report which represents the fulfillment of one single
+ * Response -- Part of the report which represents the fulfillment of one single
  * Request of a Task.
+ * 
+ * Its an interface for {@link AudioResponse} {@link PhotoResponse} {@link TextResponse}.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
  */
-public abstract class Response {
-
-    private Timestamp timestamp;
-
-    /**
-     * Construct a new Response with a Timestamp set to the current time. This
-     * constructor should not be used, except from inherited classes.
-     */
-    protected Response() {
-        /* Get a timestamp for the current time. */
-        setTimestamp(new Timestamp(new Date().getTime()));
-    }
-
-    /**
-     * Construct a new Response with the given Timestamp. This constructor
-     * should not be used, except from inherited classes.
-     * 
-     * @param timestamp
-     */
-    protected Response(Timestamp timestamp) {
-        setTimestamp(timestamp);
-    }
-
-    /**
-     * @return the timestamp
-     */
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    /**
-     * @param timestamp
-     *            the timestamp to set
-     */
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
+public interface Response {
 
     /** Returns the MediaType of this subclass of Response. */
     public abstract MediaType getMediaType();

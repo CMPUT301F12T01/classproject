@@ -20,6 +20,11 @@ package ca.ualberta.cs.c301f12t01.common;
 /**
  * Request -- Represents one of (possibly many) request of a Task.
  * 
+ * This should be instantiated when you are making a Task. It fills out
+ * the types of request that you need to have for the given task. It
+ * can also have a description for each type of request made as well as
+ * how many of that type of request you want.
+ * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
  * @see Task Not to be confused with a Response.
@@ -28,18 +33,20 @@ public class Request {
 
     /**
      * The media that the request requires.
-     * 
      * @see MediaType
      */
     private MediaType type;
-    /** A short description of this specific request. */
+    /** 
+     * A short description of this specific request. 
+     */
     private String description;
-    /** The quantity of the media requested. */
+    /** 
+     * The quantity of the media requested. 
+     */
     private int quantity;
 
     /**
      * Constructs a new Request with only its MediaType.
-     * 
      * @param type
      */
     public Request(MediaType type) {
@@ -49,7 +56,6 @@ public class Request {
     
     /**
      * Constructs a new Request with only its MediaType.
-     * 
      * @param type
      * @param description
      */

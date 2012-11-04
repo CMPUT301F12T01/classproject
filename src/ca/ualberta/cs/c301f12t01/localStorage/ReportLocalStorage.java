@@ -15,39 +15,37 @@
  * limitations under the License.
  * 
  */
-package ca.ualberta.cs.c301f12t01.model;
+package ca.ualberta.cs.c301f12t01.localStorage;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.UUID;
 
+import android.database.sqlite.SQLiteDatabase;
 import ca.ualberta.cs.c301f12t01.common.Report;
-import ca.ualberta.cs.c301f12t01.common.Task;
+
 
 /**
- * Class to interface between the model and the storage
+ * This class is responsible for decomposing 
+ * responses by attributes to be stored into 
+ * the database as well as reconstructing
+ * the Reports from the database.
+ * 
+ * This includes assembling the Responses
+ * associated with each Report and 
+ * disassembling those Responses
+ * 
+ * @author Neil Borle
  *
- *@author Mitchell Home
- *@author Neil Borle
  */
-
-// TODO: Javadoc the rest of this interface.
-
-public interface StorageInterface {
+public class ReportLocalStorage
+{
+	public static void storeReport(SQLiteDatabase db, Report reportToStore) {
+		
+	}
 	
-	// Storage and retrieval of Tasks
-	public void storeTask(Task taskToStore);
+	public static ArrayList<Report> getReports(SQLiteDatabase db, UUID taskid, boolean global) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	public Collection<Task> getOwnTasks(UUID userid);
-	
-	public Collection<Task> getLocalTasks();
-	
-	public Collection<Task> getGlobalTasks();
-	
-	// Storage and retrieval of reports
-	public void storeReport(Report reportToStore);
-	
-	public Collection<Report> getLocalReports(UUID taskid);
-	
-	public Collection<Report> getGlobalReports(UUID taskid);
-
 }
