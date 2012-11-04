@@ -60,5 +60,14 @@
 
     <!-- Viewing a report -->
     <string name="task_report_header">This Report Contains:</string>
+    
+    <!-- Testing strings: throw away later? -->
+    <string name="TEST_LONG_SUMMARY">THIS IS A VERY LONG SUMMARY THAT 
+        	SHOULD HOPEFULLY GET CUT OFF OR SOMETHING LIKE THAT. 
+        	LOTADS!</string>
+    <string name="TEST_SHORT_SUMMARY">much shorter summary</string>
+    <string name="TEST_REPORT_SUMMARY">Text, 20 photos, 10 audio clips.</string>
+    <string name="TEST_REPORT_SHORT_SUMMARY">Text</string>
+    <string name="TEST_REPORT_TIMESTAMP">March 05, 2011</string>
 
 </resources>

@@ -22,6 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".gui.TaskDetailFragment" >
 
     <!-- Display the summary, description and media type of the requirements -->
@@ -52,6 +53,23 @@
         style="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <!-- Show if it's local or global -->
+
+    <TextView
+        android:id="@+id/text_sharing"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/task_sharing" />
+
+    <TextView
+        android:id="@+id/text_sharing_setting"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp" />
 
     <!-- Want these two buttons side by side. TODO: make neater? -->
 
