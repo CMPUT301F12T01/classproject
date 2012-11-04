@@ -26,7 +26,7 @@ public class DBInstance extends SQLiteOpenHelper{
 	private static final String DATABASE_CREATE = "CREATE TABLE Tasks "
 		      + "(userid TEXT NOT NULL, " //have to store UUIDs as Text
 			  + "id TEXT PRIMARY KEY, " //have to store UUIDs as Text
-		      + "shared INTEGER, "
+		      + "global INTEGER, " // 0 is local and 1 is global
 		      + "summary TEXT, "
 		      + "description TEXT); "
 		      
