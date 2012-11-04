@@ -30,6 +30,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 
+/**
+ * 
+ * 
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ *
+ */
 public class TaskListActivity extends Activity implements
         TaskListFragment.Callbacks {
 

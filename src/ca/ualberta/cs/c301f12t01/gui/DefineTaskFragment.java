@@ -37,6 +37,7 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
 /**
+ * DefineTaskFragment -- 
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *
