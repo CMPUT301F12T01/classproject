@@ -17,9 +17,11 @@
  */
 package ca.ualberta.cs.c301f12t01.common;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.UUID;
+
 
 /**
  * Report -- contains Responses that fulfill Tasks.
@@ -32,12 +34,21 @@ public class Report implements Iterable<Response> {
     final private UUID id = UUID.randomUUID();
     private UUID taskID;
     private Collection<Response> responses;
+    private Timestamp timestamp;
 
     /** Create a new Report for the given Task. */
     public Report(Task task) {
-        setTaskID(task.getId());
+    	Timestamp currentTimestamp = new Timestamp(new Date().getTime();
+    	
+        this(task, currentTimestamp);
+    }
+    
+    public Report(Task task, Timestamp timestamp) {
+    	setTaskID(task.getId());
+    	setTimestamp(timestamp);
     }
 
+    
     /**
      * @return the id
      */
@@ -101,5 +112,27 @@ public class Report implements Iterable<Response> {
     public Iterator<Response> iterator() {
         return responses.iterator();
     }
+
+
+	
+	/**
+	 * @return the timestamp
+	 */
+	public Timestamp getTimestamp()
+	{
+	
+		return timestamp;
+	}
+
+
+	
+	/**
+	 * @param timestamp the timestamp to set
+	 */
+	public void setTimestamp(Timestamp timestamp)
+	{
+	
+		this.timestamp = timestamp;
+	}
 
 }

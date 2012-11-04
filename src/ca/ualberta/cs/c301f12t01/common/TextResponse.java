@@ -17,20 +17,17 @@
  */
 package ca.ualberta.cs.c301f12t01.common;
 
-import java.sql.Timestamp;
 
 /**
  * TextResponse -- A response containing text.
  * 
  * This should be instantiated when you want to give a text response to a given
- * task. It extends Response which gives text response a timestamp for a given
- * text response if it is a new TextResponse. If it needs to be reconstructed
- * from storage it can pass response a timestamp.
+ * task.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
  */
-public class TextResponse extends Response {
+public class TextResponse implements Response {
 
     private String text;
 
@@ -39,17 +36,6 @@ public class TextResponse extends Response {
      * This is used by the GUI.
      */
     public TextResponse(String text) {
-        super();
-        setText(text);
-    }
-
-    /**
-     * Takes in a timestamp and text calling Response with timestamp.
-     * Calls setText with that text. This is used by the storage code.
-     * @param timestamp
-     */
-    public TextResponse(Timestamp timestamp, String text) {
-        super(timestamp);
         setText(text);
     }
 
@@ -74,7 +60,6 @@ public class TextResponse extends Response {
      * 
      * @see ca.ualberta.cs.c301f12t01.common.Response#getMediaType()
      */
-    @Override
     public MediaType getMediaType() {
         return MediaType.TEXT;
     }
