@@ -32,11 +32,12 @@ import java.util.UUID;
  * collection of responses.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Neil Borle
  * 
  */
 public class Report implements Iterable<Response> {
 
-    final private UUID id = UUID.randomUUID();
+    final private UUID id;
     private UUID taskID;
     private Collection<Response> responses;
     private Sharing sharing = Sharing.LOCAL;
@@ -63,6 +64,22 @@ public class Report implements Iterable<Response> {
      */
     public Report(Task task, Timestamp timestamp) {
     	setTaskID(task.getId());
+    	setTimestamp(timestamp);
+    	id = UUID.randomUUID();
+    }
+    
+    /**
+     * This constructor is for the database and should only be 
+     * used by the database. It allows the construction of 
+     * a report object given a UUID and NOT a task.
+     * 
+     * @param task UUID
+     * @param id UUID
+     * @param timestamp
+     */
+    public Report(UUID taskId, UUID reportId, Timestamp timestamp) {
+    	setTaskID(taskId);
+    	id = reportId;
     	setTimestamp(timestamp);
     }
 
