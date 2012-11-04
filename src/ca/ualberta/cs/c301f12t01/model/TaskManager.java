@@ -127,4 +127,12 @@ public class TaskManager extends Observable{
         // TODO Auto-generated method stub
         
     }
+
+    /**
+     * @param localStorage
+     */
+    public void setLocal(StorageInterface localStorage) {
+        // TODO Auto-generated method stub
+        
+    }
 }
