@@ -25,7 +25,11 @@ import java.util.UUID;
 
 
 /**
- * Report -- contains Responses that fulfill Tasks.
+ * Report -- Contains Responses that fulfill Tasks.
+ * 
+ * This should be instantiated when a user makes a report for a task.
+ * A report is given a timestamp upon creation and is given a 
+ * collection of responses.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
@@ -37,11 +41,24 @@ public class Report implements Iterable<Response> {
     private Collection<Response> responses;
     private Timestamp timestamp;
 
-    /** Create a new Report for the given Task. */
+    /** 
+     * Construct a new Report for the given Task. It also 
+     * handles the timestamp. This is for the GUI to call
+     * where it doesn't have a timestamp yet.
+     * 
+     *  @param task
+     */
     public Report(Task task) {
         this(task, new Timestamp(new Date().getTime()));
     }
     
+    /**
+     * Construct a Report from storage. This is what storage would
+     * call to reconstruct a Report from stored data.
+     *  
+     * @param task
+     * @param timestamp
+     */
     public Report(Task task, Timestamp timestamp) {
     	setTaskID(task.getId());
     	setTimestamp(timestamp);
