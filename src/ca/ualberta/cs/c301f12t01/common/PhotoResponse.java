@@ -23,11 +23,13 @@ import java.sql.Timestamp;
  * NOT IMPLEMENTED
  * TODO IMPLEMENT THIS CLASS
  */
+
 public class PhotoResponse extends Response {
 
     /**
      * 
      */
+	
     public PhotoResponse() {
     }
 

@@ -37,12 +37,22 @@ public class Task implements Iterable<Request> {
     final private UUID id;
     private UUID user;
 
-    /** Instantiates a new class for the specified user. */
+    /**
+     * Constructs a new task. This is used by the GUI.
+     * It takes in a user ID to keep track of who created the task.
+     * @param user
+     */
     public Task(UUID user) {
         setUser(user);
         id = UUID.randomUUID();
     }
     
+    /** 
+     * Constructs a new task given a pre-existing task id. 
+     * This will be done from storage side of code.
+     * @param taskId
+     * @param user
+     */
     public Task(UUID taskId, UUID user) {
     	setUser(user);
     	id = taskId;
@@ -50,8 +60,9 @@ public class Task implements Iterable<Request> {
     }
 
     /**
+     * This will add a new request to the task.
      * @param object
-     * @return
+     * @return If it is successful it will return True, otherwise False.
      * @see java.util.Collection#add(java.lang.Object)
      */
     public boolean addRequest(Request newRequest) {
@@ -59,8 +70,9 @@ public class Task implements Iterable<Request> {
     }
 
     /**
+     * This will remove a request from the task.
      * @param object
-     * @return
+     * @return If it is successful it will return True, otherwise False.
      * @see java.util.Collection#remove(java.lang.Object)
      */
     public boolean removeRequest(Object deadRequest) {
@@ -69,8 +81,7 @@ public class Task implements Iterable<Request> {
 
     /**
      * Iterates through the Requests in this Task.
-     * 
-     * @return
+     * @return It will return a collection of the objects iterator over.
      * @see java.util.Collection#iterator()
      */
     public Iterator<Request> iterator() {
@@ -78,7 +89,8 @@ public class Task implements Iterable<Request> {
     }
 
     /**
-     * @return the amount of Requests in this Task.
+     * Used to see how many requests are in a Task.
+     * @return Returns the amount of Requests in this Task.
      * @see java.util.Collection#size()
      */
     public int requestCount() {
@@ -86,84 +98,98 @@ public class Task implements Iterable<Request> {
     }
 
     /**
-     * @return the summary
+     * Used to get the summary of a given task. The summary is
+     * a brief description of the given task.
+     * @return Returns the summary
      */
     public String getSummary() {
         return summary;
     }
 
     /**
-     * @return the description
+     * Used to get the description of a given task. The description is
+     * a lengthy response describing in full detail what the task requires
+     * in terms of what type of text audio or photo responses be required.
+     * @return Returns the description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * @return whether the Task is local to the device only.
+     * Used to check whether the task is local.
+     * @return Returns whether the Task is local to the device only.
      */
     public Boolean isLocal() {
         return shared == false;
     }
 
-    /** Declare that the task must be stored locally on the device only. */
+    /**
+     * Sets the task to local by changing shared to false.
+     */
     public void setLocal() {
         shared = false;
     }
 
     /**
-     * @return whether the Task is globally shared.
+     * Used to check whether the task is global.
+     * @return Returns whether the Task is globally shared.
      */
     public Boolean isGlobal() {
         return shared == true;
     }
 
-    /** Declare that the task must be globally shared. */
+    /**
+     * Set the task to global by changing shared to true.
+     */
     public void setGlobal() {
         shared = true;
     }
 
     /**
-     * @return the Task id
+     * Used to get the Task id.
+     * @return Returns the Task id
      */
     public UUID getId() {
         return id;
     }
 
     /**
-     * @return the Task creator's ID.
+     * Used to get the Task creator's ID.
+     * @return Returns the Task creator's ID.
      */
     public UUID getUser() {
         return user;
     }
 
     /**
+     * Sets the summary of the task.
      * @param summary
-     *            the summary to set
      */
     public void setSummary(String summary) {
         this.summary = summary;
     }
 
     /**
+     * Sets the description of the task.
      * @param description
-     *            the description to set
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
+     * Sets the user to the Task.
      * @param user
-     *            the user to set
      */
     public void setUser(UUID user) {
         this.user = user;
     }
 
     /**
-     * Returns the UUID and the summary of the task.
-     * 
+     * Will grab the Id and change it to a string combined with
+     * the task summary.
+     * @return Returns the UUID and the summary of the task.
      * @deprecated For debug use only!
      */
     @Override
