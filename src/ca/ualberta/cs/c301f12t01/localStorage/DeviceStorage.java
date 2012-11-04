@@ -107,12 +107,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 
 	public Collection<Report> getLocalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		return null;
+		return ReportLocalStorage.getReports(database, taskid, false);
 	}
 
 	public Collection<Report> getGlobalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		return null;
+		return ReportLocalStorage.getReports(database, taskid, true);
 	}
 	
 }

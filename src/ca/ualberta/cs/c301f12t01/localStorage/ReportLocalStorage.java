@@ -43,14 +43,9 @@ public class ReportLocalStorage
 		
 	}
 	
-	public static ArrayList<Report> getLocalReports(SQLiteDatabase db, UUID taskid) {
+	public static ArrayList<Report> getReports(SQLiteDatabase db, UUID taskid, boolean global) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	public static ArrayList<Report> getGlobalReports(SQLiteDatabase db, UUID taskid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

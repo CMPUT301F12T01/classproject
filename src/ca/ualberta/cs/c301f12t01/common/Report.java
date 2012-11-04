@@ -19,6 +19,7 @@ package ca.ualberta.cs.c301f12t01.common;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -38,9 +39,7 @@ public class Report implements Iterable<Response> {
 
     /** Create a new Report for the given Task. */
     public Report(Task task) {
-    	Timestamp currentTimestamp = new Timestamp(new Date().getTime();
-    	
-        this(task, currentTimestamp);
+        this(task, new Timestamp(new Date().getTime()));
     }
     
     public Report(Task task, Timestamp timestamp) {
