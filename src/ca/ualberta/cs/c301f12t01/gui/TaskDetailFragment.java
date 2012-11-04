@@ -116,6 +116,8 @@ public class TaskDetailFragment extends Fragment {
                 .findViewById(R.id.task_summary);
         TextView requirementView = (TextView) rootView
                 .findViewById(R.id.task_requires);
+        TextView sharingView = (TextView) rootView
+                .findViewById(R.id.task_sharing_setting);
         
         /* Collect strings and stuff from the Task instance. */
         
@@ -125,6 +127,7 @@ public class TaskDetailFragment extends Fragment {
         /* TODO: Get rid of this ugly mess! */
         String requirementText;
         Set<String> requirementSet = new HashSet<String>();
+        
         
         /* Setup the requirement text. */
         for (Request request : task) {
@@ -160,6 +163,14 @@ public class TaskDetailFragment extends Fragment {
         
         requirementView.setText(requirementText);
 
+        /* Get the sharing option */
+
+        if (task.isGlobal()) {
+        	sharingView.setText(getString(R.string.task_global));
+        } else {
+        	sharingView.setText(getString(R.string.task_local));
+        }
+        
 
         return descriptionView;
     }
