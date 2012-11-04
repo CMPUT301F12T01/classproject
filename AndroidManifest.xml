@@ -35,7 +35,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
         </activity>
-        
+        <activity
+            android:name=".gui.FulfillTaskActivity"
+            android:label="@string/title_activity_task_define_fragment" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.app.ListActivity" />
+        </activity>
     </application>
 
 </manifest>
