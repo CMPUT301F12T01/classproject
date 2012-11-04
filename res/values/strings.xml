@@ -25,10 +25,18 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_define_task">DefineTaskActivity</string>
-    <string name="task_sharing_pref">task_sharing_pref</string>
     <string name="task_sharing_description">Please select your visibility of 
 	    	your task. If your task is global other people can view your tasks
 	    	and can help you fulfill them. If your task is local, only you will
 	    	be able to view them. </string>
+    <string name="title_activity_task_define_fragment">TaskDefineFragment</string>
 
+    <!-- Fulfilling to a task -->
+    <string name="task_take_photo">Take A Photo</string>
+    <string name="task_record_audio">Record An Audio Clip</string>
+    <string name="task_report_to">Send Report To</string>
+    <string name="send_to_owner">Owner</string>
+    <string name="send_to_server">Server</string>
+    <string	name="do_not_send">Don\'t Send</string>
+    
 </resources>
