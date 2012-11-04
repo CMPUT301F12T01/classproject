@@ -28,17 +28,14 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  *
  */
 public class TestUtils {
-
 	
 	/**
-	 * @return A simple task meant for testing
+	 * @return A simple global task meant for testing
 	 */
-	public static Task makeSimpleGlobalTask(){
+	public static Task makeSimpleTask(){
 		Task t = new Task(UUID.randomUUID());
 		t.setDescription("This is a longer description");
 		t.setSummary("A short summary");
-		return t;
-		
-	}
-	
+		return t;		
+	}	
 }
