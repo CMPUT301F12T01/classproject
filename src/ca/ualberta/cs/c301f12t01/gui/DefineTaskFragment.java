@@ -32,7 +32,10 @@ import ca.ualberta.cs.c301f12t01.R;
  *
  */
 public class DefineTaskFragment extends Fragment {
-    /** Constructs a new TaskDetailFragment. */
+	
+    /** 
+     * Constructs a new TaskDetailFragment. 
+     */
     public DefineTaskFragment() {
     }
 
