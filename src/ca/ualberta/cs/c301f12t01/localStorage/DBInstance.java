@@ -56,7 +56,8 @@ public class DBInstance extends SQLiteOpenHelper{
 		      + "foreign key(task_id) references Tasks(id) NOT NULL); "
 		      
 		      + "CREATE TABLE Reports "
-		      + "(scope INTEGER, "
+		      + "(scope TEXT, "
+		      + "timestamp TEXT NOT NULL, "
 		      + "id TEXT PRIMARY KEY, " //have to store UUIDs as Text
 			  + "task_id TEXT NOT NULL, " //have to store UUIDs as Text
 		      + "foreign key(task_id) references Tasks(id) NOT NULL);"

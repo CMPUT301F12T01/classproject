@@ -26,6 +26,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 
@@ -107,12 +108,17 @@ public class DeviceStorage implements StorageInterface, Observer {
 
 	public Collection<Report> getLocalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		return ReportLocalStorage.getReports(database, taskid, false);
+		return ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
+	}
+	
+	public Collection<Report> getTaskCreatorReports(UUID taskid) {
+		// Delegate Report retrieval to ReportLocalStorage class
+		return ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR);
 	}
 
 	public Collection<Report> getGlobalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		return ReportLocalStorage.getReports(database, taskid, true);
+		return ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL);
 	}
 	
 }
