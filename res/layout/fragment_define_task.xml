@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".gui.TaskDefineFragment" >
+    tools:context=".gui.DefineTaskFragment" >
 
     <!-- Summary enter text field (maximum of 2 lines showing at a time), Request options -->
 
