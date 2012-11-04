@@ -1,5 +1,8 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.UUID;
 
 import android.app.Fragment;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
@@ -48,46 +52,106 @@ public class TaskDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
-    {
-        
-        int detail_layout_resource_id;
+            Bundle savedInstanceState) {
+
+        int layout_id;
         View rootView;
-
-        /*
-         * If given a Task, display one thing, else display "no task to display"
-         * screen.
-         */
-        /*
-         * Later, we'll use some sort of class to create the detail display.
-         * Maybe.
-         */
-        /* TODO: refactor into new methods or entirely new classes. */
-
-        if (task != null) {
-            detail_layout_resource_id = R.layout.fragment_task_detail;
-
-        } else {
-            detail_layout_resource_id = R.layout.fragment_no_task_detail;
-        }
         
-        rootView = inflater.inflate(detail_layout_resource_id,
-                container, false);
+        /* TODO: Make some sort of template pattern here or something. */
 
-        /* We need to do a little bit more work for actual tasks. */
-        if (task != null) {
-            TextView detailView = (TextView) rootView.findViewById(R.id.task_detail);
-            String description = task.getDescription();
-            
-            if (description.equals("")) {
-                /* Description is empty. Say so instead of giving the user a blank screen. */
-                detailView.setText("No description");
-                detailView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
-            } else {
-                detailView.setText(description);
-            }
+
+        /* Inflate the root view depending on whether we have a Task or not. */
+        layout_id = (task == null)
+                ? R.layout.fragment_no_task_detail /* No task?  No detail. */
+                : R.layout.fragment_task_detail;   /* Else, get the details. */
+        rootView = inflater
+                .inflate(layout_id, container, false);
+
+        /* Invoke the proper method. */
+        switch (layout_id) {
+            case R.layout.fragment_no_task_detail:
+                completeNoDetailViewInflation(rootView);
+                break;
+            case R.layout.fragment_task_detail:
+                completeTaskDetailViewInflation(rootView);
+                break;
         }
         
         return rootView;
     }
+
+    /**
+     * Given an inflated `fragment_task_detail` view, fills it out with the
+     * current task.
+     * 
+     * @return the completed task detail view
+     */
+    protected View completeTaskDetailViewInflation(View rootView) {
+        /* Get the associated views. */
+        TextView descriptionView = (TextView) rootView
+                .findViewById(R.id.task_description);
+        TextView summaryView = (TextView) rootView
+                .findViewById(R.id.task_summary);
+        TextView requirementView = (TextView) rootView
+                .findViewById(R.id.task_requires);
+        
+        /* Collect strings and stuff from the Task instance. */
+        
+        String descriptionText = task.getDescription();
+        String summaryText = task.getSummary();
+        
+        /* TODO: Get rid of this ugly mess! */
+        String requirementText;
+        Set<String> requirementSet = new HashSet<String>();
+        
+        /* Setup the requirement text. */
+        for (Request request : task) {
+            requirementSet.add(request.getType().toString());
+        }
+        
+        /* LOOK AWAY! LOOK AWAY! */
+        StringBuilder requirementBuilder = new StringBuilder();
+        Iterator<String> iter = requirementSet.iterator();
+        while (iter.hasNext()) {
+            requirementBuilder.append(iter.next());
+            if (!iter.hasNext()) {
+              break;                  
+            }
+            requirementBuilder.append(" ");
+        }
+        requirementText = requirementBuilder.toString();
+
+        /* It's over. The horror is over. There's nothing to see here, kids. */
+        
+        /* Set the associated views. */
+        summaryView.setText(summaryText);
+
+        /* Set the description text. */
+        if (descriptionText.equals("")) {
+            /* Description is empty. State that there is no description instead of giving the user a blank
+             * screen.*/
+            descriptionView.setText("No description");
+            descriptionView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+        } else {
+            descriptionView.setText(descriptionText);
+        }
+        
+        requirementView.setText(requirementText);
+
+
+        return descriptionView;
+    }
+
+    /**
+     * Given an inflated `fragment_task_detail` view, fills it out with the
+     * current task.
+     * 
+     * @return the completed task detail view
+     */
+    protected View completeNoDetailViewInflation(View rootView) {
+        /* The view does not need to be filled. */
+        return rootView;
+
+    }
+
 }

@@ -34,12 +34,19 @@ public class Task implements Iterable<Request> {
     private String description = "";
     private Collection<Request> requests = new ArrayList<Request>();
     private Boolean shared = true;
-    final private UUID id = UUID.randomUUID();
+    final private UUID id;
     private UUID user;
 
     /** Instantiates a new class for the specified user. */
     public Task(UUID user) {
         setUser(user);
+        id = UUID.randomUUID();
+    }
+    
+    public Task(UUID taskId, UUID user) {
+    	setUser(user);
+    	id = taskId;
+    	
     }
 
     /**

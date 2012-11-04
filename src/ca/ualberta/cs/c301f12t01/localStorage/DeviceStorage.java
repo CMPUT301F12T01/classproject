@@ -17,7 +17,7 @@
  */
 package ca.ualberta.cs.c301f12t01.localStorage;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
@@ -73,34 +73,34 @@ public class DeviceStorage implements StorageInterface, Observer {
 
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#storeTask(ca.ualberta.cs.c301f12t01.common.Task)
+	 * 
+	 * Delegate task storage to taskLocalStorage class
 	 */
 	public void storeTask(Task taskToStore) {
-		// Delegate task storage to taskLocalStorage class
-		//taskLocalStorage.storeTask(database, taskToStore);
+		taskLocalStorage.storeTask(database, taskToStore);
 	}
 
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getOwnTasks(java.util.UUID)
+	 * 
+	 * Delegate task storage to taskLocalStorage class
 	 */
-	public ArrayList<Task> getOwnTasks(UUID userid) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Task> getOwnTasks(UUID userid) {
+		return taskLocalStorage.getOwnTasks(database, userid);
 	}
 
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getLocalTasks()
 	 */
-	public ArrayList<Task> getLocalTasks() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Task> getLocalTasks() {
+		return taskLocalStorage.getTasks(database, false);
 	}
 
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getGlobalTasks()
 	 */
-	public ArrayList<Task> getGlobalTasks() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Task> getGlobalTasks() {
+		return taskLocalStorage.getTasks(database, true);
 	}
 
 	/* (non-Javadoc)
@@ -114,7 +114,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getLocalReports(java.util.UUID)
 	 */
-	public ArrayList<Report> getLocalReports(UUID taskid) {
+	public Collection<Report> getLocalReports(UUID taskid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -122,7 +122,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getGlobalReports(java.util.UUID)
 	 */
-	public ArrayList<Report> getGlobalReports(UUID taskid) {
+	public Collection<Report> getGlobalReports(UUID taskid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -138,7 +138,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getRequests(java.util.UUID)
 	 */
-	public ArrayList<Request> getRequests(UUID taskId) {
+	public Collection<Request> getRequests(UUID taskId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -154,7 +154,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getResponses(java.util.UUID)
 	 */
-	public ArrayList<Response> getResponses(UUID reportId) {
+	public Collection<Response> getResponses(UUID reportId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

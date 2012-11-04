@@ -24,7 +24,8 @@ import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
- * Class to mangage all of our tasks
+ * Class to manage all of our tasks
+ * Singleton design pattern
  * @author Mitchell Home
  */
 public class TaskManager extends Observable{
@@ -34,13 +35,18 @@ public class TaskManager extends Observable{
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
 
-	//private constructor
+	/**
+	 * private constructor
+	 */
 	private TaskManager(){
 		//nothing to do really
 	}
 
-	//adds a new task
-	//puts in either localTasks or globalTasks
+	/**
+	 * adds a new task into either localTasks or globalTasks
+	 * @param newTask
+	 * 			task to be added
+	 */
 	public void addTask(Task newTask){
 		if (newTask.isLocal()){
 			localTasks.add(newTask);
@@ -55,7 +61,13 @@ public class TaskManager extends Observable{
 		notifyObservers();
 	}
 	
-	//given a UUID, return the task
+	/**
+	 * given a UUID, return the task
+	 * @param id
+	 * 			ID of task we are looking for
+	 * @return
+	 * 			Task that matches ID
+	 */
 	public Task get(UUID id){
 		//This is a little ugly
 		//first check local tasks
@@ -80,17 +92,28 @@ public class TaskManager extends Observable{
 		
 	}
 	
-	//returns iterator for all local tasks
+	/**
+	 * returns iterator for all local tasks
+	 * @return
+	 * 		localTasks' Iterator
+	 */
 	public Iterator<Task> getLocalTasks(){
 		return localTasks.iterator();
 	}
 
-	//returns iterator for all global tasks
-	public Iterator<Task> getGlobalTasks(){
+	/**
+	 * returns iterator for all global tasks
+	 * @return
+	 * 		globalTasks' Iterator
+	 */	public Iterator<Task> getGlobalTasks(){
 		return globalTasks.iterator();
 	}
 	
-	//let them get our instance
+	/**
+	 * let them get our instance
+	 * @return
+	 * 		Singleton instance of TaskManager
+	 */
 	public static TaskManager getInstance(){
 		return instance;
 	}
