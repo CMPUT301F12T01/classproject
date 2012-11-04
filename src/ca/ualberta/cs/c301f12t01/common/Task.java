@@ -26,6 +26,7 @@ import java.util.UUID;
  * Task -- a mission to be fulfilled by users.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Neil Borle
  * 
  */
 public class Task implements Iterable<Request> {
