@@ -39,14 +39,16 @@ public class Report implements Iterable<Response> {
     final private UUID id = UUID.randomUUID();
     private UUID taskID;
     private Collection<Response> responses;
+    private Sharing sharing = Sharing.LOCAL;
     private Timestamp timestamp;
 
-    /** 
-     * Construct a new Report for the given Task. It also 
-     * handles the timestamp. This is for the GUI to call
-     * where it doesn't have a timestamp yet.
+
+    /**
+     * Construct a new Report for the given Task, applying the Timestamp at the
+     * instant the Report is created. This is for the GUI to call where it
+     * doesn't have a timestamp yet.
      * 
-     *  @param task
+     * @param task
      */
     public Report(Task task) {
         this(task, new Timestamp(new Date().getTime()));
@@ -132,6 +134,20 @@ public class Report implements Iterable<Response> {
 
 	
 	/**
+     * @return the sharing
+     */
+    public Sharing getSharing() {
+        return sharing;
+    }
+
+    /**
+     * @param sharing the sharing to set
+     */
+    public void setSharing(Sharing sharing) {
+        this.sharing = sharing;
+    }
+
+    /**
 	 * @return the timestamp
 	 */
 	public Timestamp getTimestamp()

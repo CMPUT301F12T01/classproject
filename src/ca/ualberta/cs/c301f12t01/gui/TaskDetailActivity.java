@@ -18,12 +18,11 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
-import ca.ualberta.cs.c301f12t01.R;
-import android.content.Intent;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import ca.ualberta.cs.c301f12t01.R;
 
 public class TaskDetailActivity extends Activity {
 
@@ -51,7 +50,7 @@ public class TaskDetailActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpTo(this, new Intent(this, TaskListActivity.class));
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 

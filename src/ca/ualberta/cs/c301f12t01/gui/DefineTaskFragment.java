@@ -32,19 +32,15 @@ import ca.ualberta.cs.c301f12t01.R;
  *
  */
 public class DefineTaskFragment extends Fragment {
-	
-    /** 
-     * Constructs a new TaskDetailFragment. 
-     */
-    public DefineTaskFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
-
+        /* Initialize stuff if it has been initialized yet. */
+        if (savedInstanceState == null) {
+            setHasOptionsMenu(true);
+        }
     }
 
     @Override

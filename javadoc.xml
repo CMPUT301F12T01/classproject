@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="protected" author="true" classpath="/home/dsk06/cscrs/c301/android-sdk-linux/tools/support/annotations.jar:/usr/local/stow/eclipse-java-indigo-SR2-linux-gtk-android/eclipse-android/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar:libs/android-support-v4.jar:/usr/local/stow/eclipse-java-indigo-SR2-linux-gtk-android/eclipse-android/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="ca.ualberta.cs.c301f12t01.dummy,ca.ualberta.cs.c301f12t01.common,ca.ualberta.cs.c301f12t01.model,ca.ualberta.cs.c301f12t01.localStorage,ca.ualberta.cs.c301f12t01.serverStorage,ca.ualberta.cs.c301f12t01.testing,ca.ualberta.cs.c301f12t01.gui" source="1.5" sourcepath="gen:src" splitindex="true" use="true" version="true">
+            <link href="file:/home/dsk03/ugrad/easantos/softeng/classproject-repo/doc/"/>
+        </javadoc>
+    </target>
+</project>

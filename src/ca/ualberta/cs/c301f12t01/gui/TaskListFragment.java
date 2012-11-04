@@ -54,6 +54,7 @@ public class TaskListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setListAdapter(new ArrayAdapter<Task>(getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,

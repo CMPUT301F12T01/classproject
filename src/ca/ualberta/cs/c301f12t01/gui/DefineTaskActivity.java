@@ -36,6 +36,9 @@ import ca.ualberta.cs.c301f12t01.R;
 public class DefineTaskActivity extends Activity {
 
 
+    /**
+     * Starts the {@link DefineTaskFragment}, and configures the home button.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

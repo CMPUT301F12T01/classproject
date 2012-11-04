@@ -28,7 +28,6 @@ public class PhotoResponse implements Response {
     /**
      * 
      */
-	
     public PhotoResponse() {
     }
 
