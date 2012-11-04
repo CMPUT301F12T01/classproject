@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".gui.TaskDefineFragment" >
+    tools:context=".gui.DefineTaskFragment" >
 
     <!-- Summary enter text field (maximum of 2 lines showing at a time), Request options -->
 
@@ -92,9 +92,10 @@
 
     <!-- Again TableRows for two buttons side by side -->
 
-    <TableRow
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+                android:layout_height="50dp"
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/radio_local"
@@ -109,6 +110,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/task_global" />
-    </TableRow>
+    </RadioGroup>
 
 </LinearLayout>

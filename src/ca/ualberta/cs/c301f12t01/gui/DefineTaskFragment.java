@@ -52,10 +52,10 @@ public class DefineTaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater
-                .inflate(R.layout.activity_define_task, container, false);
-
         
+        View rootView = inflater
+                .inflate(R.layout.fragment_define_task, container, false);
+
         return rootView;
     }
 

@@ -33,6 +33,7 @@ import java.util.UUID;
  * The shared is a boolean true or false whether to be shared or not.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Neil Borle
  * 
  */
 public class Task implements Iterable<Request> {

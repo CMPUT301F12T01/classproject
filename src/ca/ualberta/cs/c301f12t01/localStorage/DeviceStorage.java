@@ -26,8 +26,6 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import ca.ualberta.cs.c301f12t01.common.Report;
-import ca.ualberta.cs.c301f12t01.common.Request;
-import ca.ualberta.cs.c301f12t01.common.Response;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 
@@ -38,7 +36,7 @@ import ca.ualberta.cs.c301f12t01.model.StorageInterface;
  */
 
 public class DeviceStorage implements StorageInterface, Observer {
-	/*
+	/**
 	 * This class is responsible for creating 
 	 * a connection to a database in Android
 	 * and providing the functionality to 
@@ -63,99 +61,57 @@ public class DeviceStorage implements StorageInterface, Observer {
 			database.close();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	/**
+	 * Notify everyone!
 	 */
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#storeTask(ca.ualberta.cs.c301f12t01.common.Task)
-	 * 
-	 * Delegate task storage to taskLocalStorage class
+	/**
+	 * The following methods deal with the storage and 
+	 * retrieval of Tasks from the database. They delegate
+	 * the hard work off to the taskLocalStorage class
 	 */
 	public void storeTask(Task taskToStore) {
-		taskLocalStorage.storeTask(database, taskToStore);
+		// Delegate task storage to taskLocalStorage class
+		TaskLocalStorage.storeTask(database, taskToStore);
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getOwnTasks(java.util.UUID)
-	 * 
-	 * Delegate task storage to taskLocalStorage class
-	 */
 	public Collection<Task> getOwnTasks(UUID userid) {
-		return taskLocalStorage.getOwnTasks(database, userid);
+		// Delegate task storage to taskLocalStorage class
+		return TaskLocalStorage.getOwnTasks(database, userid);
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getLocalTasks()
-	 */
 	public Collection<Task> getLocalTasks() {
-		return taskLocalStorage.getTasks(database, false);
+		// Delegate task retrieval to taskLocalStorage class
+		return TaskLocalStorage.getTasks(database, false);
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getGlobalTasks()
-	 */
 	public Collection<Task> getGlobalTasks() {
-		return taskLocalStorage.getTasks(database, true);
+		// Delegate task retrieval to taskLocalStorage class
+		return TaskLocalStorage.getTasks(database, true);
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#storeReport(ca.ualberta.cs.c301f12t01.common.Report)
+	/**
+	 * The following methods deal with the storage and 
+	 * retrieval of Reports from the database.
+	 * The hard work has been delegated off to the
+	 * reportLocalStorage class
 	 */
 	public void storeReport(Report reportToStore) {
-		// TODO Auto-generated method stub
-		
+		// Delegate Report storage to ReportLocalStorage
+		ReportLocalStorage.storeReport(database, reportToStore);
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getLocalReports(java.util.UUID)
-	 */
 	public Collection<Report> getLocalReports(UUID taskid) {
-		// TODO Auto-generated method stub
+		// Delegate Report retrieval to ReportLocalStorage class
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getGlobalReports(java.util.UUID)
-	 */
 	public Collection<Report> getGlobalReports(UUID taskid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#storeRequest(ca.ualberta.cs.c301f12t01.common.Request)
-	 */
-	public void storeRequest(Request requestToStore) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getRequests(java.util.UUID)
-	 */
-	public Collection<Request> getRequests(UUID taskId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#storeResponse(ca.ualberta.cs.c301f12t01.common.Response)
-	 */
-	public void storeResponse(Response responseToStore) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.c301f12t01.model.StorageInterface#getResponses(java.util.UUID)
-	 */
-	public Collection<Response> getResponses(UUID reportId) {
-		// TODO Auto-generated method stub
+		// Delegate Report retrieval to ReportLocalStorage class
 		return null;
 	}
 	
