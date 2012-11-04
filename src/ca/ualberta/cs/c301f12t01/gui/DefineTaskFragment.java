@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import ca.ualberta.cs.c301f12t01.R;
 
 /**
+ * DefineTaskFragment -- 
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *

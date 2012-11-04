@@ -36,9 +36,11 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
 /**
+ * TaskDetailFragmnet -- 
+ * 
  * Fragment that displays details about a Task. Uses the `fragment_task_detail`
  * for displaying an actual fragment, or if no fragment was specified, uses
- * `fragment_no_task_detail` for displaying the "sorry, t'ere ain't no task to
+ * `fragment_no_task_detail` for displaying the "sorry, there ain't no task to
  * display" screen. layout.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>

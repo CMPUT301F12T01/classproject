@@ -24,6 +24,12 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import ca.ualberta.cs.c301f12t01.R;
 
+/**
+ * 
+ * 
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ *
+ */
 public class TaskDetailActivity extends Activity {
 
     @Override

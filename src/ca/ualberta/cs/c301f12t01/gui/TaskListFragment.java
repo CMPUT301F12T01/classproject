@@ -31,6 +31,12 @@ import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
+/**
+ * 
+ * 
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ *
+ */
 public class TaskListFragment extends ListFragment {
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
