@@ -25,13 +25,19 @@ import android.view.MenuItem;
 import ca.ualberta.cs.c301f12t01.R;
 
 /**
+ * TaskDetailActivity -- Displays the user interface for Task Details.
  * 
+ * Displays the layout for activity_task_detail, which displays a fragment of TaskDetailFragment 
+ * {@link TaskDetailFragment} that handles the displaying of the task details.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *
  */
 public class TaskDetailActivity extends Activity {
 
+	/**
+	 * Starts the {@link TaskListFragment}.
+	 */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

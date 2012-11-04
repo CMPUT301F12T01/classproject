@@ -25,9 +25,10 @@ import ca.ualberta.cs.c301f12t01.R;
 
 
 /**
- * DefineTaskActivity -- Displays the user interface.
+ * DefineTaskActivity -- Displays the user interface for defining a task.
  * 
- * Displays the layout for activiy_define_task.
+ * Displays the layout for activiy_define_task. Which displays a fragment of DefineTaskFragment 
+ * {@link DefineTaskFragment} that handles defining a task.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *

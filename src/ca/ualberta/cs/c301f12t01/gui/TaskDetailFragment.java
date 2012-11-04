@@ -36,7 +36,7 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
 /**
- * TaskDetailFragmnet -- 
+ * TaskDetailFragment -- Displays the details about a task.
  * 
  * Fragment that displays details about a Task. Uses the `fragment_task_detail`
  * for displaying an actual fragment, or if no fragment was specified, uses
@@ -51,7 +51,9 @@ public class TaskDetailFragment extends Fragment {
 
     Task task;
 
-    /** Constructs a new TaskDetailFragment. */
+    /** 
+     * Constructs a new TaskDetailFragment. 
+     */
     public TaskDetailFragment() {
     }
 
