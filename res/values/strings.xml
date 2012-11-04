@@ -13,5 +13,7 @@
     
     <string name="view_reports">View Reports</string>
     <string name="fulfill">Fulfill</string>
+    <string name="menu_define_task">Add new task</string>
+    <string name="menu_short_define_task">New</string>
 
 </resources>
