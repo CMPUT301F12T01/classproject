@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.UUID;
 
+import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
@@ -117,4 +118,13 @@ public class TaskManager extends Observable{
 	public static TaskManager getInstance(){
 		return instance;
 	}
+
+    /**
+     * 
+     * @param report
+     */
+    public void addReport(Report report) {
+        // TODO Auto-generated method stub
+        
+    }
 }

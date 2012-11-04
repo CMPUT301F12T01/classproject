@@ -49,7 +49,7 @@ public class TaskDetailFragment extends Fragment {
 
     public static final String ARG_TASK_ID = "task_id";
 
-    Task task;
+    private Task task;
 
     /** 
      * Constructs a new TaskDetailFragment. 
