@@ -92,9 +92,10 @@
 
     <!-- Again TableRows for two buttons side by side -->
 
-    <TableRow
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+                android:layout_height="50dp"
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/radio_local"
@@ -109,6 +110,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/task_global" />
-    </TableRow>
+    </RadioGroup>
 
 </LinearLayout>

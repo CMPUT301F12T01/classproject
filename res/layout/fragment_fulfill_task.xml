@@ -30,9 +30,10 @@
         android:layout_height="wrap_content"
         android:text="@string/task_report_to" />
 
-    <TableRow
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/radio_send_to_owner"
@@ -57,6 +58,6 @@
             android:layout_weight="1"
             android:text="@string/do_not_send"
             android:textSize="13dip" />
-    </TableRow>
+    </RadioGroup>
 
 </LinearLayout>
