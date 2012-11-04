@@ -18,24 +18,43 @@
 package ca.ualberta.cs.c301f12t01.model;
 
 import java.util.AbstractCollection;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 
-/*Task collection class	
+/**Task collection class	
  * @author Mitchell Home
  */
 public class TaskCollection extends AbstractCollection<Task>{
 
-	private Collection<Task> taskCollection;
+	List<Task> taskCollection = new ArrayList<Task>();
 
+	/**
+	 * Adds a task
+	 * @param t
+	 * 			The task to be added 
+	 * @return True because collection says so
+	 */
+	public boolean add(Task t){
+		taskCollection.add(t);
+		return true;
+	}
+
+	/**
+	 * Access the taskCollection's iterator
+	 * @return Iterator from taskCollection
+	 */
 	public Iterator<Task> iterator() {
 		return taskCollection.iterator();
 	}
 
+	/**
+	 * @return The size of taskCollection
+	 */
 	public int size() {
 		return taskCollection.size();
 	}
-	
+
 }

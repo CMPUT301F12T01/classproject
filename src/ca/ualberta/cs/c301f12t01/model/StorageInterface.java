@@ -14,6 +14,8 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  *@author Neil Borle
  */
 
+// TODO: Javadoc the rest of this interface.
+
 public interface StorageInterface {
 	
 	// Storage and retrieval of Tasks

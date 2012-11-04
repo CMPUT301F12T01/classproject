@@ -31,7 +31,7 @@ import ca.ualberta.cs.c301f12t01.common.Response;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 
-/*
+/**
  * Breaking up concerns needs to be done, plus this header
  * 
  * @author Neil Borle

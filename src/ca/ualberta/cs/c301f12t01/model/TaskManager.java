@@ -19,27 +19,34 @@ package ca.ualberta.cs.c301f12t01.model;
 
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 
-/*Class to mangage all of our tasks
+/**
+ * Class to manage all of our tasks
+ * Singleton design pattern
  * @author Mitchell Home
  */
 public class TaskManager extends Observable{
 	//our collections
-	private TaskCollection localTasks;
-	private TaskCollection globalTasks;
+	private TaskCollection localTasks = new TaskCollection();
+	private TaskCollection globalTasks = new TaskCollection();
 	//our instance
-	// TODO: Add singleton accessor class method.
 	private static final TaskManager instance =	new TaskManager();
 
-	//private constructor
+	/**
+	 * private constructor
+	 */
 	private TaskManager(){
 		//nothing to do really
 	}
 
-	//adds a new task
-	//puts in either localTasks or globalTasks
+	/**
+	 * adds a new task into either localTasks or globalTasks
+	 * @param newTask
+	 * 			task to be added
+	 */
 	public void addTask(Task newTask){
 		if (newTask.isLocal()){
 			localTasks.add(newTask);
@@ -53,19 +60,61 @@ public class TaskManager extends Observable{
 		//notify that we changed
 		notifyObservers();
 	}
-
-	//returns iterator for all local tasks
+	
+	/**
+	 * given a UUID, return the task
+	 * @param id
+	 * 			ID of task we are looking for
+	 * @return
+	 * 			Task that matches ID
+	 */
+	public Task get(UUID id){
+		//This is a little ugly
+		//first check local tasks
+		Iterator<Task> i = getLocalTasks();
+		while (i.hasNext()){
+			Task t = i.next();
+			if (t.getId() == id){
+				return t;
+			}
+		}
+		//If we didn't find it in our local tasks
+		//check our global tasks
+		i = getGlobalTasks();
+		while (i.hasNext()){
+			Task t = i.next();
+			if (t.getId() == id){
+				return t;
+			}
+		}
+		//If we got here, we didn't find the task
+		return null;
+		
+	}
+	
+	/**
+	 * returns iterator for all local tasks
+	 * @return
+	 * 		localTasks' Iterator
+	 */
 	public Iterator<Task> getLocalTasks(){
 		return localTasks.iterator();
 	}
 
-	//returns iterator for all global tasks
-	public Iterator<Task> getGlobalTasks(){
+	/**
+	 * returns iterator for all global tasks
+	 * @return
+	 * 		globalTasks' Iterator
+	 */	public Iterator<Task> getGlobalTasks(){
 		return globalTasks.iterator();
 	}
 	
-	//let them get our instance
-	public TaskManager getInstance(){
+	/**
+	 * let them get our instance
+	 * @return
+	 * 		Singleton instance of TaskManager
+	 */
+	public static TaskManager getInstance(){
 		return instance;
 	}
 }

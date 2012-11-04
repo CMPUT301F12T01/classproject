@@ -161,4 +161,15 @@ public class Task implements Iterable<Request> {
         this.user = user;
     }
 
+    /**
+     * Returns the UUID and the summary of the task.
+     * 
+     * @deprecated For debug use only!
+     */
+    @Override
+    public String toString() {
+        /* String concatenation: a sign of *wonderful* coding practices in Java! */
+        return getId().toString() + ": " + getSummary();
+    }
+
 }

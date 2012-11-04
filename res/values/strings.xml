@@ -3,5 +3,15 @@
     <string name="app_name">TaskSource</string>
     <string name="title_task_detail">Task Detail</string>
     <string name="title_task_list">All Tasks</string>
+    <string name="no_task_message">No task to display!</string>
+    
+    
+    <!-- Task displaying fields -->
+    <string name="task_summary">Summary</string>
+    <string name="task_description">Description</string>
+    <string name="task_requirements">Requirements</string>
+    
+    <string name="view_reports">View Reports</string>
+    <string name="fulfill">Fulfill</string>
 
 </resources>
