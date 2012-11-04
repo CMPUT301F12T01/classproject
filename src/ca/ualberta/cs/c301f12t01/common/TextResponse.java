@@ -20,7 +20,12 @@ package ca.ualberta.cs.c301f12t01.common;
 import java.sql.Timestamp;
 
 /**
- * A response containing text.
+ * TextResponse -- A response containing text.
+ * 
+ * This should be instantiated when you want to give a text response to a given
+ * task. It extends Response which gives text response a timestamp for a given
+ * text response if it is a new TextResponse. If it needs to be reconstructed
+ * from storage it can pass response a timestamp.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
@@ -30,7 +35,8 @@ public class TextResponse extends Response {
     private String text;
 
     /**
-     * 
+     * Takes in a string of text and calls setText with that text.
+     * This is used by the GUI.
      */
     public TextResponse(String text) {
         super();
@@ -38,6 +44,8 @@ public class TextResponse extends Response {
     }
 
     /**
+     * Takes in a timestamp and text calling Response with timestamp.
+     * Calls setText with that text. This is used by the storage code.
      * @param timestamp
      */
     public TextResponse(Timestamp timestamp, String text) {
@@ -46,6 +54,7 @@ public class TextResponse extends Response {
     }
 
     /**
+     * Gets the text entered into the text response.
      * @return the text
      */
     public String getText() {
@@ -53,8 +62,8 @@ public class TextResponse extends Response {
     }
 
     /**
+     * Sets the text of the TextRepsonse to the text passed into it.
      * @param text
-     *            the text to set
      */
     public void setText(String text) {
         this.text = text;
