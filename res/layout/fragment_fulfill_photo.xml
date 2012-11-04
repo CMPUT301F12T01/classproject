@@ -18,26 +18,34 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fulfill_photo_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:divider="?android:attr/dividerHorizontal"
-    android:orientation="horizontal"
-    android:showDividers="middle"
-    tools:context=".gui.TaskListActivity" >
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".gui.TaskFulfillFragment" >
 
-    <fragment
-        android:id="@+id/task_list"
-        android:name="ca.ualberta.cs.c301f12t01.gui.TaskListFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+    <!-- Take a photo button -->
 
-    <FrameLayout
-        android:id="@+id/task_detail_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3" />
+    <Button
+        android:id="@+id/button_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/task_take_photo" />
+
+    <!-- Display attached photos -->
+
+    <TextView
+        android:id="@+id/text_attached_photos"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/task_attached_photos" />
+
+    <Gallery
+        android:id="@+id/gallery_fulfill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -16,14 +16,30 @@
   limitations under the License. 
 -->
 
-<!-- If there are no Tasks to display -->
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/no_detail_message"
-    style="?android:attr/textAppearanceLarge"
+    android:id="@+id/report_task_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp"
-    android:text="@string/no_task_message"
-    tools:context=".gui.TaskDetailFragment" />
+    tools:context=".gui.TaskReportFragment" >
+
+    <!-- "This report contains..." Or something to that effect. -->
+
+    <TextView
+        android:id="@+id/text_report_header"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/task_report_header" />
+
+    <!-- Set the text to display the timestamp at the bottom -->
+
+    <TextView
+        android:id="@+id/text_timestamp_response"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

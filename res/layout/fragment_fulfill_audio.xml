@@ -16,12 +16,30 @@
   limitations under the License. 
 -->
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/task_list"
-    android:name="ca.ualberta.cs.c301f12t01.gui.TaskListFragment"
+    android:id="@+id/fulfill_audio_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    tools:context=".gui.TaskListActivity" />
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".gui.TaskFulfillFragment" >
+
+    <!--
+        Record audio button. This may lead to a dialog or something? TODO later. 
+    	Not entirely sure what will happen for this part.
+    -->
+
+    <Button
+        android:id="@+id/button_attach_audio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/task_record_audio" />
+
+    <MediaController
+        android:id="@+id/media_controller_fulfill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </MediaController>
+
+</LinearLayout>

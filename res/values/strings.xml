@@ -1,3 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2012 Neil Borle, Mitchell Home, Bronte Lee, Aaron
+  Padlesky, Eddie Santos
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. 
+-->
+
 <resources>
 
     <string name="app_name">TaskSource</string>
@@ -14,7 +32,7 @@
     <string name="menu_define_task">Add new task</string>
     <string name="menu_short_define_task">New</string>
 
-    <!-- Creating Tasks -->
+    <!-- Defining Tasks -->
     <string name="task_request">Request</string>
     <string name="task_text">Text</string>
     <string name="task_photo">Photo</string>
@@ -31,12 +49,16 @@
 	    	be able to view them. </string>
     <string name="title_activity_task_define_fragment">TaskDefineFragment</string>
 
-    <!-- Fulfilling to a task -->
+    <!-- Fulfilling a task -->
     <string name="task_take_photo">Take A Photo</string>
+    <string name="task_attached_photos">Attached Photos</string>
     <string name="task_record_audio">Record An Audio Clip</string>
     <string name="task_report_to">Send Report To</string>
     <string name="send_to_owner">Owner</string>
     <string name="send_to_server">Server</string>
-    <string	name="do_not_send">Don\'t Send</string>
-    
+    <string name="do_not_send">Don\'t Send</string>
+
+    <!-- Viewing a report -->
+    <string name="task_report_header">This Report Contains:</string>
+
 </resources>

@@ -16,12 +16,21 @@
   limitations under the License. 
 -->
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/task_list"
-    android:name="ca.ualberta.cs.c301f12t01.gui.TaskListFragment"
+    android:id="@+id/report_audio_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    tools:context=".gui.TaskListActivity" />
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".gui.TaskReportFragment" >
+
+    <!-- Media Controller to show the audio clips. -->
+    
+    <MediaController
+        android:id="@+id/media_controller_response"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </MediaController>
+
+</LinearLayout>
