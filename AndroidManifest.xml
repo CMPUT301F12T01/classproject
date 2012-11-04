@@ -27,6 +27,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".taskListActivity" />
         </activity>
+        <activity
+            android:name=".gui.DefineTaskActivity"
+            android:label="@string/title_activity_define_task" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
+        </activity>
     </application>
 
 </manifest>
