@@ -47,6 +47,12 @@ public class TaskLocalStorage {
 		 * request associated with the task is decomposed and stored in
 		 * the data base
 		 */
+		String taskTable = "Tasks";
+		String requestTable = "Requests";
+		String []taskCollumns = {"userid", "id", "global", 
+				"summary", "description"};
+		String []reqCollumns = {"task_id", "description",
+	    		"quantity", "amountfulfilled", "mediatype"};
 		
 		// Get all the fields from the task 
 		String userId = taskToStore.getUser().toString();
@@ -61,34 +67,40 @@ public class TaskLocalStorage {
 		
 		// store all the extracted fields into the database
 		ContentValues taskValues = new ContentValues();
-	    taskValues.put("userid", userId);
-	    taskValues.put("id", id);
-	    taskValues.put("global", global);
-	    taskValues.put("summary", summary);
-	    taskValues.put("description", description);
+	    taskValues.put(taskCollumns[0], userId);
+	    taskValues.put(taskCollumns[1], id);
+	    taskValues.put(taskCollumns[2], global);
+	    taskValues.put(taskCollumns[3], summary);
+	    taskValues.put(taskCollumns[4], description);
 	    
 	    //TODO ERROR HANDLING IF db.insert returns -1
-	    db.insert("Tasks", null, taskValues);
+	    db.insert(taskTable, null, taskValues);
 	    
 	    for (Request request : taskToStore) {
+	    	
 	    	ContentValues requestValues = new ContentValues();
-	    	requestValues.put("task_id", taskToStore.getId().toString());
-	    	requestValues.put("description", request.getDescription());
-	    	requestValues.put("quantity", request.getQuantity());
-	    	requestValues.put("amountfulfilled", 0);
-	    	requestValues.put("mediatype", request.getType().toString());
-	    	db.insert("Requests", null, requestValues);
+	    	requestValues.put(reqCollumns[0], taskToStore.getId().toString());
+	    	requestValues.put(reqCollumns[1], request.getDescription());
+	    	requestValues.put(reqCollumns[2], request.getQuantity());
+	    	requestValues.put(reqCollumns[3], 0);
+	    	requestValues.put(reqCollumns[4], request.getType().toString());
+	    	db.insert(requestTable, null, requestValues);
+	    	
 	    }
 	    
 	}
 	
 	public static ArrayList<Task> getOwnTasks(SQLiteDatabase db, UUID userid) {
-		String user = userid.toString();
+		
+		String taskTable = "Tasks";
+		String requestTable = "Requests";
 		String []taskSelectColumns = {"userid", "id", "global", "summary", "description"};
 		String []requestSelectColumns = {"task_id", "description", "quantity", "mediatype"};
-		ArrayList<Task> tasklist = new ArrayList<Task>();
 		
-		Cursor userTasks = db.query("Tasks", 
+		ArrayList<Task> tasklist = new ArrayList<Task>();
+		String user = userid.toString();
+		
+		Cursor userTasks = db.query(taskTable, 
 				taskSelectColumns, taskSelectColumns[0] + " = " + user, 
 				null, null, null, null);
 		
@@ -107,7 +119,7 @@ public class TaskLocalStorage {
 			}
 			
 			// GET ALL REQUESTS ASSOCIATED WITH THE TASK
-			Cursor taskRequests = db.query("Requests", requestSelectColumns, 
+			Cursor taskRequests = db.query(requestTable, requestSelectColumns, 
 					requestSelectColumns[0] + " = " + userTasks.getString(2), 
 					null, null, null, null);
 			
@@ -126,18 +138,21 @@ public class TaskLocalStorage {
 	}
 	
 	public static ArrayList<Task> getTasks(SQLiteDatabase db, boolean global) {
-		ArrayList<Task> tasklist = new ArrayList<Task>();
+		
+		String taskTable = "Tasks";
+		String requestTable = "Requests";
 		String []taskSelectColumns = {"userid", "id", "global", "summary", "description"};
 		String []requestSelectColumns = {"task_id", "description", "quantity", "mediatype"};
+		ArrayList<Task> tasklist = new ArrayList<Task>();
 		
 		Cursor scopedTasks;
 		
 		if (global) {
-			scopedTasks = db.query("Tasks", 
+			scopedTasks = db.query(taskTable, 
 					taskSelectColumns, taskSelectColumns[2] + " = " + 1, 
 					null, null, null, null);
 		} else {
-			scopedTasks = db.query("Tasks", 
+			scopedTasks = db.query(taskTable, 
 					taskSelectColumns, taskSelectColumns[2] + " = " + 0, 
 					null, null, null, null);
 		}
@@ -155,7 +170,7 @@ public class TaskLocalStorage {
 			}
 			
 			// GET ALL REQUESTS ASSOCIATED WITH THE TASK
-			Cursor taskRequests = db.query("Requests", requestSelectColumns, 
+			Cursor taskRequests = db.query(requestTable, requestSelectColumns, 
 					requestSelectColumns[0] + " = " + scopedTasks.getString(2), 
 					null, null, null, null);
 

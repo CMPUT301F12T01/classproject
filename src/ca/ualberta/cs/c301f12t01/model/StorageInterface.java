@@ -48,6 +48,8 @@ public interface StorageInterface {
 	
 	public Collection<Report> getLocalReports(UUID taskid);
 	
+	public Collection<Report> getTaskCreatorReports(UUID taskid);
+	
 	public Collection<Report> getGlobalReports(UUID taskid);
 
 }
