@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fulfill_task_audio"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".gui.TaskFulfillFragment" >
+
+    
+    <!-- Record audio button -->
+    <Button
+        android:id="@+id/button_attach_audio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/task_record_audio" />
+
+    <MediaController
+        android:id="@+id/mediaController1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </MediaController>
+
+</LinearLayout>
