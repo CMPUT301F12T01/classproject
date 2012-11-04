@@ -27,8 +27,7 @@ import ca.ualberta.cs.c301f12t01.R;
 /**
  * DefineTaskActivity -- Displays the user interface.
  * 
- * Displays the layout for activiy_define_task. This is a
- * user interface for the defining of a task.
+ * Displays the layout for activiy_define_task.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *
@@ -47,10 +46,14 @@ public class DefineTaskActivity extends Activity {
         
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
-        DefineTaskFragment fragment = new DefineTaskFragment();
-        getFragmentManager().beginTransaction()
-            .add(R.id.define_task_container, fragment)
-            .commit();
+        /* If we're on a large display and the display hasn't been set yet,
+         * created the fragment in the display. */
+        if (savedInstanceState == null) {
+            DefineTaskFragment fragment = new DefineTaskFragment();
+            getFragmentManager().beginTransaction()
+                .add(R.id.define_task_container, fragment)
+                .commit();
+        }
 
     }
 

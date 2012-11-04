@@ -106,15 +106,16 @@ public class Report implements Iterable<Response> {
     }
 
     /**
-     * @param taskID the taskID to set
+     * Sets taskID to the given taskID.
+     * @param taskID
      */
     public void setTaskID(UUID taskID) {
         this.taskID = taskID;
     }
 
     /**
-     * @param response the response to add
-     * @return
+     * @param response, the response to add
+     * @return True if successful else False
      * @see java.util.Collection#add(java.lang.Object)
      */
     public boolean addResponse(Response response) {
@@ -122,8 +123,8 @@ public class Report implements Iterable<Response> {
     }
 
     /**
-     * @param deadResponse the response to kill
-     * @return
+     * @param deadResponse, the response to kill
+     * @returnTrue if successful else False
      * @see java.util.Collection#remove(java.lang.Object)
      */
     public boolean removeResponse(Response deadResponse) {
@@ -131,7 +132,7 @@ public class Report implements Iterable<Response> {
     }
 
     /**
-     * @return the amount of Responses in this Report.
+     * @return the amount of Responses in this Report
      * @see java.util.Collection#size()
      */
     public int responseCount() {
@@ -141,7 +142,7 @@ public class Report implements Iterable<Response> {
 
     /**
      * Iterate through this Report's Responses.
-     * @return
+     * @return Collection of Responses
      * @see java.util.Collection#iterator()
      */
     public Iterator<Response> iterator() {
@@ -158,7 +159,8 @@ public class Report implements Iterable<Response> {
     }
 
     /**
-     * @param sharing the sharing to set
+     * Sets sharing to the given value sharing.
+     * @param sharing
      */
     public void setSharing(Sharing sharing) {
         this.sharing = sharing;
@@ -176,7 +178,8 @@ public class Report implements Iterable<Response> {
 
 	
 	/**
-	 * @param timestamp the timestamp to set
+	 * Set timestamp to given value timestamp.
+	 * @param timestamp
 	 */
 	public void setTimestamp(Timestamp timestamp)
 	{
