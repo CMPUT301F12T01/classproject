@@ -69,5 +69,8 @@
     <string name="TEST_REPORT_SUMMARY">Text, 20 photos, 10 audio clips.</string>
     <string name="TEST_REPORT_SHORT_SUMMARY">Text</string>
     <string name="TEST_REPORT_TIMESTAMP">March 05, 2011</string>
+    <string name="menu_view_reports">View Reports</string>
+    <string name="menu_fulfill_task">Fulfill Task</string>
+    <string name="menu_fulfill_task_short">fulfill</string>
 
 </resources>

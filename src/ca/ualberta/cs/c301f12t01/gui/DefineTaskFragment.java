@@ -19,7 +19,6 @@ package ca.ualberta.cs.c301f12t01.gui;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -93,7 +92,7 @@ public class DefineTaskFragment extends Fragment {
                 newTask.setGlobal();
                 break;
         }
-        
+
         /* Add requests. */
         if (text_toggle.isChecked()) {
             newTask.addRequest(new Request(MediaType.TEXT));
@@ -107,7 +106,7 @@ public class DefineTaskFragment extends Fragment {
         
         
         /* TODO: MAKE THIS WORK WITH THE TASK COLLECTIONL INTERFACE. */
-        DummyTasks.addItem(newTask);
+        DummyTasks.addTask(newTask);
         
         Toast.makeText(getActivity(), "Task created.", Toast.LENGTH_SHORT).show();
         
@@ -116,7 +115,7 @@ public class DefineTaskFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-       inflater.inflate(R.menu.activity_define_task, menu);
+       inflater.inflate(R.menu.fragment_define_task, menu);
     }
 
     @Override
