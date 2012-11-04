@@ -18,6 +18,8 @@
 
 package ca.ualberta.cs.c301f12t01.common;
 
+import java.io.Serializable;
+
 /**
  * NOT IMPLEMENTED
  * TODO IMPLEMENT THIS CLASS
@@ -35,6 +37,22 @@ public class AudioResponse implements Response {
      */
     public MediaType getMediaType() {
         return MediaType.AUDIO;
+    }
+
+    /* (non-Javadoc)
+     * @see ca.ualberta.cs.c301f12t01.common.Response#getResponseData()
+     */
+    public Serializable getResponseData() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see ca.ualberta.cs.c301f12t01.common.Response#setResponseData(java.io.Serializable)
+     */
+    public void setResponseData(Serializable newData) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

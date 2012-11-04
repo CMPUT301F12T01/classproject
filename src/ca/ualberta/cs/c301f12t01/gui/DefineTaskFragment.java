@@ -37,7 +37,7 @@ public class DefineTaskFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* Initialize stuff if it has been initialized yet. */
+        /* Initialize stuff if it hasn't been initialized yet. */
         if (savedInstanceState == null) {
             setHasOptionsMenu(true);
         }

@@ -17,6 +17,8 @@
  */
 package ca.ualberta.cs.c301f12t01.common;
 
+import java.io.Serializable;
+
 
 /**
  * TextResponse -- A response containing text.
@@ -62,6 +64,22 @@ public class TextResponse implements Response {
      */
     public MediaType getMediaType() {
         return MediaType.TEXT;
+    }
+    
+    /* TODO: Test the following methods (verify with getText). */
+
+    /* (non-Javadoc)
+     * @see ca.ualberta.cs.c301f12t01.common.Response#getResponseData()
+     */
+    public Serializable getResponseData() {
+        return getText();
+    }
+
+    /* (non-Javadoc)
+     * @see ca.ualberta.cs.c301f12t01.common.Response#setResponseData(java.io.Serializable)
+     */
+    public void setResponseData(Serializable newData) {
+        setText((String) newData); 
     }
 
 }
