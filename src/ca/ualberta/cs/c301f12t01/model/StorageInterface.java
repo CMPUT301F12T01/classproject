@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
-import ca.ualberta.cs.c301f12t01.common.Request;
-import ca.ualberta.cs.c301f12t01.common.Response;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /*
@@ -33,15 +31,5 @@ public interface StorageInterface {
 	public Collection<Report> getLocalReports(UUID taskid);
 	
 	public Collection<Report> getGlobalReports(UUID taskid);
-	
-	// Storage and retrieval of requests
-	public void storeRequest(Request requestToStore);
-	
-	public Collection<Request> getRequests(UUID taskId);
-	
-	// Storage and retrieval of responses
-	public void storeResponse(Response responseToStore);
-	
-	public Collection<Response> getResponses(UUID reportId);
 
 }
