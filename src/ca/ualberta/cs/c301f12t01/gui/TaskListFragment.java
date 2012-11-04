@@ -31,6 +31,12 @@ import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
+/**
+ * 
+ * 
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ *
+ */
 public class TaskListFragment extends ListFragment {
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
@@ -54,6 +60,7 @@ public class TaskListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setListAdapter(new ArrayAdapter<Task>(getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,

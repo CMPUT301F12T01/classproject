@@ -17,27 +17,20 @@
  */
 package ca.ualberta.cs.c301f12t01.common;
 
-import java.io.Serializable;
-
-
 /**
- * Response -- Part of the report which represents the fulfillment of one single
- * Request of a Task.
- * 
- * Its an interface for {@link AudioResponse} {@link PhotoResponse} {@link TextResponse}.
+ * Sharing -- Specifies the sharing of a Task or a Report.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
- * 
  */
-public interface Response {
-
-    /** Returns the MediaType of this subclass of Response. */
-    public MediaType getMediaType();
-    
-    /** Returns the Response data as a Serializable object. */
-    public Serializable getResponseData();
-    
-    /** Allows one to set the Serializable data of the response. */
-    public void setResponseData(Serializable newData);
-
+public enum Sharing {
+    /** The item is visible only to the user who created it. */
+    LOCAL,
+    /** The item should be published, and be visible by all users. */
+    GLOBAL,
+    /**
+     * Designates that a Report should be shared only with the Task fulfiller
+     * and the Task creator. This should only affect a Report. If this applied
+     * to a Task, it has the same effect as {@link #LOCAL}.
+     */
+    TASK_CREATOR
 }

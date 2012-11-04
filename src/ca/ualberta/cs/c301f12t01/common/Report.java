@@ -32,21 +32,24 @@ import java.util.UUID;
  * collection of responses.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Neil Borle
  * 
  */
 public class Report implements Iterable<Response> {
 
-    final private UUID id = UUID.randomUUID();
+    final private UUID id;
     private UUID taskID;
     private Collection<Response> responses;
+    private Sharing sharing = Sharing.LOCAL;
     private Timestamp timestamp;
 
-    /** 
-     * Construct a new Report for the given Task. It also 
-     * handles the timestamp. This is for the GUI to call
-     * where it doesn't have a timestamp yet.
+
+    /**
+     * Construct a new Report for the given Task, applying the Timestamp at the
+     * instant the Report is created. This is for the GUI to call where it
+     * doesn't have a timestamp yet.
      * 
-     *  @param task
+     * @param task
      */
     public Report(Task task) {
         this(task, new Timestamp(new Date().getTime()));
@@ -61,6 +64,22 @@ public class Report implements Iterable<Response> {
      */
     public Report(Task task, Timestamp timestamp) {
     	setTaskID(task.getId());
+    	setTimestamp(timestamp);
+    	id = UUID.randomUUID();
+    }
+    
+    /**
+     * This constructor is for the database and should only be 
+     * used by the database. It allows the construction of 
+     * a report object given a UUID and NOT a task.
+     * 
+     * @param task UUID
+     * @param id UUID
+     * @param timestamp
+     */
+    public Report(UUID taskId, UUID reportId, Timestamp timestamp) {
+    	setTaskID(taskId);
+    	id = reportId;
     	setTimestamp(timestamp);
     }
 
@@ -87,15 +106,16 @@ public class Report implements Iterable<Response> {
     }
 
     /**
-     * @param taskID the taskID to set
+     * Sets taskID to the given taskID.
+     * @param taskID
      */
     public void setTaskID(UUID taskID) {
         this.taskID = taskID;
     }
 
     /**
-     * @param response the response to add
-     * @return
+     * @param response, the response to add
+     * @return True if successful else False
      * @see java.util.Collection#add(java.lang.Object)
      */
     public boolean addResponse(Response response) {
@@ -103,8 +123,8 @@ public class Report implements Iterable<Response> {
     }
 
     /**
-     * @param deadResponse the response to kill
-     * @return
+     * @param deadResponse, the response to kill
+     * @returnTrue if successful else False
      * @see java.util.Collection#remove(java.lang.Object)
      */
     public boolean removeResponse(Response deadResponse) {
@@ -112,7 +132,7 @@ public class Report implements Iterable<Response> {
     }
 
     /**
-     * @return the amount of Responses in this Report.
+     * @return the amount of Responses in this Report
      * @see java.util.Collection#size()
      */
     public int responseCount() {
@@ -122,7 +142,7 @@ public class Report implements Iterable<Response> {
 
     /**
      * Iterate through this Report's Responses.
-     * @return
+     * @return Collection of Responses
      * @see java.util.Collection#iterator()
      */
     public Iterator<Response> iterator() {
@@ -132,6 +152,21 @@ public class Report implements Iterable<Response> {
 
 	
 	/**
+     * @return the sharing
+     */
+    public Sharing getSharing() {
+        return sharing;
+    }
+
+    /**
+     * Sets sharing to the given value sharing.
+     * @param sharing
+     */
+    public void setSharing(Sharing sharing) {
+        this.sharing = sharing;
+    }
+
+    /**
 	 * @return the timestamp
 	 */
 	public Timestamp getTimestamp()
@@ -143,7 +178,8 @@ public class Report implements Iterable<Response> {
 
 	
 	/**
-	 * @param timestamp the timestamp to set
+	 * Set timestamp to given value timestamp.
+	 * @param timestamp
 	 */
 	public void setTimestamp(Timestamp timestamp)
 	{

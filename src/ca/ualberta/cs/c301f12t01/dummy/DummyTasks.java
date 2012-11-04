@@ -25,24 +25,23 @@ public class DummyTasks {
     /* Besides, the following is really poor practice. */
     public static List<Task> ITEMS = new ArrayList<Task>();
     public static Map<UUID, Task> ITEM_MAP = new HashMap<UUID, Task>();
+    public static final UUID DUMMY_USER = UUID.randomUUID();
 
     /* Initialize this dummy task collection with some dummy tasks. */
     static {
-        UUID randomUser = UUID.randomUUID();
-        
         Task[] dummyTasks = {
-           new Task(randomUser)  {{
+           new Task(DUMMY_USER)  {{
                setSummary("700 pictures of poop.");
                setDescription("All races welcome ;D");
                addRequest(new Request(MediaType.PHOTO));
                setGlobal();
            }},
-           new Task(randomUser)  {{
+           new Task(DUMMY_USER)  {{
                setSummary("Buy full-body dalmation suit; describe its texture");
                addRequest(new Request(MediaType.TEXT));
                setLocal();
            }},
-           new Task(randomUser)  {{
+           new Task(DUMMY_USER)  {{
                setSummary("Play 'Dancing Queen' on tuba");
                addRequest(new Request(MediaType.AUDIO));
                setLocal();
@@ -54,7 +53,7 @@ public class DummyTasks {
         }
     }
 
-    private static void addItem(Task newTask) {
+    public static void addItem(Task newTask) {
         ITEMS.add(newTask);
         ITEM_MAP.put(newTask.getId(), newTask);
     }

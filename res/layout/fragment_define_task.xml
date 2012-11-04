@@ -106,9 +106,10 @@
         android:text="@string/task_sharing_description"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <!-- Again TableRows for two buttons side by side -->
+    <!-- RadioGroup for two buttons side by side -->
 
     <RadioGroup
+        android:id="@+id/radio_group_sharing"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal" >
