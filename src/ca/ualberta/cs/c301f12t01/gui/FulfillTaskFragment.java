@@ -17,13 +17,6 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.util.UUID;
-
-import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.common.Report;
-import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
-import ca.ualberta.cs.c301f12t01.model.TaskManager;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,17 +25,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * 
  * @author easantos
- *
+ * 
  */
 public class FulfillTaskFragment extends Fragment {
 
     public static final String ARG_TASK_ID = "task_id";
-    
+
     private Task task;
+
+    /**
+     * Create a new FulfillTaskFragment for the given Task.
+     */
+    public FulfillTaskFragment(Task newTask) {
+        /* TODO: apparently custom constructors are bad. Fix that linting issue eventually. */
+        task = newTask;
+    }
+
+    public FulfillTaskFragment() {
+        task = null;
+    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,57 +60,53 @@ public class FulfillTaskFragment extends Fragment {
         /* Initialize stuff if it hasn't been initialized yet. */
         if (savedInstanceState == null) {
             setHasOptionsMenu(true);
-            
-            /* Get the task we're fulfilling. */
-            if (getArguments().containsKey(ARG_TASK_ID)) {
-                UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
-                task = DummyTasks.ITEM_MAP.get(taskId);
-            }
-            
+
         }
     }
-    
-    /** Called when the user decides they are done fulfilling the task.
-     * @returns false is the form was completed incorrectly, else true. */
+
+    /**
+     * Called when the user decides they are done fulfilling the task.
+     * 
+     * @returns false is the form was completed incorrectly, else true.
+     */
     protected Boolean onFormCompletion() {
         /* TODO: FINISH THIS METHOD! */
-        
+
         Report report = new Report(task);
         TaskManager.getInstance().addReport(report);
         return true;
     }
-    
+
     /* TODO: Template some of this stuff away into a superclass. */
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-       inflater.inflate(R.menu.fragment_fulfill_task, menu);
+        inflater.inflate(R.menu.fragment_fulfill_task, menu);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        
-        View rootView = inflater
-                .inflate(R.layout.fragment_fulfill_task, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_fulfill_task,
+                container, false);
 
         return rootView;
     }
-    
-    
+
     /** Handle the menu button to create entries. */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_done:
-                 onFormCompletion();
-                 /* TODO: Figure out how to navigate away from this fragment... */
-                 //NavUtils.???
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        case R.id.menu_done:
+            onFormCompletion();
+            /* TODO: Figure out how to navigate away from this fragment... */
+            // NavUtils.???
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
-    
+
 }

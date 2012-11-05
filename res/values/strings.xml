@@ -31,6 +31,9 @@
     <string name="fulfill">Fulfill</string>
     <string name="menu_define_task">Add new task</string>
     <string name="menu_short_define_task">New</string>
+    <string name="menu_view_reports">View Reports</string>
+    <string name="menu_fulfill_task">Fulfill Task</string>
+    <string name="menu_fulfill_task_short">Fulfill</string>
 
     <!-- Defining Tasks -->
     <string name="task_request">Request</string>
@@ -47,9 +50,10 @@
 	    	your task. If your task is global other people can view your tasks
 	    	and can help you fulfill them. If your task is local, only you will
 	    	be able to view them. </string>
-    <string name="title_activity_task_define_fragment">TaskDefineFragment</string>
+    <string name="title_activity_task_define_fragment">Create a new task</string>
 
     <!-- Fulfilling a task -->
+    <string name="title_activity_fulfill_task">Fulfill Task</string>
     <string name="task_take_photo">Take A Photo</string>
     <string name="task_attached_photos">Attached Photos</string>
     <string name="task_record_audio">Record An Audio Clip</string>
@@ -60,7 +64,7 @@
 
     <!-- Viewing a report -->
     <string name="task_report_header">This Report Contains:</string>
-    
+
     <!-- Testing strings: throw away later? -->
     <string name="TEST_LONG_SUMMARY">THIS IS A VERY LONG SUMMARY THAT 
         	SHOULD HOPEFULLY GET CUT OFF OR SOMETHING LIKE THAT. 
@@ -69,8 +73,7 @@
     <string name="TEST_REPORT_SUMMARY">Text, 20 photos, 10 audio clips.</string>
     <string name="TEST_REPORT_SHORT_SUMMARY">Text</string>
     <string name="TEST_REPORT_TIMESTAMP">March 05, 2011</string>
-    <string name="menu_view_reports">View Reports</string>
-    <string name="menu_fulfill_task">Fulfill Task</string>
-    <string name="menu_fulfill_task_short">fulfill</string>
+
+
 
 </resources>

@@ -25,10 +25,9 @@ import org.junit.Test;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
-import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
- * 
+ * Testing for TaskCollection
  * @author home
  *
  */
