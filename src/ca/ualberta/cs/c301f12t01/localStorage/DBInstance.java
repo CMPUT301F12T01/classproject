@@ -30,7 +30,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DBInstance extends SQLiteOpenHelper{
-	/**
+	/*
 	 * This class is a basic implementation of a SQLlite
 	 * helper to create a database
 	 * 
@@ -65,10 +65,23 @@ public class DBInstance extends SQLiteOpenHelper{
 			  + "report_id TEXT NOT NULL, " //have to store UUIDs as Texts
 		      + "media BLOB); ";
 	
+	/**
+	 * Creates the Database Only If that
+	 * that Database does not already 
+	 * exist on the device
+	 * 
+	 * @param context
+	 */
 	public DBInstance(Context context) {
 	    super(context, DATABASE_NAME, null, 1);
 	}
 	
+	/**
+	 * Creates all four of the SQLite Database
+	 * tables
+	 * 
+	 * @param SQLiteDatabase database
+	 */
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		// This method is called IF the database does not exist
@@ -78,6 +91,15 @@ public class DBInstance extends SQLiteOpenHelper{
 		database.execSQL(DATABASE_CREATE_RESPONSES);
 	}
 	
+	/**
+	 * When the table is upgraded remove all existing
+	 * tables and recreate the tables; Tasks, Reports,
+	 * Requests, Responses.
+	 * 
+	 * @param SQLiteDatabase db
+	 * @param int oldVersion
+	 * @param int newVersion
+	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Drop all tables and create a new table
