@@ -106,7 +106,10 @@ public class ReportLocalStorage
 				requestValues.put(responseCollumns[2], responseBytes);
 				objectOutput.close();
 				baos.close();
-			} catch (IOException e) {}
+				System.out.println("ActuallyWorked");
+			} catch (IOException e) {
+				System.out.println("SAVING THE RESPONSE FAILED HARD");
+			}
 
 			db.insert(responseTable, null, requestValues);
 
@@ -125,21 +128,26 @@ public class ReportLocalStorage
 
 		// Get all Reports in a given scope {LOCAL, GLOBAL or TASK_CREATOR}
 		Cursor scopedReports = db.query(reportTable, 
-				reportSelectCollumns, reportSelectCollumns[3] + " = " + state.toString(), 
+				reportSelectCollumns, reportSelectCollumns[2] + " = '" + state.toString() + "'", 
 				null, null, null, null);
 
 		// Create a new report with a all the fields set
 		for (scopedReports.moveToFirst(); !scopedReports.isAfterLast(); scopedReports.moveToNext()) {
-			Report newReport = new Report(UUID.fromString(scopedReports.getString(1)),
-					UUID.fromString(scopedReports.getString(2)),
-					Timestamp.valueOf(scopedReports.getString(4)));
+			Report newReport = new Report(
+					UUID.fromString(scopedReports.getString(
+							scopedReports.getColumnIndex(reportSelectCollumns[0]))),
+					UUID.fromString(scopedReports.getString(
+							scopedReports.getColumnIndex(reportSelectCollumns[1]))),
+					Timestamp.valueOf(scopedReports.getString(
+							scopedReports.getColumnIndex(reportSelectCollumns[3]))));
 
 			newReport.setSharing(state);
 
 
 			// GET ALL RESPONSES RELATED TO A REPORT
 			Cursor reportResponses = db.query(responseTable, responseSelectCollumns, 
-					responseSelectCollumns[0] + " = " + scopedReports.getString(2), 
+					responseSelectCollumns[0] + " = '" + scopedReports.getString(
+							scopedReports.getColumnIndex(reportSelectCollumns[1])) + "'", 
 					null, null, null, null);
 
 			for (reportResponses.moveToFirst(); !reportResponses.isAfterLast(); reportResponses.moveToNext()) {
@@ -147,18 +155,26 @@ public class ReportLocalStorage
 				Response newResponse;
 
 				// Figure out what type of response it is, instantiate it and append it to the report's list
-				if (MediaType.valueOf(reportResponses.getString(2)) == MediaType.AUDIO) {
+				if (MediaType.valueOf(reportResponses.getString(
+						
+						reportResponses.getColumnIndex(responseSelectCollumns[1]))) == MediaType.AUDIO) {
 					newResponse = new AudioResponse();
+				
 				}
-				else if (MediaType.valueOf(reportResponses.getString(2)) == MediaType.PHOTO) {
+				else if (MediaType.valueOf(reportResponses.getString(
+				
+						reportResponses.getColumnIndex(responseSelectCollumns[1]))) == MediaType.PHOTO) {
 					newResponse = new PhotoResponse();
+				
 				}
 				else {
 					newResponse = new TextResponse(null);
 				}
 
 				// Create streams to pull out the response blob
-				ByteArrayInputStream bis = new ByteArrayInputStream(reportResponses.getBlob(3));
+				ByteArrayInputStream bis = new ByteArrayInputStream(reportResponses.getBlob(
+						reportResponses.getColumnIndex(responseSelectCollumns[2])));
+				
 				ObjectInput in = null;
 				try {
 					in = new ObjectInputStream(bis);

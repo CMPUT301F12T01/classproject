@@ -43,30 +43,32 @@ public class TaskSourceApplication extends Application {
     public TaskManager getTaskManager() {
         /* Lazily loads the manager. */
         if (manager == null) {
-            StorageInterface localStorage = new DeviceStorage(getApplicationContext());
-            /* TODO: Get the server interface working! */
-            StorageInterface serverStorage = null;
-            
-           
-            
-            manager = TaskManager.getInstance();
-            /**
-             * TODO not sure where to tell the observers
-             * where localStorage is, I put it here for now
-             */
-            tObsv = new TaskObserver();
-            manager.addObserver(tObsv); //add our observer
-            tObsv.setLocal(localStorage);
-            tObsv.setServer(serverStorage);
-            
-            rObsv = new ReportObserver();
-            manager.addObserver(rObsv);//add our observer
-            rObsv.setLocal(localStorage);
-            rObsv.setServer(serverStorage);
-            //manager.setLocal(localStorage);
-            //manager.setLocal(serverStorage);
-            
+            setupTaskManager();
         }
+        
+        return manager;
+    }
+    
+    private TaskManager setupTaskManager() {
+        StorageInterface localStorage = new DeviceStorage(getApplicationContext());
+        /* TODO: Get the server interface working! */
+        StorageInterface serverStorage = null;
+
+        manager = TaskManager.getInstance();
+        
+        /**
+         * TODO not sure where to tell the observers
+         * where localStorage is, I put it here for now
+         */
+        tObsv = new TaskObserver();
+        manager.addObserver(tObsv); //add our observer
+        tObsv.setLocal(localStorage);
+        tObsv.setServer(serverStorage);
+        
+        rObsv = new ReportObserver();
+        manager.addObserver(rObsv);//add our observer
+        rObsv.setLocal(localStorage);
+        rObsv.setServer(serverStorage);
         
         return manager;
     }

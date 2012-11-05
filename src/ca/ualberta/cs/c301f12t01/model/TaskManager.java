@@ -26,6 +26,8 @@ import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
+/* TODO: HashMaps. USE THEM. */
+
 /**
  * Class to manage all of our tasks
  * Singleton design pattern
@@ -39,8 +41,9 @@ public class TaskManager extends Observable{
 
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
+	
 	//our StorageInterface
-	//private StorageInterface localStorage;
+	private StorageInterface localStorage;
 	/**TODO Implement server stuff */
 
 	/**

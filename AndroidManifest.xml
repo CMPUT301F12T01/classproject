@@ -8,9 +8,10 @@
         android:targetSdkVersion="15" />
 
     <application
+        android:name=".gui.TaskSourceApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:name=".gui.TaskSourceApplication">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".gui.TaskListActivity"
             android:label="@string/app_name"
@@ -23,7 +24,8 @@
         </activity>
         <activity
             android:name=".gui.TaskDetailActivity"
-            android:label="@string/title_task_detail" android:uiOptions="splitActionBarWhenNarrow">
+            android:label="@string/title_task_detail"
+            android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".gui.TaskListActivity" />
@@ -37,10 +39,11 @@
         </activity>
         <activity
             android:name=".gui.FulfillTaskActivity"
-            android:label="@string/title_activity_task_define_fragment" >
+            android:label="@string/title_activity_fulfill_task"
+            android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.ListActivity" />
+                android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
         </activity>
     </application>
 

@@ -45,7 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1.0"
+        android:contentDescription="@string/task_list_status_description"
         android:scaleType="fitEnd"
-        android:src="@android:drawable/title_bar_tall" />
+        android:src="@android:drawable/title_bar_tall"
+        android:visibility="invisible" />
 
 </TableRow>

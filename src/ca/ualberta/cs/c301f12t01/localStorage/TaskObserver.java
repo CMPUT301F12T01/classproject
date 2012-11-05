@@ -23,11 +23,6 @@ import java.util.Observer;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 
-/**DO NOT USE
- * CLOSE FILE NOW
- * NOT IN USE
- */
-
 /**
  * Class to observe when TaskManager has a change
  * @author home

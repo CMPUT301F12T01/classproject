@@ -18,9 +18,11 @@
 package ca.ualberta.cs.c301f12t01.common;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,13 +35,14 @@ import java.util.UUID;
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * @author Neil Borle
+ * @author padlesky
  * 
  */
 public class Report implements Iterable<Response> {
 
     final private UUID id;
     private UUID taskID;
-    private Collection<Response> responses;
+    private List<Response> responses = new ArrayList<Response>();
     private Sharing sharing = Sharing.LOCAL;
     private Timestamp timestamp;
 
@@ -121,7 +124,7 @@ public class Report implements Iterable<Response> {
     public boolean addResponse(Response response) {
         return responses.add(response);
     }
-
+    
     /**
      * @param deadResponse, the response to kill
      * @returnTrue if successful else False
@@ -139,7 +142,6 @@ public class Report implements Iterable<Response> {
         return responses.size();
     }
 
-
     /**
      * Iterate through this Report's Responses.
      * @return Collection of Responses
@@ -149,8 +151,21 @@ public class Report implements Iterable<Response> {
         return responses.iterator();
     }
 
-
-	
+    /**
+     * Used when you need to know the types of responses that the
+     * report used.
+     * @return Returns a string of the types of responses
+     */
+    public String responseTypes () {
+    	String mediaTypes = null;
+    	Iterator<Response> responseIterator = iterator();
+    	while(responseIterator.hasNext()) {
+    		Response response = responseIterator.next();
+    		mediaTypes = mediaTypes.concat(response.getMediaType().toString() + " ");
+    	}
+    	return mediaTypes;
+    }
+    
 	/**
      * @return the sharing
      */
@@ -171,7 +186,6 @@ public class Report implements Iterable<Response> {
 	 */
 	public Timestamp getTimestamp()
 	{
-	
 		return timestamp;
 	}
 
@@ -185,6 +199,16 @@ public class Report implements Iterable<Response> {
 	{
 	
 		this.timestamp = timestamp;
+	}
+	
+	/** @deprecated when desperation calls, toString()! */
+	public String toString() {
+	    String s = "Report with {";
+	    for (Response r : this) {
+	        s = s + r.toString();
+	    }
+	    s = s + "}";
+        return s;
 	}
 
 }
