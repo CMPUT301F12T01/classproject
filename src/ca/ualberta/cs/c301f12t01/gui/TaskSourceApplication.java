@@ -17,6 +17,8 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.UUID;
+
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.localStorage.ReportObserver;
 import ca.ualberta.cs.c301f12t01.localStorage.TaskObserver;
@@ -34,6 +36,8 @@ public class TaskSourceApplication extends Application {
     private TaskManager manager = null;
     private TaskObserver tObsv = null;
     private ReportObserver rObsv = null;
+    /*TODO MAKE THIS LESS UGLY PLEASE*/
+    public static UUID hack__user = UUID.randomUUID();
     
     /** Returns the Task Manager.  */ 
     public TaskManager getTaskManager() {

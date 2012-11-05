@@ -36,6 +36,7 @@ public class TaskManager extends Observable{
 	private List<Task> localTasks = new ArrayList<Task>();
 	private List<Task> globalTasks = new ArrayList<Task>();
 	private List<Report> reports = new ArrayList<Report>();
+
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
 	//our StorageInterface
@@ -90,6 +91,8 @@ public class TaskManager extends Observable{
 		//check our global tasks
 		l = getGlobalTasks();
 		i = l.iterator();
+		List<Task> g = getGlobalTasks();
+		i = g.iterator();
 		while (i.hasNext()){
 			Task t = i.next();
 			if (t.getId() == id){
@@ -102,21 +105,23 @@ public class TaskManager extends Observable{
 	}
 	
 	/**
-	 * returns iterator for all local tasks
+	 * returns all local tasks
 	 * @return
-	 * 		localTasks' Iterator
+	 * 		ArrayList of local tasks
 	 */
 	public List<Task> getLocalTasks(){
 		return localTasks;
 	}
 
 	/**
-	 * returns iterator for all global tasks
+	 * returns all global tasks
 	 * @return
-	 * 		globalTasks' Iterator
-	 */	public List<Task> getGlobalTasks(){
+	 * 		ArrayList of local tasks
+	 */
+	public List<Task> getGlobalTasks(){
 		return globalTasks;
 	}
+
 	
 	/**
 	 * let them get our instance
