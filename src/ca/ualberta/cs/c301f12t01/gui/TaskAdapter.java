@@ -102,7 +102,7 @@ public class TaskAdapter extends BaseAdapter{
 		
 		// Sets all values in the new view.
 		summary.setText(task.getSummary());
-		
+
 		List<Report> reports = TaskManager.getInstance().getReports(task.getId());
 		// Sets marker to visible if a report has been made to a task.
 		if (reports.size() != 0) {
