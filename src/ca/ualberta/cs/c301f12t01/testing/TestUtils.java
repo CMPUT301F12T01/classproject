@@ -52,8 +52,7 @@ public class TestUtils {
 		return r;
 	}
 	
-	public static Report makeSimpleReport() {
-		Task t = new Task(UUID.randomUUID());
+	public static Report makeSimpleReport(Task t) {
 		Timestamp timestamp = new Timestamp(new Date().getTime());
 		Report r = new Report(t, timestamp);
 		return r;
