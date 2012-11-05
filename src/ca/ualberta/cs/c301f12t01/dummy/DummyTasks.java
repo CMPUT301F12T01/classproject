@@ -49,11 +49,11 @@ public class DummyTasks {
         };
                 
         for (Task task : dummyTasks) {
-            addItem(task);
+            addTask(task);
         }
     }
 
-    public static void addItem(Task newTask) {
+    public static void addTask(Task newTask) {
         ITEMS.add(newTask);
         ITEM_MAP.put(newTask.getId(), newTask);
     }

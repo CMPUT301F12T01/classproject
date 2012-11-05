@@ -24,12 +24,17 @@ import java.util.Set;
 import java.util.UUID;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
@@ -47,28 +52,28 @@ import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
  */
 public class TaskDetailFragment extends Fragment {
 
+    /* TODO: Get some more global place to store the following string. */
     public static final String ARG_TASK_ID = "task_id";
 
-    Task task;
-
-    /** 
-     * Constructs a new TaskDetailFragment. 
-     */
-    public TaskDetailFragment() {
-    }
+    private Task task;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-         * Hopefully this fragment was initialized with some Task ID. Try to
-         * retrieve the task ID and retrieve the Task in order to display it
-         * later.
-         */
-        if (getArguments().containsKey(ARG_TASK_ID)) {
-            UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
-            task = DummyTasks.ITEM_MAP.get(taskId);
+        if (savedInstanceState == null) {
+            
+            setHasOptionsMenu(true);
+            
+            /*
+             * Hopefully this fragment was initialized with some Task ID. Try to
+             * retrieve the task ID and retrieve the Task in order to display it
+             * later.
+             */
+            if (getArguments().containsKey(ARG_TASK_ID)) {
+                UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
+                task = DummyTasks.ITEM_MAP.get(taskId);
+            }
         }
     }
 
@@ -103,6 +108,33 @@ public class TaskDetailFragment extends Fragment {
     }
 
     /**
+     * When the user wants to view reports, start the report viewing activity.
+     */
+    private void onUserSelectViewReports() {
+        //startActivityWithTask(ReportDetailActivity.class);
+        Toast.makeText(getActivity(), "Not implemented", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * When the user wants to fulfill reports, start the task fulfillment activity.
+     */
+    private void onUserSelectFulfill() {
+        //startActivityWithTask(FulfillTaskActivity.class);
+        Toast.makeText(getActivity(), "Not implemented", Toast.LENGTH_LONG).show();
+
+        
+    }
+    
+    /* TODO: This should really not be in this class. */
+    private void startActivityWithTask(Class activity) {
+        Intent activityIntent = new Intent(getActivity(), activity);
+
+        activityIntent.putExtra(ARG_TASK_ID, task.getId());
+
+        startActivity(activityIntent);
+    }
+    
+    /**
      * Given an inflated `fragment_task_detail` view, fills it out with the
      * current task.
      * 
@@ -116,6 +148,8 @@ public class TaskDetailFragment extends Fragment {
                 .findViewById(R.id.task_summary);
         TextView requirementView = (TextView) rootView
                 .findViewById(R.id.task_requires);
+        TextView sharingView = (TextView) rootView
+                .findViewById(R.id.task_sharing_setting);
         
         /* Collect strings and stuff from the Task instance. */
         
@@ -125,6 +159,7 @@ public class TaskDetailFragment extends Fragment {
         /* TODO: Get rid of this ugly mess! */
         String requirementText;
         Set<String> requirementSet = new HashSet<String>();
+        
         
         /* Setup the requirement text. */
         for (Request request : task) {
@@ -160,6 +195,14 @@ public class TaskDetailFragment extends Fragment {
         
         requirementView.setText(requirementText);
 
+        /* Get the sharing option */
+
+        if (task.isGlobal()) {
+        	sharingView.setText(getString(R.string.task_global));
+        } else {
+        	sharingView.setText(getString(R.string.task_local));
+        }
+        
 
         return descriptionView;
     }
@@ -176,4 +219,28 @@ public class TaskDetailFragment extends Fragment {
 
     }
 
+    /* (non-Javadoc)
+     * @see android.app.Fragment#onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {  
+        inflater.inflate(R.menu.fragment_task_detail, menu);
+    }
+
+    /** Handle the menu button to create entries. */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_fulfill_task:
+                onUserSelectFulfill();
+                return true;
+            case R.id.menu_view_reports:
+                onUserSelectViewReports();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
 }

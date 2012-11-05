@@ -33,7 +33,6 @@ import ca.ualberta.cs.c301f12t01.model.TaskManager;
  */
 public class TaskManagerTest {
 
-
 	@Test
 	public void add_global_task() {
 		TaskManager tm = TaskManager.getInstance();

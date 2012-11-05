@@ -39,6 +39,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <!-- Requests -->
+    
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/task_requests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp" >
+        
+  		<!-- The contents will be added programatically. -->
+  		
+    </LinearLayout>
+    
     <!-- Select who gets the report: task creator, the server, or just store it locally -->
 
     <TextView
