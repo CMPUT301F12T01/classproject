@@ -18,13 +18,11 @@
 package ca.ualberta.cs.c301f12t01.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
 
-import android.util.Log;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
@@ -39,7 +37,6 @@ public class TaskManager extends Observable {
     // our collections
     private List<Task> localTasks = new ArrayList<Task>();
     private List<Task> globalTasks = new ArrayList<Task>();
-    private List<Report> reports = new ArrayList<Report>();
 
     // our instance
     private static final TaskManager instance = new TaskManager();
@@ -148,17 +145,23 @@ public class TaskManager extends Observable {
      *            Task that you want to get reports for
      * @return The Collection of reports associated with our task
      */
-    public Collection<Report> getReports(UUID taskID) {
-        Iterator<Report> iter = reports.iterator();
-        List<Report> l = new ArrayList<Report>();
-        while (iter.hasNext()) {
-            Report r = iter.next();
-            if (r.getTaskID() == taskID) {
-                l.add(r);
-            }
-        }
-        return l;
+    public List<Report> getReports(UUID taskID) {
+        return (List<Report>) localStorage.getLocalReports(taskID);
         // return localStorage.getLocalReports(taskID);
+    }
+    
+    public void setLocalStorage(StorageInterface localStorage){
+    	this.localStorage = localStorage;
+    }
+    
+    /**
+     * 
+     * @param localStorage
+     * 			Where our local storage is
+     */
+    public void loadTasks(StorageInterface localStorage){
+    	localTasks = (List<Task>) localStorage.getLocalTasks();
+    	/*TODO Make Neil use Lists and not collections*/
     }
 
     /**
@@ -169,7 +172,6 @@ public class TaskManager extends Observable {
         /**
          * TODO make this handle global as well
          */
-        reports.add(newReport);
         notifyObservers(newReport);
         // localStorage.storeReport(report);
     }

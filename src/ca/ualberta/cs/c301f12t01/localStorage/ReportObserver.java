@@ -17,8 +17,10 @@
  */
 package ca.ualberta.cs.c301f12t01.localStorage;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
 

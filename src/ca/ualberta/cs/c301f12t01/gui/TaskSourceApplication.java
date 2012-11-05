@@ -60,6 +60,8 @@ public class TaskSourceApplication extends Application {
          * TODO not sure where to tell the observers
          * where localStorage is, I put it here for now
          */
+        manager.setLocalStorage(localStorage);
+        
         tObsv = new TaskObserver();
         manager.addObserver(tObsv); //add our observer
         tObsv.setLocal(localStorage);
