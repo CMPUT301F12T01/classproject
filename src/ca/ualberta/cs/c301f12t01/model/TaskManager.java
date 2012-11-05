@@ -21,11 +21,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.UUID;
-
-import android.content.Context;
-
-import ca.ualberta.cs.c301f12t01.common.Report;
-
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
@@ -41,6 +36,8 @@ public class TaskManager extends Observable{
 	private TaskCollection globalTasks = new TaskCollection();
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
+	//our StorageInterface
+	private StorageInterface localStorage;
 
 	/**
 	 * private constructor
@@ -129,13 +126,11 @@ public class TaskManager extends Observable{
 	 * 
 	 * @param taskID
 	 * 			Task that you want to get reports for
-	 * @param ds
-	 * 			DeviceStorage that stores our reports
 	 * @return
 	 * 			The Collection of reports associated with our task
 	 */
-	public Collection<Report> getReports(UUID taskID, DeviceStorage ds){
-		return ds.getLocalReports(taskID);
+	public Collection<Report> getReports(UUID taskID){
+		return localStorage.getLocalReports(taskID);
 	}
 
     /**
@@ -143,15 +138,17 @@ public class TaskManager extends Observable{
      * @param report
      */
     public void addReport(Report report) {
-        // TODO Auto-generated method stub
-        
+        /**TODO
+         * make this handle global as well
+         */
+    	localStorage.storeReport(report);        
     }
 
     /**
      * @param localStorage
+     * 			Local storage we got passed
      */
     public void setLocal(StorageInterface localStorage) {
-        // TODO Auto-generated method stub
-        
+    	this.localStorage = localStorage;
     }
 }
