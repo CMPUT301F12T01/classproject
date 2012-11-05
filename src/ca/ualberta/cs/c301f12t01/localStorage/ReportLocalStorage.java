@@ -106,9 +106,8 @@ public class ReportLocalStorage
 				requestValues.put(responseCollumns[2], responseBytes);
 				objectOutput.close();
 				baos.close();
-				System.out.println("ActuallyWorked");
 			} catch (IOException e) {
-				System.out.println("SAVING THE RESPONSE FAILED HARD");
+				e.printStackTrace();
 			}
 
 			db.insert(responseTable, null, requestValues);

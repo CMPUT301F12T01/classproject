@@ -47,8 +47,10 @@ public class DeviceStorage implements StorageInterface, Observer {
 	private DBInstance instance;
 	private SQLiteDatabase database;
 	
+	// TODO HANDLE CLOSING THE DATABASE WITHOUT NULLPOINTEREXECPTIONS
 	public DeviceStorage(Context context) {
 		instance = new DBInstance(context);
+		open();
 	}
 	
 	public void open() throws SQLException {
@@ -77,18 +79,13 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 */
 	public void storeTask(Task taskToStore) {
 		// Delegate task storage to taskLocalStorage class
-		open();
 		TaskLocalStorage.storeTask(database, taskToStore);
-		close();
 	}
 
 	public Collection<Task> getOwnTasks(UUID userid) {
 		// Delegate task storage to taskLocalStorage class
 		Collection<Task> taskList;
-		
-		open();
 		taskList = TaskLocalStorage.getOwnTasks(database, userid);
-		close();
 		
 		return taskList;
 	}
@@ -96,10 +93,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public Collection<Task> getLocalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		Collection<Task> taskList;
-		
-		open();
 		taskList = TaskLocalStorage.getTasks(database, false);
-		close();
 		
 		return taskList;
 	}
@@ -107,10 +101,8 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public Collection<Task> getGlobalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		Collection<Task> taskList;
-		
-		open();
 		taskList = TaskLocalStorage.getTasks(database, true);
-		close();
+		
 		return taskList;
 	}
 
@@ -122,18 +114,13 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 */
 	public void storeReport(Report reportToStore) {
 		// Delegate Report storage to ReportLocalStorage
-		open();
 		ReportLocalStorage.storeReport(database, reportToStore);
-		close();
 	}
 
 	public Collection<Report> getLocalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		Collection<Report> reportList;
-		
-		open();
 		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
-		close();
 		
 		return reportList;
 	}
@@ -141,10 +128,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public Collection<Report> getTaskCreatorReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		Collection<Report> reportList;
-		
-		open();
 		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR);
-		close();
 		
 		return reportList;
 	}
@@ -152,10 +136,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public Collection<Report> getGlobalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		Collection<Report> reportList;
-		
-		open();
 		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL);
-		close();
 		
 		return reportList;
 	}

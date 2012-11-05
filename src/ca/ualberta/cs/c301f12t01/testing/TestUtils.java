@@ -24,7 +24,9 @@ import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Request;
+import ca.ualberta.cs.c301f12t01.common.Response;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.common.TextResponse;
 
 /**
  * Provides utilities for testing
@@ -56,5 +58,10 @@ public class TestUtils {
 		Timestamp timestamp = new Timestamp(new Date().getTime());
 		Report r = new Report(t, timestamp);
 		return r;
+	}
+	
+	public static Response makeSimpleTextResponse() {
+		Response textResponse = new TextResponse("This is a text response.");
+		return textResponse;
 	}
 }
