@@ -25,10 +25,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import ca.ualberta.cs.c301f12t01.gui.TaskAdapter;
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
 /**
@@ -61,9 +60,8 @@ public class TaskListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new ArrayAdapter<Task>(getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
+        
+        setListAdapter(new TaskAdapter(getActivity(),
                 DummyTasks.ITEMS));
         
 
