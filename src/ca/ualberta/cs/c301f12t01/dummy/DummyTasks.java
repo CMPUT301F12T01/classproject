@@ -30,7 +30,7 @@ public class DummyTasks {
     /* Initialize this dummy task collection with some dummy tasks. */
     static {
         Task[] dummyTasks = {
-           new Task(DUMMY_USER)  {{
+          /* new Task(DUMMY_USER)  {{
                setSummary("700 pictures of poop.");
                setDescription("All races welcome ;D");
                addRequest(new Request(MediaType.PHOTO));
@@ -45,7 +45,7 @@ public class DummyTasks {
                setSummary("Play 'Dancing Queen' on tuba");
                addRequest(new Request(MediaType.AUDIO));
                setLocal();
-           }},
+           }}, */
         };
                 
         for (Task task : dummyTasks) {

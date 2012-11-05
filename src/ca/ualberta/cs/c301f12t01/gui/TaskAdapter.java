@@ -103,7 +103,7 @@ public class TaskAdapter extends BaseAdapter{
 		summary.setText(task.getSummary());
 		
 		//0 means Visible, 1 means Invisible, 2 means gone
-		responseIndicator.setVisibility(1);
+		//responseIndicator.setVisibility(1);
 		
 		return vi;
 	}
