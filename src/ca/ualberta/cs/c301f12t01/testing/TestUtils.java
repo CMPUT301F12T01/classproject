@@ -19,6 +19,8 @@ package ca.ualberta.cs.c301f12t01.testing;
 
 import java.util.UUID;
 
+import ca.ualberta.cs.c301f12t01.common.MediaType;
+import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
@@ -38,4 +40,12 @@ public class TestUtils {
 		t.setSummary("A short summary");
 		return t;		
 	}	
+	
+	public static Request makeSimpleReport() {
+		
+		MediaType type = MediaType.TEXT;
+		Request r = new Request(type, "THIS IS A DESCRIPTION YO", 1);
+		
+		return r;
+	}
 }
