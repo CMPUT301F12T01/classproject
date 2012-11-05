@@ -31,12 +31,16 @@ import ca.ualberta.cs.c301f12t01.common.TextResponse;
 
 
 /**
+ * ReportTest -- A JUnit test to verify the methods for Report work.
+ * 
  * 
  * @author padlesky
- *
  */
 public class ReportTest {
 
+	/**
+	 * Test to see if creating a Report exists.
+	 */
 	@Test
 	public void creatingReport() {
 		Task task = TestUtils.makeSimpleTask();
@@ -44,6 +48,10 @@ public class ReportTest {
 		assertNotNull(testReport);
 	}
 	
+	/**
+	 * Test to see if timestamps are set properly. Also
+	 * tests the getTimestamp function at the same time.
+	 */
 	@Test
 	public void getTimestamp() {
 		Task task = TestUtils.makeSimpleTask();
@@ -52,14 +60,17 @@ public class ReportTest {
 		assertTrue(testReport.getTimestamp().equals(timestamp));
 	}
 	
+	/**
+	 * Tests to see if you can make a TextResponse a Response.
+	 */
 	@Test
 	public void createResponse() {
 		Response textResponse = new TextResponse("This is a text response.");
 		assertNotNull(textResponse);
 	}
-	/* 
-	 * Not sure how to add a response to test whether the the addResponse
-	 * works or not. This also affects the other 3 tests.
+	
+	/**
+	 * Tests to see if you can add a Response to a Report.
 	 */
 	@Test
 	public void addResponse() {
@@ -70,18 +81,40 @@ public class ReportTest {
 		assertTrue(test);
 	}
 	
+	/**
+	 * Tests to see if you can remove a Response from a Report.
+	 */
 	@Test
 	public void removeTextResponse() {
-		
+		Response textResponse = new TextResponse("This is a text response.");
+		Task task = TestUtils.makeSimpleTask();
+		Report testReport = new Report(task);
+		testReport.addResponse(textResponse);
+		boolean test = testReport.removeResponse(textResponse);
+		assertTrue(test);
 	}
 	
+	/**
+	 * Gets the number of responses that were given.
+	 */
 	@Test
 	public void responseCount() {
-		
+		Response textResponse = new TextResponse("This is a text response.");
+		Task task = TestUtils.makeSimpleTask();
+		Report testReport = new Report(task);
+		testReport.addResponse(textResponse);
+		assertTrue(testReport.responseCount() == 1);
 	}
 	
+	/**
+	 * Checks to see if the responseTypes returns the Types in a proper string format.
+	 */
 	@Test
 	public void responseTypes() {
-		
+		Response textResponse = new TextResponse("This is a text response.");
+		Task task = TestUtils.makeSimpleTask();
+		Report testReport = new Report(task);
+		testReport.addResponse(textResponse);
+		assertTrue(testReport.responseTypes().matches("TEXT "));
 	}
 }
