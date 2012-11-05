@@ -37,6 +37,9 @@ public class ReportObserver implements Observer{
 	//private StorageInterface serverStorage;
 	/**TODO Implement the server stuff */
 
+	public ReportObserver(){
+		System.out.println("report observer created");
+	}
 	
 	/**
 	 * 
