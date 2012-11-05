@@ -22,11 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- We'll add the fragment here.  -->
+    <!-- We'll add the appropriate fragment here programmatically.  -->
     
-    <!--fragment android:name="ca.ualberta.cs.c301f12t01.gui.FulfillTaskFragment"
-              android:id="@+id/fragment_fulfill_task"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" /-->
     
 </LinearLayout>

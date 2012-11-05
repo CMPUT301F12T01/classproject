@@ -25,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
@@ -32,8 +33,7 @@ import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * 
- * @author easantos
- * 
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
 public class FulfillTaskFragment extends Fragment {
 
@@ -90,6 +90,20 @@ public class FulfillTaskFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_fulfill_task,
                 container, false);
+        
+        /* Sets the simple text views. */
+        ((TextView) rootView.findViewById(R.id.task_summary))
+            .setText(task.getSummary());
+        String descriptionText = task.getDescription();
+        TextView descripionView = (TextView) rootView.findViewById(R.id.task_description);
+        if (descriptionText.equals("")) {
+            /* No description? Don't show the text widget at all! */
+            descripionView.setVisibility(View.GONE);
+        } else {
+            descripionView.setText(descriptionText);
+        }
+        
+        /* TODO: code to show each request. */
 
         return rootView;
     }
