@@ -116,16 +116,15 @@ public class TaskDetailFragment extends Fragment {
     }
 
     /**
-     * When the user wants to fulfill reports, start the task fulfillment activity.
+     * When the user wants to fulfill reports, start the task fulfillment
+     * activity.
      */
     private void onUserSelectFulfill() {
-        //startActivityWithTask(FulfillTaskActivity.class);
-        Toast.makeText(getActivity(), "Not implemented", Toast.LENGTH_LONG).show();
-
-        
+        startActivityWithTask(FulfillTaskActivity.class);
     }
     
-    /* TODO: This should really not be in this class. */
+    /* TODO: This should really not be in *this* class. */
+    @SuppressWarnings("rawtypes")
     private void startActivityWithTask(Class activity) {
         Intent activityIntent = new Intent(getActivity(), activity);
 
