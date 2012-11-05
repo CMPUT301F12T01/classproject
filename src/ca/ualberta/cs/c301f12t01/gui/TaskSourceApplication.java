@@ -67,7 +67,7 @@ public class TaskSourceApplication extends Application {
         tObsv.setLocal(localStorage);
         tObsv.setServer(serverStorage);
         
-        rObsv = new ReportObserver();
+        rObsv = new ReportObserver(manager);
         manager.addObserver(rObsv);//add our observer
         rObsv.setLocal(localStorage);
         rObsv.setServer(serverStorage);
