@@ -157,11 +157,11 @@ public class Report implements Iterable<Response> {
      * @return Returns a string of the types of responses
      */
     public String responseTypes () {
-    	String mediaTypes = null;
+    	String mediaTypes = "";
     	Iterator<Response> responseIterator = iterator();
     	while(responseIterator.hasNext()) {
     		Response response = responseIterator.next();
-    		mediaTypes = mediaTypes.concat(response.getMediaType().toString() + " ");
+    		mediaTypes = mediaTypes.concat((response.getMediaType().toString() + " "));
     	}
     	return mediaTypes;
     }

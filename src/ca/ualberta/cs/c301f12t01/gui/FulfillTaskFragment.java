@@ -18,6 +18,7 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -27,14 +28,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.R.id;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
@@ -78,6 +78,14 @@ public class FulfillTaskFragment extends Fragment {
         if (savedInstanceState == null) {
             setHasOptionsMenu(true);
 
+            /* TODO: FIX THE HELL OUT OF THIS. */
+            /* Get the task we're fulfilling. */
+//            if (getArguments().containsKey(ARG_TASK_ID)) {
+//                UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
+//                TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+//                task = tm.get(taskId);
+//            }
+            
         }
     }
 
@@ -159,7 +167,7 @@ public class FulfillTaskFragment extends Fragment {
         
         Log.d("DEBUG", report.toString());
         
-        //TaskManager.getInstance().addReport(report);
+        TaskManager.getInstance().addReport(report);
         return true;
     }
 

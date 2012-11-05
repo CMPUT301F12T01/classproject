@@ -87,4 +87,11 @@ public class TextResponseTest {
 		assertTrue(((String) testGetResponseData).equals(randomString));
 	}
 	
+	@Test
+	public void getMediaType () {
+		TextResponse testTextResponse = new TextResponse("This is a text response.");
+		String media = testTextResponse.getMediaType().toString();
+		assertTrue(media == "TEXT");
+	}
+	
 }

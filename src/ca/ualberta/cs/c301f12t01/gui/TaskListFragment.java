@@ -18,17 +18,22 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.UUID;
+
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
-import ca.ualberta.cs.c301f12t01.gui.TaskAdapter;
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
+import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * 
@@ -36,7 +41,7 @@ import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *
  */
-public class TaskListFragment extends ListFragment {
+public class TaskListFragment extends ListFragment implements Observer {
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
@@ -60,11 +65,12 @@ public class TaskListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        
+        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+        /*TODO Take into account global tasks maybe?*/
         setListAdapter(new TaskAdapter(getActivity(),
-                DummyTasks.ITEMS));
-        
+                tm.getLocalTasks()));
 
+        
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);
 
@@ -107,7 +113,10 @@ public class TaskListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
+        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+        List<Task> list = tm.getLocalTasks();
+        callbacks.onItemSelected(list.get(position).getId());
+        /*TODO This also needs to handle global tasks*/
     }
 
     @Override
@@ -132,5 +141,13 @@ public class TaskListFragment extends ListFragment {
         }
 
         activatedPosition = position;
+    }
+
+    /* (non-Javadoc)
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    public void update(Observable observable, Object ignored) {
+        
+        ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
     }
 }

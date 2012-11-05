@@ -17,7 +17,11 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.UUID;
+
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
+import ca.ualberta.cs.c301f12t01.localStorage.ReportObserver;
+import ca.ualberta.cs.c301f12t01.localStorage.TaskObserver;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 import android.app.Application;
@@ -30,6 +34,10 @@ import android.app.Application;
 public class TaskSourceApplication extends Application {
     
     private TaskManager manager = null;
+    private TaskObserver tObsv = null;
+    private ReportObserver rObsv = null;
+    /*TODO MAKE THIS LESS UGLY PLEASE*/
+    public static UUID hack__user = UUID.randomUUID();
     
     /** Returns the Task Manager.  */ 
     public TaskManager getTaskManager() {
@@ -41,14 +49,28 @@ public class TaskSourceApplication extends Application {
         return manager;
     }
     
-    public TaskManager setupTaskManager() {
+    private TaskManager setupTaskManager() {
         StorageInterface localStorage = new DeviceStorage(getApplicationContext());
         /* TODO: Get the server interface working! */
-        //StorageInterface serverStorage = null;
-        
+        StorageInterface serverStorage = null;
+
         manager = TaskManager.getInstance();
-        manager.setLocal(localStorage);
-        //manager.setGlobal(serverStorage);
+        
+        /**
+         * TODO not sure where to tell the observers
+         * where localStorage is, I put it here for now
+         */
+        manager.setLocalStorage(localStorage);
+        
+        tObsv = new TaskObserver();
+        manager.addObserver(tObsv); //add our observer
+        tObsv.setLocal(localStorage);
+        tObsv.setServer(serverStorage);
+        
+        rObsv = new ReportObserver();
+        manager.addObserver(rObsv);//add our observer
+        rObsv.setLocal(localStorage);
+        rObsv.setServer(serverStorage);
         
         return manager;
     }
