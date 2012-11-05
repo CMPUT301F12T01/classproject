@@ -17,6 +17,7 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.UUID;
@@ -24,8 +25,10 @@ import java.util.UUID;
 import android.content.Context;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
+
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 
 /**
  * Class to manage all of our tasks

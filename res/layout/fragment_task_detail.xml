@@ -65,7 +65,7 @@
         android:text="@string/task_sharing" />
 
     <TextView
-        android:id="@+id/text_sharing_setting"
+        android:id="@+id/task_sharing_setting"
         style="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
