@@ -79,5 +79,9 @@ public class TextResponse implements Response {
     public void setResponseData(Serializable newData) {
         setText((String) newData);
     }
+    
+    public String toString() {
+        return "Response: \"" + getText()+ "\"";
+    }
 
 }
