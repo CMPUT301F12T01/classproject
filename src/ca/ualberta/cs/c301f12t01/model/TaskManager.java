@@ -17,7 +17,6 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.UUID;
@@ -25,8 +24,8 @@ import java.util.UUID;
 import android.content.Context;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 
 /**
  * Class to manage all of our tasks
@@ -37,7 +36,6 @@ public class TaskManager extends Observable{
 	//our collections
 	private TaskCollection localTasks = new TaskCollection();
 	private TaskCollection globalTasks = new TaskCollection();
-
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
 
@@ -136,4 +134,21 @@ public class TaskManager extends Observable{
 	public Collection<Report> getReports(UUID taskID, DeviceStorage ds){
 		return ds.getLocalReports(taskID);
 	}
+
+    /**
+     * 
+     * @param report
+     */
+    public void addReport(Report report) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /**
+     * @param localStorage
+     */
+    public void setLocal(StorageInterface localStorage) {
+        // TODO Auto-generated method stub
+        
+    }
 }
