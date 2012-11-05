@@ -23,149 +23,155 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
+
+import android.util.Log;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /* TODO: HashMaps. USE THEM. */
 
 /**
- * Class to manage all of our tasks
- * Singleton design pattern
+ * Class to manage all of our tasks Singleton design pattern
+ * 
  * @author Mitchell Home
  */
-public class TaskManager extends Observable{
-	//our collections
-	private List<Task> localTasks = new ArrayList<Task>();
-	private List<Task> globalTasks = new ArrayList<Task>();
-	private List<Report> reports = new ArrayList<Report>();
+public class TaskManager extends Observable {
+    // our collections
+    private List<Task> localTasks = new ArrayList<Task>();
+    private List<Task> globalTasks = new ArrayList<Task>();
+    private List<Report> reports = new ArrayList<Report>();
 
-	//our instance
-	private static final TaskManager instance =	new TaskManager();
-	
-	//our StorageInterface
-	private StorageInterface localStorage;
-	/**TODO Implement server stuff */
+    // our instance
+    private static final TaskManager instance = new TaskManager();
 
-	/**
-	 * private constructor
-	 */
-	private TaskManager(){
-		//nothing to do really
-	}
+    // our StorageInterface
+    private StorageInterface localStorage;
 
-	/**
-	 * adds a new task into either localTasks or globalTasks
-	 * @param newTask
-	 * 			task to be added
-	 */
-	public void addTask(Task newTask){
-		if (newTask.isLocal()){
-			localTasks.add(newTask);
-		}
-		else if (newTask.isGlobal()){
-			globalTasks.add(newTask);
-		}
-		else{
-			//handle errors??
-		}
-		//notify that we changed
-		notifyObservers(newTask);
-	}
-	
-	/**
-	 * given a UUID, return the task
-	 * @param id
-	 * 			ID of task we are looking for
-	 * @return
-	 * 			Task that matches ID
-	 */
-	public Task get(UUID id){
-		//This is a little ugly
-		//first check local tasks
-		List<Task> l = getLocalTasks();
-		Iterator<Task> i = l.iterator();
-		while (i.hasNext()){
-			Task t = i.next();
-			if (t.getId() == id){
-				return t;
-			}
-		}
-		//If we didn't find it in our local tasks
-		//check our global tasks
-		l = getGlobalTasks();
-		i = l.iterator();
-		List<Task> g = getGlobalTasks();
-		i = g.iterator();
-		while (i.hasNext()){
-			Task t = i.next();
-			if (t.getId() == id){
-				return t;
-			}
-		}
-		//If we got here, we didn't find the task
-		return null;
-		
-	}
-	
-	/**
-	 * returns all local tasks
-	 * @return
-	 * 		ArrayList of local tasks
-	 */
-	public List<Task> getLocalTasks(){
-		return localTasks;
-	}
+    /** TODO Implement server stuff */
 
-	/**
-	 * returns all global tasks
-	 * @return
-	 * 		ArrayList of local tasks
-	 */
-	public List<Task> getGlobalTasks(){
-		return globalTasks;
-	}
+    /**
+     * private constructor
+     */
+    private TaskManager() {
+        // nothing to do really
+    }
 
-	
-	/**
-	 * let them get our instance
-	 * @return
-	 * 		Singleton instance of TaskManager
-	 */
-	public static TaskManager getInstance(){
-		return instance;
-	}
-	
-	/**
-	 * 
-	 * @param taskID
-	 * 			Task that you want to get reports for
-	 * @return
-	 * 			The Collection of reports associated with our task
-	 */
-	public Collection<Report> getReports(UUID taskID){
-		Iterator<Report> iter = reports.iterator();
-		List<Report> l = new ArrayList<Report>();
-		while (iter.hasNext()){
-			Report r = iter.next();
-			if (r.getTaskID() == taskID){
-				l.add(r);
-			}
-		}
-		return l;
-		//return localStorage.getLocalReports(taskID);
-	}
+    /**
+     * adds a new task into either localTasks or globalTasks
+     * 
+     * @param newTask
+     *            task to be added
+     */
+    public void addTask(Task newTask) {
+        if (newTask.isLocal()) {
+            localTasks.add(newTask);
+
+        } else if (newTask.isGlobal()) {
+            globalTasks.add(newTask);
+
+        } else {
+            // handle errors??
+        }
+        // notify that we changed
+        notifyObservers(newTask);
+    }
+
+    /**
+     * given a UUID, return the task
+     * 
+     * @param id
+     *            ID of task we are looking for
+     * @return Task that matches ID
+     */
+    public Task get(UUID id) {
+
+        // This is a little ugly
+        // first check local tasks
+        List<Task> l = getLocalTasks();
+        Iterator<Task> i = l.iterator();
+        while (i.hasNext()) {
+            Task t = i.next();
+
+            if (t.getId().equals(id)) {
+
+                return t;
+            }
+        }
+        // If we didn't find it in our local tasks
+        // check our global tasks
+        l = getGlobalTasks();
+        i = l.iterator();
+        List<Task> g = getGlobalTasks();
+        i = g.iterator();
+        while (i.hasNext()) {
+            Task t = i.next();
+            if (t.getId().equals(id)) {
+
+                return t;
+            }
+        }
+        // If we got here, we didn't find the task
+        return null;
+
+    }
+
+    /**
+     * returns all local tasks
+     * 
+     * @return ArrayList of local tasks
+     */
+    public List<Task> getLocalTasks() {
+        return localTasks;
+    }
+
+    /**
+     * returns all global tasks
+     * 
+     * @return ArrayList of local tasks
+     */
+    public List<Task> getGlobalTasks() {
+        return globalTasks;
+    }
+
+    /**
+     * let them get our instance
+     * 
+     * @return Singleton instance of TaskManager
+     */
+    public static TaskManager getInstance() {
+        return instance;
+    }
+
+    /**
+     * 
+     * @param taskID
+     *            Task that you want to get reports for
+     * @return The Collection of reports associated with our task
+     */
+    public Collection<Report> getReports(UUID taskID) {
+        Iterator<Report> iter = reports.iterator();
+        List<Report> l = new ArrayList<Report>();
+        while (iter.hasNext()) {
+            Report r = iter.next();
+            if (r.getTaskID() == taskID) {
+                l.add(r);
+            }
+        }
+        return l;
+        // return localStorage.getLocalReports(taskID);
+    }
 
     /**
      * 
      * @param report
      */
     public void addReport(Report newReport) {
-        /**TODO
-         * make this handle global as well
+        /**
+         * TODO make this handle global as well
          */
-    	reports.add(newReport);
-    	notifyObservers(newReport);
-    	//localStorage.storeReport(report);        
+        reports.add(newReport);
+        notifyObservers(newReport);
+        // localStorage.storeReport(report);
     }
 
 }

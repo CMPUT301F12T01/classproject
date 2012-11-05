@@ -74,11 +74,9 @@ public class TaskDetailFragment extends Fragment {
             if (getArguments().containsKey(ARG_TASK_ID)) {
                 UUID taskId = (UUID) getArguments()
                         .getSerializable(ARG_TASK_ID);
-                TaskManager tm = TaskManager.getInstance();
+                TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
                 task = tm.get(taskId);
 
-                if (task == null)
-                    Log.d("NOTICE", "Task is null.");
 
             }
         }

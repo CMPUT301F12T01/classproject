@@ -81,7 +81,7 @@ public class FulfillTaskFragment extends Fragment {
             /* Get the task we're fulfilling. */
             if (getArguments().containsKey(ARG_TASK_ID)) {
                 UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
-                TaskManager tm = TaskManager.getInstance();
+                TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
                 task = tm.get(taskId);
             }
             

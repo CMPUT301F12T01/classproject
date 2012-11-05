@@ -105,7 +105,7 @@ public class DefineTaskFragment extends Fragment {
         }
         
         //add task using TaskManager
-        TaskManager tm = TaskManager.getInstance();
+        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         tm.addTask(newTask);
         
         Toast.makeText(getActivity(), "Task created.", Toast.LENGTH_SHORT).show();

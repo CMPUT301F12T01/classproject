@@ -65,7 +65,7 @@ public class TaskListFragment extends ListFragment implements Observer {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TaskManager tm = TaskManager.getInstance();
+        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         /*TODO Take into account global tasks maybe?*/
         setListAdapter(new TaskAdapter(getActivity(),
                 tm.getLocalTasks()));
@@ -113,7 +113,7 @@ public class TaskListFragment extends ListFragment implements Observer {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        TaskManager tm = TaskManager.getInstance();
+        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         List<Task> list = tm.getLocalTasks();
         callbacks.onItemSelected(list.get(position).getId());
         /*TODO This also needs to handle global tasks*/
