@@ -67,8 +67,8 @@ public class ReportObserver implements Observer{
 	 */
 	public void update(Observable obsv, Object arg) {
 		if (arg instanceof Report){
-			Report newTask = (Report) arg;
-			localStorage.storeReport(newTask);
+			Report newReport = (Report) arg;
+			localStorage.storeReport(newReport);
 		}
 		else{
 			//Something is very very wrong
