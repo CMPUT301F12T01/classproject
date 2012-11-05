@@ -17,13 +17,9 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
-
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 import ca.ualberta.cs.c301f12t01.R;
 import android.content.Context;
@@ -107,12 +103,11 @@ public class TaskAdapter extends BaseAdapter{
 		// Sets all values in the new view.
 		summary.setText(task.getSummary());
 		
-		// Neil need your input for device storage interface.
-		/*List<Report> reports = TaskManager.getReports(task.getId());
-		// 0 means Visible, 1 means Invisible, 2 means gone
+		List<Report> reports = TaskManager.getInstance().getReports(task.getId());
+		// Sets marker to visible if a report has been made to a task.
 		if (reports.size() != 0) {
 			responseIndicator.setVisibility(0);
-		}*/
+		}
 		
 		return vi;
 	}

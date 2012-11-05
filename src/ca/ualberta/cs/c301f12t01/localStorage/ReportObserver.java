@@ -25,6 +25,7 @@ import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.Report;
 
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * 
@@ -34,11 +35,13 @@ import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 public class ReportObserver implements Observer{
 	//where we store things
 	private StorageInterface localStorage;
+	private TaskManager tm = null;
 	//private StorageInterface serverStorage;
 	/**TODO Implement the server stuff */
 
-	public ReportObserver(){
-		System.out.println("report observer created");
+
+	public ReportObserver(TaskManager tm){
+		this.tm = tm;
 	}
 	
 	/**
