@@ -17,9 +17,12 @@
  */
 package ca.ualberta.cs.c301f12t01.testing;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.MediaType;
+import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
@@ -41,11 +44,18 @@ public class TestUtils {
 		return t;		
 	}	
 	
-	public static Request makeSimpleReport() {
+	public static Request makeSimpleRequest() {
 		
 		MediaType type = MediaType.TEXT;
 		Request r = new Request(type, "THIS IS A DESCRIPTION YO", 1);
 		
+		return r;
+	}
+	
+	public static Report makeSimpleReport() {
+		Task t = new Task(UUID.randomUUID());
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		Report r = new Report(t, timestamp);
 		return r;
 	}
 }
