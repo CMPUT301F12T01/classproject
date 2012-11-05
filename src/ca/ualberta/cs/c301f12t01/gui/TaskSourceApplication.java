@@ -18,6 +18,8 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
+import ca.ualberta.cs.c301f12t01.localStorage.ReportObserver;
+import ca.ualberta.cs.c301f12t01.localStorage.TaskObserver;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 import android.app.Application;
@@ -30,6 +32,8 @@ import android.app.Application;
 public class TaskSourceApplication extends Application {
     
     private TaskManager manager = null;
+    private TaskObserver tObsv = null;
+    private ReportObserver rObsv = null;
     
     /** Returns the Task Manager.  */ 
     public TaskManager getTaskManager() {
@@ -42,8 +46,21 @@ public class TaskSourceApplication extends Application {
            
             
             manager = TaskManager.getInstance();
-            manager.setLocal(localStorage);
-            manager.setLocal(serverStorage);
+            /**
+             * TODO not sure where to tell the observers
+             * where localStorage is, I put it here for now
+             */
+            tObsv = new TaskObserver();
+            manager.addObserver(tObsv); //add our observer
+            tObsv.setLocal(localStorage);
+            tObsv.setServer(serverStorage);
+            
+            rObsv = new ReportObserver();
+            manager.addObserver(rObsv);//add our observer
+            rObsv.setLocal(localStorage);
+            rObsv.setServer(serverStorage);
+            //manager.setLocal(localStorage);
+            //manager.setLocal(serverStorage);
             
         }
         

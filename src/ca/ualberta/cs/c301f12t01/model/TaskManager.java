@@ -17,13 +17,14 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 
 /**
  * Class to manage all of our tasks
@@ -32,12 +33,14 @@ import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
  */
 public class TaskManager extends Observable{
 	//our collections
-	private TaskCollection localTasks = new TaskCollection();
-	private TaskCollection globalTasks = new TaskCollection();
+	private List<Task> localTasks = new ArrayList<Task>();
+	private List<Task> globalTasks = new ArrayList<Task>();
+	private List<Report> reports = new ArrayList<Report>();
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
 	//our StorageInterface
-	private StorageInterface localStorage;
+	//private StorageInterface localStorage;
+	/**TODO Implement server stuff */
 
 	/**
 	 * private constructor
@@ -62,7 +65,7 @@ public class TaskManager extends Observable{
 			//handle errors??
 		}
 		//notify that we changed
-		notifyObservers();
+		notifyObservers(newTask);
 	}
 	
 	/**
@@ -75,7 +78,8 @@ public class TaskManager extends Observable{
 	public Task get(UUID id){
 		//This is a little ugly
 		//first check local tasks
-		Iterator<Task> i = getLocalTasks();
+		List<Task> l = getLocalTasks();
+		Iterator<Task> i = l.iterator();
 		while (i.hasNext()){
 			Task t = i.next();
 			if (t.getId() == id){
@@ -84,7 +88,8 @@ public class TaskManager extends Observable{
 		}
 		//If we didn't find it in our local tasks
 		//check our global tasks
-		i = getGlobalTasks();
+		l = getGlobalTasks();
+		i = l.iterator();
 		while (i.hasNext()){
 			Task t = i.next();
 			if (t.getId() == id){
@@ -101,16 +106,16 @@ public class TaskManager extends Observable{
 	 * @return
 	 * 		localTasks' Iterator
 	 */
-	public Iterator<Task> getLocalTasks(){
-		return localTasks.iterator();
+	public List<Task> getLocalTasks(){
+		return localTasks;
 	}
 
 	/**
 	 * returns iterator for all global tasks
 	 * @return
 	 * 		globalTasks' Iterator
-	 */	public Iterator<Task> getGlobalTasks(){
-		return globalTasks.iterator();
+	 */	public List<Task> getGlobalTasks(){
+		return globalTasks;
 	}
 	
 	/**
@@ -130,25 +135,21 @@ public class TaskManager extends Observable{
 	 * 			The Collection of reports associated with our task
 	 */
 	public Collection<Report> getReports(UUID taskID){
-		return localStorage.getLocalReports(taskID);
+		return reports;
+		//return localStorage.getLocalReports(taskID);
 	}
 
     /**
      * 
      * @param report
      */
-    public void addReport(Report report) {
+    public void addReport(Report newReport) {
         /**TODO
          * make this handle global as well
          */
-    	localStorage.storeReport(report);        
+    	reports.add(newReport);
+    	notifyObservers(newReport);
+    	//localStorage.storeReport(report);        
     }
 
-    /**
-     * @param localStorage
-     * 			Local storage we got passed
-     */
-    public void setLocal(StorageInterface localStorage) {
-    	this.localStorage = localStorage;
-    }
 }
