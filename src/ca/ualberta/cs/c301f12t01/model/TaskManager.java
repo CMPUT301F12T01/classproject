@@ -140,7 +140,15 @@ public class TaskManager extends Observable{
 	 * 			The Collection of reports associated with our task
 	 */
 	public Collection<Report> getReports(UUID taskID){
-		return reports;
+		Iterator<Report> iter = reports.iterator();
+		List<Report> l = new ArrayList<Report>();
+		while (iter.hasNext()){
+			Report r = iter.next();
+			if (r.getTaskID() == taskID){
+				l.add(r);
+			}
+		}
+		return l;
 		//return localStorage.getLocalReports(taskID);
 	}
 
