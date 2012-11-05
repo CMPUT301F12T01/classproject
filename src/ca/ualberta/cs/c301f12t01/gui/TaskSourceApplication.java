@@ -17,6 +17,8 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.UUID;
+
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
@@ -30,6 +32,8 @@ import android.app.Application;
 public class TaskSourceApplication extends Application {
     
     private TaskManager manager = null;
+    /*TODO MAKE THIS LESS UGLY PLEASE*/
+    public static UUID hack__user = UUID.randomUUID();
     
     /** Returns the Task Manager.  */ 
     public TaskManager getTaskManager() {

@@ -17,13 +17,14 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 
 /**
  * Class to manage all of our tasks
@@ -32,8 +33,8 @@ import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
  */
 public class TaskManager extends Observable{
 	//our collections
-	private TaskCollection localTasks = new TaskCollection();
-	private TaskCollection globalTasks = new TaskCollection();
+	private List<Task> localTasks = new ArrayList<Task>();
+	private List<Task> globalTasks = new ArrayList<Task>();
 	//our instance
 	private static final TaskManager instance =	new TaskManager();
 	//our StorageInterface
@@ -75,7 +76,8 @@ public class TaskManager extends Observable{
 	public Task get(UUID id){
 		//This is a little ugly
 		//first check local tasks
-		Iterator<Task> i = getLocalTasks();
+		List<Task> l = getLocalTasks();
+		Iterator<Task> i = l.iterator();
 		while (i.hasNext()){
 			Task t = i.next();
 			if (t.getId() == id){
@@ -84,7 +86,8 @@ public class TaskManager extends Observable{
 		}
 		//If we didn't find it in our local tasks
 		//check our global tasks
-		i = getGlobalTasks();
+		List<Task> g = getGlobalTasks();
+		i = g.iterator();
 		while (i.hasNext()){
 			Task t = i.next();
 			if (t.getId() == id){
@@ -97,21 +100,23 @@ public class TaskManager extends Observable{
 	}
 	
 	/**
-	 * returns iterator for all local tasks
+	 * returns all local tasks
 	 * @return
-	 * 		localTasks' Iterator
+	 * 		ArrayList of local tasks
 	 */
-	public Iterator<Task> getLocalTasks(){
-		return localTasks.iterator();
+	public List<Task> getLocalTasks(){
+		return localTasks;
 	}
 
 	/**
-	 * returns iterator for all global tasks
+	 * returns all global tasks
 	 * @return
-	 * 		globalTasks' Iterator
-	 */	public Iterator<Task> getGlobalTasks(){
-		return globalTasks.iterator();
+	 * 		ArrayList of local tasks
+	 */
+	public List<Task> getGlobalTasks(){
+		return globalTasks;
 	}
+
 	
 	/**
 	 * let them get our instance

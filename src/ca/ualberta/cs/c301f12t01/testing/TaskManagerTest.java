@@ -20,6 +20,7 @@ package ca.ualberta.cs.c301f12t01.testing;
 import static org.junit.Assert.*;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.Test;
@@ -38,8 +39,8 @@ public class TaskManagerTest {
 		TaskManager tm = TaskManager.getInstance();
 		Task t1 = TestUtils.makeSimpleTask();
 		tm.addTask(t1); //now we should have one global task
-		Iterator<Task> iter = tm.getGlobalTasks();
-		Task t2 = iter.next();
+		List<Task> list = tm.getGlobalTasks();
+		Task t2 = list.get(0);
 		assertTrue(t1.equals(t2));
 	}
 	
@@ -48,10 +49,10 @@ public class TaskManagerTest {
 		TaskManager tm = TaskManager.getInstance();
 		Task t1 = TestUtils.makeSimpleTask();
 		t1.setLocal();
-		tm.addTask(t1); //now we should have one local task
-		Iterator<Task> iter = tm.getLocalTasks();
-		Task t2 = iter.next();
-		assertTrue(t1.equals(t2));		
+		tm.addTask(t1); //now we should have one global task
+		List<Task> list = tm.getLocalTasks();
+		Task t2 = list.get(0);
+		assertTrue(t1.equals(t2));
 	}
 	
 	@Test

@@ -38,7 +38,7 @@ import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * TaskDetailFragment -- Displays the details about a task.
@@ -72,7 +72,8 @@ public class TaskDetailFragment extends Fragment {
              */
             if (getArguments().containsKey(ARG_TASK_ID)) {
                 UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
-                task = DummyTasks.ITEM_MAP.get(taskId);
+                TaskManager tm = TaskManager.getInstance();
+                task = tm.get(taskId);
             }
         }
     }

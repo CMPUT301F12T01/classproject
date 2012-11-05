@@ -34,6 +34,7 @@ import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * DefineTaskFragment -- 
@@ -78,7 +79,7 @@ public class DefineTaskFragment extends Fragment {
         
         /* Now set up the new task with the extracted data. */
         /* TODO: Get rid of this dummy user crud. */
-        Task newTask = new Task(DummyTasks.DUMMY_USER);
+        Task newTask = new Task(TaskSourceApplication.hack__user);
 
         newTask.setDescription(descriptionText);
         newTask.setSummary(summaryText);
@@ -104,9 +105,9 @@ public class DefineTaskFragment extends Fragment {
             newTask.addRequest(new Request(MediaType.AUDIO));
         }
         
-        
-        /* TODO: MAKE THIS WORK WITH THE TASK COLLECTIONL INTERFACE. */
-        DummyTasks.addTask(newTask);
+        //add task using TaskManager
+        TaskManager tm = TaskManager.getInstance();
+        tm.addTask(newTask);
         
         Toast.makeText(getActivity(), "Task created.", Toast.LENGTH_SHORT).show();
         

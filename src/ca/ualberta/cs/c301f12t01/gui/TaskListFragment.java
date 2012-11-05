@@ -18,6 +18,7 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.List;
 import java.util.UUID;
 import android.app.Activity;
 import android.app.ListFragment;
@@ -29,7 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * 
@@ -61,11 +62,12 @@ public class TaskListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        TaskManager tm = TaskManager.getInstance();
         setListAdapter(new ArrayAdapter<Task>(getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                DummyTasks.ITEMS));
-        
+                tm.getLocalTasks()));
+        /*TODO Take into account global tasks maybe?*/
 
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);
@@ -109,7 +111,10 @@ public class TaskListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
+        TaskManager tm = TaskManager.getInstance();
+        List<Task> list = tm.getLocalTasks();
+        callbacks.onItemSelected(list.get(position).getId());
+        /*TODO This also needs to handle global tasks*/
     }
 
     @Override

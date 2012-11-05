@@ -22,7 +22,6 @@ import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -55,7 +54,8 @@ public class FulfillTaskFragment extends Fragment {
             /* Get the task we're fulfilling. */
             if (getArguments().containsKey(ARG_TASK_ID)) {
                 UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
-                task = DummyTasks.ITEM_MAP.get(taskId);
+                TaskManager tm = TaskManager.getInstance();
+                task = tm.get(taskId);
             }
             
         }
