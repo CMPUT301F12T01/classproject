@@ -15,7 +15,7 @@
  * limitations under the License.
  * 
  */
-package ca.ualberta.cs.c301f12t01.gui;
+package ca.ualberta.cs.c301f12t01.gui.helper;
 
 import android.view.ViewGroup;
 import ca.ualberta.cs.c301f12t01.common.Response;
@@ -23,14 +23,14 @@ import ca.ualberta.cs.c301f12t01.common.Response;
 /**
  * Abstract Class ObtainResponse for obtaining a response from a media type
  * 
- * @author Bronte Lee
+ * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
-public abstract class AbstractObtainResponse {
+public abstract class AbstractResponseObtainer {
 
 	protected ViewGroup viewGroup;
 	
-	public AbstractObtainResponse(ViewGroup view){
+	public AbstractResponseObtainer(ViewGroup view){
 		this.viewGroup = view; 
 	}
 	
@@ -43,5 +43,5 @@ public abstract class AbstractObtainResponse {
 	public void setView(ViewGroup view) {
 		this.viewGroup = view;
 	}
-		
+
 }
