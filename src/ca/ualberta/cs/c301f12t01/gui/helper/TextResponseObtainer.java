@@ -15,34 +15,45 @@
  * limitations under the License.
  * 
  */
-package ca.ualberta.cs.c301f12t01.gui;
+package ca.ualberta.cs.c301f12t01.gui.helper;
 
-import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.common.Response;
 import android.view.ViewGroup;
-import android.widget.Gallery;
 import android.widget.TextView;
+import ca.ualberta.cs.c301f12t01.common.Response;
+import ca.ualberta.cs.c301f12t01.common.TextResponse;
+import ca.ualberta.cs.c301f12t01.R;
 
 /**
+ * ObtainText -- Gets the text from a TextView and returns it as a Response
  * 
- * @author Bronte Lee
+ * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
-public class ObtainPhoto extends AbstractObtainResponse {
-
+public class TextResponseObtainer extends AbstractResponseObtainer {
+	
+	
 	/**
 	 * @param view
 	 */
-	public ObtainPhoto(ViewGroup view) {
+	public TextResponseObtainer(ViewGroup view) {
 		super(view);
 		// TODO Auto-generated constructor stub
 	}
-	
-	// TODO implement get photo response
-	public Response getResponse() {
 
-		return null;
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.ObtainResponseInterface#getResponse()
+	 */
+	public Response getResponse() {
+		// TODO Auto-generated method stub
+		int textID = R.id.edit_text_fulfill;
 		
+		TextView textView = (TextView) getView().findViewById(textID);
+		
+		String textMedia = textView.getText().toString();
+		
+		return new TextResponse(textMedia);
+
 	}
+
 
 }
