@@ -71,24 +71,4 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp" />
 
-    <!-- Want these two buttons side by side. TODO: make neater? -->
-
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button_view_reports"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/view_reports" />
-
-        <Button
-            android:id="@+id/button_fulfill_report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fulfill" />
-    </TableRow>
-
 </LinearLayout>
