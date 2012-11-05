@@ -106,7 +106,10 @@ public class ReportLocalStorage
 				requestValues.put(responseCollumns[2], responseBytes);
 				objectOutput.close();
 				baos.close();
-			} catch (IOException e) {}
+				System.out.println("ActuallyWorked");
+			} catch (IOException e) {
+				System.out.println("SAVING THE RESPONSE FAILED HARD");
+			}
 
 			db.insert(responseTable, null, requestValues);
 
@@ -125,7 +128,7 @@ public class ReportLocalStorage
 
 		// Get all Reports in a given scope {LOCAL, GLOBAL or TASK_CREATOR}
 		Cursor scopedReports = db.query(reportTable, 
-				reportSelectCollumns, reportSelectCollumns[3] + " = " + state.toString(), 
+				reportSelectCollumns, reportSelectCollumns[2] + " = '" + state.toString() + "'", 
 				null, null, null, null);
 
 		// Create a new report with a all the fields set
@@ -143,8 +146,8 @@ public class ReportLocalStorage
 
 			// GET ALL RESPONSES RELATED TO A REPORT
 			Cursor reportResponses = db.query(responseTable, responseSelectCollumns, 
-					responseSelectCollumns[0] + " = " + scopedReports.getString(
-							scopedReports.getColumnIndex(reportSelectCollumns[1])), 
+					responseSelectCollumns[0] + " = '" + scopedReports.getString(
+							scopedReports.getColumnIndex(reportSelectCollumns[1])) + "'", 
 					null, null, null, null);
 
 			for (reportResponses.moveToFirst(); !reportResponses.isAfterLast(); reportResponses.moveToNext()) {
