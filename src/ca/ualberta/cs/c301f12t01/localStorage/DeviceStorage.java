@@ -77,22 +77,41 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 */
 	public void storeTask(Task taskToStore) {
 		// Delegate task storage to taskLocalStorage class
+		open();
 		TaskLocalStorage.storeTask(database, taskToStore);
+		close();
 	}
 
 	public Collection<Task> getOwnTasks(UUID userid) {
 		// Delegate task storage to taskLocalStorage class
-		return TaskLocalStorage.getOwnTasks(database, userid);
+		Collection<Task> taskList;
+		
+		open();
+		taskList = TaskLocalStorage.getOwnTasks(database, userid);
+		close();
+		
+		return taskList;
 	}
 
 	public Collection<Task> getLocalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
-		return TaskLocalStorage.getTasks(database, false);
+		Collection<Task> taskList;
+		
+		open();
+		taskList = TaskLocalStorage.getTasks(database, false);
+		close();
+		
+		return taskList;
 	}
 
 	public Collection<Task> getGlobalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
-		return TaskLocalStorage.getTasks(database, true);
+		Collection<Task> taskList;
+		
+		open();
+		taskList = TaskLocalStorage.getTasks(database, true);
+		close();
+		return taskList;
 	}
 
 	/**
@@ -103,22 +122,42 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 */
 	public void storeReport(Report reportToStore) {
 		// Delegate Report storage to ReportLocalStorage
+		open();
 		ReportLocalStorage.storeReport(database, reportToStore);
+		close();
 	}
 
 	public Collection<Report> getLocalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		return ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
+		Collection<Report> reportList;
+		
+		open();
+		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
+		close();
+		
+		return reportList;
 	}
 	
 	public Collection<Report> getTaskCreatorReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		return ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR);
+		Collection<Report> reportList;
+		
+		open();
+		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR);
+		close();
+		
+		return reportList;
 	}
 
 	public Collection<Report> getGlobalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		return ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL);
+		Collection<Report> reportList;
+		
+		open();
+		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL);
+		close();
+		
+		return reportList;
 	}
 	
 }

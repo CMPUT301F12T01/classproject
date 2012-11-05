@@ -38,35 +38,32 @@ public class DBInstance extends SQLiteOpenHelper{
 	 * http://www.vogella.com/articles/AndroidSQLite/article.html
 	 */
 	
-	private static final String DATABASE_NAME = "TaskSource.db";
+	private static final String DATABASE_NAME = "TaskSourceDB.db";
 	
-	private static final String DATABASE_CREATE = "CREATE TABLE Tasks "
+	private static final String DATABASE_CREATE_TASKS = "CREATE TABLE Tasks "
 		      + "(userid TEXT NOT NULL, " //have to store UUIDs as Text
 			  + "id TEXT PRIMARY KEY, " //have to store UUIDs as Text
 		      + "global INTEGER, " // 0 is local and 1 is global
 		      + "summary TEXT, "
-		      + "description TEXT); "
+		      + "description TEXT); ";
 		      
-		      + "CREATE TABLE Requests "
+	private static final String DATABASE_CREATE_REQUESTS = "CREATE TABLE Requests "
 		      + "(description TEXT, "
 		      + "mediatype TEXT, "
 			  + "quantity INTEGER, "
 			  + "amountfulfilled INTEGER, "
-			  + "task_id TEXT NOT NULL, " //have to store UUIDs as Text
-		      + "foreign key(task_id) references Tasks(id) NOT NULL); "
+			  + "task_id TEXT NOT NULL); "; //have to store UUIDs as Text
 		      
-		      + "CREATE TABLE Reports "
+	private static final String DATABASE_CREATE_REPORTS = "CREATE TABLE Reports "
 		      + "(scope TEXT, "
 		      + "timestamp TEXT NOT NULL, "
 		      + "id TEXT PRIMARY KEY, " //have to store UUIDs as Text
-			  + "task_id TEXT NOT NULL, " //have to store UUIDs as Text
-		      + "foreign key(task_id) references Tasks(id) NOT NULL);"
+			  + "task_id TEXT NOT NULL); "; //have to store UUIDs as Text
 		      
-		      + "CREATE TABLE Responses "
+	private static final String DATABASE_CREATE_RESPONSES = "CREATE TABLE Responses "
 		      + "(mediatype TEXT, "
-			  + "report_id TEXT, " //have to store UUIDs as Texts
-		      + "foreign key(report_id) references Report(id) NOT NULL, " 
-			  + "media BLOB);";
+			  + "report_id TEXT NOT NULL, " //have to store UUIDs as Texts
+		      + "media BLOB); ";
 	
 	public DBInstance(Context context) {
 	    super(context, DATABASE_NAME, null, 1);
@@ -75,7 +72,10 @@ public class DBInstance extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		// This method is called IF the database does not exist
-		database.execSQL(DATABASE_CREATE);
+		database.execSQL(DATABASE_CREATE_TASKS);
+		database.execSQL(DATABASE_CREATE_REQUESTS);
+		database.execSQL(DATABASE_CREATE_REPORTS);
+		database.execSQL(DATABASE_CREATE_RESPONSES);
 	}
 	
 	@Override

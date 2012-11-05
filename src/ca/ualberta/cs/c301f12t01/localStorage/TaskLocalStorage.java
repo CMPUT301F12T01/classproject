@@ -101,17 +101,22 @@ public class TaskLocalStorage {
 		String user = userid.toString();
 		
 		Cursor userTasks = db.query(taskTable, 
-				taskSelectColumns, taskSelectColumns[0] + " = " + user, 
+				taskSelectColumns, taskSelectColumns[0] + " = '" + user + "'", 
 				null, null, null, null);
 		
 		for (userTasks.moveToFirst(); !userTasks.isAfterLast(); userTasks.moveToNext()) {
-			Task newTask = new Task(UUID.fromString(userTasks.getString(2)),
-					UUID.fromString(userTasks.getString(1)));
+			Task newTask = new Task(
+					UUID.fromString(userTasks.getString(
+							userTasks.getColumnIndex(taskSelectColumns[1]))), 
+					UUID.fromString(userTasks.getString(
+							userTasks.getColumnIndex(taskSelectColumns[0]))));
 			
-			newTask.setSummary(userTasks.getString(4));
-			newTask.setDescription(userTasks.getString(5));
+			newTask.setSummary(userTasks.getString(
+					userTasks.getColumnIndex(taskSelectColumns[3])));
+			newTask.setDescription(userTasks.getString(
+					userTasks.getColumnIndex(taskSelectColumns[4])));
 			
-			if (userTasks.getInt(3) == 1) {
+			if (userTasks.getInt(userTasks.getColumnIndex(taskSelectColumns[2])) == 1) {
 				newTask.isGlobal();
 			}
 			else {
@@ -120,19 +125,23 @@ public class TaskLocalStorage {
 			
 			// GET ALL REQUESTS ASSOCIATED WITH THE TASK
 			Cursor taskRequests = db.query(requestTable, requestSelectColumns, 
-					requestSelectColumns[0] + " = " + userTasks.getString(2), 
+					requestSelectColumns[0] + " = '" + userTasks.getString(
+							userTasks.getColumnIndex(taskSelectColumns[1])) + "'", 
 					null, null, null, null);
 			
 			for (taskRequests.moveToFirst(); !taskRequests.isAfterLast(); taskRequests.moveToNext()) {
-				Request newRequest = new Request(MediaType.valueOf(taskRequests.getString(4)));
-				newRequest.setDescription(taskRequests.getString(2));
-				newRequest.setQuantity(taskRequests.getInt(3));
+				
+				Request newRequest = new Request(MediaType.valueOf(taskRequests.getString(
+						taskRequests.getColumnIndex(requestSelectColumns[3]))));
+				newRequest.setDescription(taskRequests.getString(
+						taskRequests.getColumnIndex(requestSelectColumns[1])));
+				newRequest.setQuantity(taskRequests.getInt(
+						taskRequests.getColumnIndex(requestSelectColumns[2])));
 				newTask.addRequest(newRequest);
 			}
 			
 			tasklist.add(newTask);
 		}
-		
 		
 		return tasklist;
 	}
@@ -158,11 +167,16 @@ public class TaskLocalStorage {
 		}
 		
 		for (scopedTasks.moveToFirst(); !scopedTasks.isAfterLast(); scopedTasks.moveToNext()) {
-			Task newTask = new Task(UUID.fromString(scopedTasks.getString(2)),
-					UUID.fromString(scopedTasks.getString(1)));
+			Task newTask = new Task(
+					UUID.fromString(scopedTasks.getString(
+							scopedTasks.getColumnIndex(taskSelectColumns[1]))), 
+					UUID.fromString(scopedTasks.getString(
+							scopedTasks.getColumnIndex(taskSelectColumns[0]))));
 			
-			newTask.setSummary(scopedTasks.getString(4));
-			newTask.setDescription(scopedTasks.getString(5));
+			newTask.setSummary(scopedTasks.getString(
+					scopedTasks.getColumnIndex(taskSelectColumns[3])));
+			newTask.setDescription(scopedTasks.getString(
+					scopedTasks.getColumnIndex(taskSelectColumns[4])));
 			if (global) {
 				newTask.isGlobal();
 			} else {
@@ -171,13 +185,18 @@ public class TaskLocalStorage {
 			
 			// GET ALL REQUESTS ASSOCIATED WITH THE TASK
 			Cursor taskRequests = db.query(requestTable, requestSelectColumns, 
-					requestSelectColumns[0] + " = " + scopedTasks.getString(2), 
+					requestSelectColumns[0] + " = '" + scopedTasks.getString(
+							scopedTasks.getColumnIndex(taskSelectColumns[1])) + "'", 
 					null, null, null, null);
-
+			
 			for (taskRequests.moveToFirst(); !taskRequests.isAfterLast(); taskRequests.moveToNext()) {
-				Request newRequest = new Request(MediaType.valueOf(taskRequests.getString(4)));
-				newRequest.setDescription(taskRequests.getString(2));
-				newRequest.setQuantity(taskRequests.getInt(3));
+				
+				Request newRequest = new Request(MediaType.valueOf(taskRequests.getString(
+						taskRequests.getColumnIndex(requestSelectColumns[3]))));
+				newRequest.setDescription(taskRequests.getString(
+						taskRequests.getColumnIndex(requestSelectColumns[1])));
+				newRequest.setQuantity(taskRequests.getInt(
+						taskRequests.getColumnIndex(requestSelectColumns[2])));
 				newTask.addRequest(newRequest);
 			}
 
