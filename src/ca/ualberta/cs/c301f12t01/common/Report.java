@@ -18,6 +18,7 @@
 package ca.ualberta.cs.c301f12t01.common;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -41,7 +42,7 @@ public class Report implements Iterable<Response> {
 
     final private UUID id;
     private UUID taskID;
-    private List<Response> responses;
+    private List<Response> responses = new ArrayList<Response>();
     private Sharing sharing = Sharing.LOCAL;
     private Timestamp timestamp;
 
