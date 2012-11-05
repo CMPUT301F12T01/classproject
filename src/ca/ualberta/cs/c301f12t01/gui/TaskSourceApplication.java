@@ -35,17 +35,20 @@ public class TaskSourceApplication extends Application {
     public TaskManager getTaskManager() {
         /* Lazily loads the manager. */
         if (manager == null) {
-            StorageInterface localStorage = new DeviceStorage(getApplicationContext());
-            /* TODO: Get the server interface working! */
-            StorageInterface serverStorage = null;
-            
-           
-            
-            manager = TaskManager.getInstance();
-            manager.setLocal(localStorage);
-            manager.setLocal(serverStorage);
-            
+            setupTaskManager();
         }
+        
+        return manager;
+    }
+    
+    public TaskManager setupTaskManager() {
+        StorageInterface localStorage = new DeviceStorage(getApplicationContext());
+        /* TODO: Get the server interface working! */
+        //StorageInterface serverStorage = null;
+        
+        manager = TaskManager.getInstance();
+        manager.setLocal(localStorage);
+        //manager.setGlobal(serverStorage);
         
         return manager;
     }

@@ -28,7 +28,7 @@ import android.widget.TextView;
  * @author Bronte Lee
  *
  */
-public class PhotoResponseObtainer extends AbstractResponseObtainer {
+public class PhotoResponseObtainer extends ResponseObtainer {
 
 	/**
 	 * @param view

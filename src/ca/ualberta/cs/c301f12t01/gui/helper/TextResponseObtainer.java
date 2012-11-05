@@ -29,7 +29,7 @@ import ca.ualberta.cs.c301f12t01.R;
  * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
-public class TextResponseObtainer extends AbstractResponseObtainer {
+public class TextResponseObtainer extends ResponseObtainer {
 	
 	
 	/**

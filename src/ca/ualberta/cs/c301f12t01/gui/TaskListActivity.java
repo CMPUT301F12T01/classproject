@@ -47,6 +47,8 @@ public class TaskListActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
+        ((TaskSourceApplication) getApplication()).setupTaskManager();
+        
         /* See if the view is using the two pane layout. */
         if (findViewById(R.id.task_detail_container) != null) {
 

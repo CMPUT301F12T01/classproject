@@ -34,12 +34,12 @@ import ca.ualberta.cs.c301f12t01.common.MediaType;
 public class ResponseObtainerObtainer {
 
     
-    public static AbstractResponseObtainer getResponseObtainer(
+    public static ResponseObtainer getResponseObtainer(
             MediaType media, LayoutInflater inflater, ViewGroup root) {
-        AbstractResponseObtainer obtainer = null;
+        ResponseObtainer obtainer = null;
         int layout_id = -1;
         ViewGroup view = null;
-        Class<? extends AbstractResponseObtainer> obtainerClass = null;
+        Class<? extends ResponseObtainer> obtainerClass = null;
         
         switch (media) {
             case TEXT:

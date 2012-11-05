@@ -154,4 +154,12 @@ public class TaskManager extends Observable{
         // TODO Auto-generated method stub
         
     }
+
+    /**
+     * @param serverStorage
+     */
+    public void setGlobal(StorageInterface serverStorage) {
+        // TODO Auto-generated method stub
+        
+    }
 }

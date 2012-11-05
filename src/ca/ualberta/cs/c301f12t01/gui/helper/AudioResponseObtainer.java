@@ -25,7 +25,7 @@ import android.view.ViewGroup;
  * @author Bronte Lee
  *
  */
-public class AudioResponseObtainer extends AbstractResponseObtainer {
+public class AudioResponseObtainer extends ResponseObtainer {
 
 	/**
 	 * @param view

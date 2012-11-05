@@ -26,11 +26,11 @@ import ca.ualberta.cs.c301f12t01.common.Response;
  * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
-public abstract class AbstractResponseObtainer {
+public abstract class ResponseObtainer {
 
 	protected ViewGroup viewGroup;
 	
-	public AbstractResponseObtainer(ViewGroup view){
+	public ResponseObtainer(ViewGroup view){
 		this.viewGroup = view; 
 	}
 	
