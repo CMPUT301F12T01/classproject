@@ -25,7 +25,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Request;
@@ -119,6 +122,18 @@ public class FulfillTaskFragment extends Fragment {
                     inflater, responseContainer);
         }
 
+        
+        /* Why doesn't the Action Bar manager work? */
+        Button button_done = (Button) rootView.findViewById(R.id.button_done);
+        button_done.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+            	
+                onFormCompletion();
+                Toast.makeText(getActivity(), "Report Saved", Toast.LENGTH_LONG).show();
+            }
+        });  
+        
         return rootView;
     }
 
