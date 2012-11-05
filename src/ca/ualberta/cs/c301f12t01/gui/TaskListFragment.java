@@ -19,6 +19,8 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -27,6 +29,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
@@ -38,7 +41,7 @@ import ca.ualberta.cs.c301f12t01.model.TaskManager;
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *
  */
-public class TaskListFragment extends ListFragment {
+public class TaskListFragment extends ListFragment implements Observer {
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
@@ -138,5 +141,13 @@ public class TaskListFragment extends ListFragment {
         }
 
         activatedPosition = position;
+    }
+
+    /* (non-Javadoc)
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    public void update(Observable observable, Object ignored) {
+        
+        ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
     }
 }

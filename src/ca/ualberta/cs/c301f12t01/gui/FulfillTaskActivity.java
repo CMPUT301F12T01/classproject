@@ -2,13 +2,13 @@ package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.UUID;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.app.Activity;
-import android.support.v4.app.NavUtils;
+import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 public class FulfillTaskActivity extends Activity {
 
@@ -22,7 +22,7 @@ public class FulfillTaskActivity extends Activity {
                 FulfillTaskFragment.ARG_TASK_ID);
         
         /* TODO: use TaskManager. */
-        Task task = DummyTasks.ITEM_MAP.get(taskId);
+        Task task = TaskManager.getInstance().get(taskId);
 
         /* Start the FulfillTaskFragment with the appropriate parameters. */
         FulfillTaskFragment frag = new FulfillTaskFragment(task);
