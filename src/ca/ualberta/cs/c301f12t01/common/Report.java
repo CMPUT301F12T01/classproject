@@ -123,7 +123,7 @@ public class Report implements Iterable<Response> {
     public boolean addResponse(Response response) {
         return responses.add(response);
     }
-
+    
     /**
      * @param deadResponse, the response to kill
      * @returnTrue if successful else False
@@ -140,7 +140,6 @@ public class Report implements Iterable<Response> {
     public int responseCount() {
         return responses.size();
     }
-
 
     /**
      * Iterate through this Report's Responses.
@@ -186,7 +185,6 @@ public class Report implements Iterable<Response> {
 	 */
 	public Timestamp getTimestamp()
 	{
-	
 		return timestamp;
 	}
 
