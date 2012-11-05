@@ -78,12 +78,13 @@ public class FulfillTaskFragment extends Fragment {
         if (savedInstanceState == null) {
             setHasOptionsMenu(true);
 
+            /* TODO: FIX THE HELL OUT OF THIS. */
             /* Get the task we're fulfilling. */
-            if (getArguments().containsKey(ARG_TASK_ID)) {
-                UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
-                TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
-                task = tm.get(taskId);
-            }
+//            if (getArguments().containsKey(ARG_TASK_ID)) {
+//                UUID taskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
+//                TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+//                task = tm.get(taskId);
+//            }
             
         }
     }
