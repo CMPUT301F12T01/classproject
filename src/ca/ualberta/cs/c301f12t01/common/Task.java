@@ -18,8 +18,8 @@
 package ca.ualberta.cs.c301f12t01.common;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -40,7 +40,7 @@ public class Task implements Iterable<Request> {
 
     private String summary = "";
     private String description = "";
-    private Collection<Request> requests = new ArrayList<Request>();
+    private List<Request> requests = new ArrayList<Request>();
     private Boolean shared = true;
     final private UUID id;
     private UUID user;
@@ -64,7 +64,6 @@ public class Task implements Iterable<Request> {
     public Task(UUID taskId, UUID user) {
     	setUser(user);
     	id = taskId;
-    	
     }
 
     /**
@@ -96,6 +95,15 @@ public class Task implements Iterable<Request> {
         return requests.iterator();
     }
 
+    /**
+     * Used to return a request from the list given its position.
+     * @param position
+     * @return Returns a request given its position.
+     */
+    public Request getRequest(int position) {
+    	return requests.get(position);
+    }
+    
     /**
      * Used to see how many requests are in a Task.
      * @return Returns the amount of Requests in this Task.

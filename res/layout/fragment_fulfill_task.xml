@@ -40,20 +40,20 @@
         android:layout_height="wrap_content" />
 
     <!-- Requests -->
-    
+
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/task_requests"
+        android:id="@+id/task_responses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp" >
-        
-  		<!-- The contents will be added programatically. -->
-  		
+
+        <!-- The contents will be added programatically. -->
+
     </LinearLayout>
-    
+
     <!-- Select who gets the report: task creator, the server, or just store it locally -->
 
     <TextView
@@ -73,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:text="@string/send_to_owner"
             android:textSize="13dip" />
 
@@ -92,5 +93,13 @@
             android:text="@string/do_not_send"
             android:textSize="13dip" />
     </RadioGroup>
+
+
+    <Button
+        android:id="@+id/button_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/done" />
 
 </LinearLayout>

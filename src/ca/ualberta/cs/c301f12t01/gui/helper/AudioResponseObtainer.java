@@ -15,7 +15,7 @@
  * limitations under the License.
  * 
  */
-package ca.ualberta.cs.c301f12t01.gui;
+package ca.ualberta.cs.c301f12t01.gui.helper;
 
 import ca.ualberta.cs.c301f12t01.common.Response;
 import android.view.ViewGroup;
@@ -25,12 +25,12 @@ import android.view.ViewGroup;
  * @author Bronte Lee
  *
  */
-public class ObtainAudio extends AbstractObtainResponse {
+public class AudioResponseObtainer extends AbstractResponseObtainer {
 
 	/**
 	 * @param view
 	 */
-	public ObtainAudio(ViewGroup view) {
+	public AudioResponseObtainer(ViewGroup view) {
 		super(view);
 		// TODO Auto-generated constructor stub
 	}
