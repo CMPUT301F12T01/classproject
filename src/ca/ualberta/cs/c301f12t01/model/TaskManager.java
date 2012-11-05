@@ -71,6 +71,7 @@ public class TaskManager extends Observable {
             // handle errors??
         }
         // notify that we changed
+        setChanged();
         notifyObservers(newTask);
     }
 
@@ -173,6 +174,7 @@ public class TaskManager extends Observable {
         /**
          * TODO make this handle global as well
          */
+    	setChanged();
         notifyObservers(newReport);
         // localStorage.storeReport(report);
     }
