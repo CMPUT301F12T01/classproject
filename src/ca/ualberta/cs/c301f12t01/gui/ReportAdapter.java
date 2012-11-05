@@ -30,7 +30,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 /**
- * ReportAdapter -- 
+ * ReportAdapter -- Creates a new view from a tasks responses suitable for a ListView
+ * 
+ * 
  * 
  * @author padlesky
  *
@@ -43,7 +45,14 @@ public class ReportAdapter extends BaseAdapter{
 	
 	
 	/**
+	 * Creates new ReportAdapter
 	 * 
+	 * @param context
+	 * 				An Android context (Activity, Application, etc.) that will be
+	 * 				used for things like resource acquisition and doing locale-
+	 * 				specific actions.
+	 * @param reportToUseForever
+	 * 				The specific report instance that this will adapt.
 	 */
 	public ReportAdapter(Context context, List<Report> reportToUseForever) {
 		currentContext = context;
@@ -52,10 +61,18 @@ public class ReportAdapter extends BaseAdapter{
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
+	/**
+	 * 
+	 * @return Returns how many reports of a Task.
+	 */
 	public int getCount() {
 		return reportList.size();
 	}
 	
+	/**
+	 * Given a position it will return the report from a task at that position.
+	 * @return Returns a report.
+	 */
 	public Object getItem(int position) {
 		return reportList.get(position);
 	}
@@ -66,19 +83,24 @@ public class ReportAdapter extends BaseAdapter{
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
+		// View either given to us from convert view, or we might have to inflate a new layout
 		View vi;
 		
+		// Recycle the convertView, if possible, else create a new view
 		if (convertView == null) {
 			vi = taskListInflater.inflate(R.layout.fragment_report_list_summary, null);
 		} else {
 			vi = convertView;
 		}
 		
+		// Get the specified entry from our Report
 		Report report = (Report) getItem(position);
 		
+		// Grab all the fields of out template.
 		TextView mediaType = (TextView) vi.findViewById(R.id.text_report_media);
 		TextView timestamp = (TextView) vi.findViewById(R.id.text_report_timestamp);
 		
+		// Setting all values in the new view
 		mediaType.setText(report.responseTypes());
 		timestamp.setText(report.getTimestamp().toString());
 		

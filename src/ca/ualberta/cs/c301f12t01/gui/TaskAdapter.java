@@ -30,7 +30,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * TaskAdapter -- 
+ * TaskAdapter -- Creates a new view from tasks suitable for a ListView.
+ * 
+ * 
  * 
  * @author padlesky
  *
@@ -42,7 +44,14 @@ public class TaskAdapter extends BaseAdapter{
 	List<Task> taskList;
 	
 	/**
+	 * Creates new TaskAdapter
 	 * 
+	 * @param context
+	 * 				An Android context (Activity, Application, etc.) that will be
+	 * 				used for things like resource acquisition and doing locale-
+	 * 				specific actions.
+	 * @param taskToUseForever
+	 * 				The specific task instance that this will adapt.
 	 */
 	public TaskAdapter(Context context, List<Task> taskToUseForever) {
 		currentContext = context;
@@ -51,10 +60,18 @@ public class TaskAdapter extends BaseAdapter{
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
+	/**
+	 * 
+	 * @return Returns how many tasks there are.
+	 */
 	public int getCount() {
 		return taskList.size();
 	}
 	
+	/**
+	 * Given a position it will return the Task at that position.
+	 * @return Returns a Task.
+	 */
 	public Object getItem(int position) {
 		return taskList.get(position);
 	}
@@ -65,19 +82,24 @@ public class TaskAdapter extends BaseAdapter{
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
+		// View either given to us from convert view, or we might have to inflate a new layout
 		View vi;
 		
+		// Recycle the convertView, if possible, else create a new view
 		if (convertView == null) {
 			vi = taskListInflater.inflate(R.layout.fragment_task_list_summary, null);
 		} else {
 			vi = convertView;
 		}
 		
+		// Grab the specified Task from our List of tasks.
 		Task task = (Task) getItem(position);
 		
+		// Grabs all of the fields of the template.
 		TextView summary = (TextView) vi.findViewById(R.id.text_task_summary);
 		ImageView responseIndicator = (ImageView) vi.findViewById(R.id.image_status_indicator);
 		
+		// Sets all values in the new view.
 		summary.setText(task.getSummary());
 		
 		//0 means Visible, 1 means Invisible, 2 means gone
