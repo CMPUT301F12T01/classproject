@@ -60,10 +60,14 @@ import ca.ualberta.cs.c301f12t01.common.TextResponse;
  */
 public class ReportLocalStorage
 {
+	/**
+	 * Stores a Report to the local SQLiteDatabase.
+	 * 
+	 * @param SQLiteDatabase db
+	 * @param reportToStore
+	 */
 	public static void storeReport(SQLiteDatabase db, Report reportToStore) {
-		/**
-		 * 
-		 */
+
 		String reportTable = "Reports";
 		String responseTable = "Responses";
 		String []reportCollumns = {"task_id", "id", "scope", 
@@ -115,6 +119,16 @@ public class ReportLocalStorage
 		}
 	}
 
+	/**
+	 * This method will give you all of the Reports that are associated
+	 * with a particular task. By taking a Sharing state you can select
+	 * for Reports of a particular scope
+	 * 
+	 * @param SQLiteDatabase db
+	 * @param UUID taskid
+	 * @param Sharing state
+	 * @return ArrayList<Report>
+	 */
 	public static ArrayList<Report> getReports(SQLiteDatabase db, UUID taskid, Sharing state) {
 		/**
 		 * 

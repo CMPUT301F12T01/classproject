@@ -40,8 +40,15 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  */
 public class TaskLocalStorage {
 
+	/**
+	 * Takes a Task and stores it to the local
+	 * SQLiteDatabase
+	 * 
+	 * @param SQLiteDatabase db
+	 * @param Task taskToStore
+	 */
 	public static void storeTask(SQLiteDatabase db, Task taskToStore) {
-		/**
+		/*
 		 * Order of operations: first the task is decomposed into by it's
 		 * attributes which are then stored in the database, then each
 		 * request associated with the task is decomposed and stored in
@@ -90,6 +97,14 @@ public class TaskLocalStorage {
 	    
 	}
 	
+	/**
+	 * Get all of the Tasks that belong to a particular
+	 * user from the Database
+	 * 
+	 * @param SQLiteDatabase db
+	 * @param UUID userid
+	 * @return ArrayList<Task>
+	 */
 	public static ArrayList<Task> getOwnTasks(SQLiteDatabase db, UUID userid) {
 		
 		String taskTable = "Tasks";
@@ -146,6 +161,14 @@ public class TaskLocalStorage {
 		return tasklist;
 	}
 	
+	/**
+	 * Get all of the Tasks that have a particular
+	 * scope from the Database. 
+	 * 
+	 * @param SQLiteDatabase db
+	 * @param boolean global
+	 * @return ArrayList<Task>
+	 */
 	public static ArrayList<Task> getTasks(SQLiteDatabase db, boolean global) {
 		
 		String taskTable = "Tasks";
