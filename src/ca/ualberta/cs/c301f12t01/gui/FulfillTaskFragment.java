@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -131,7 +132,6 @@ public class FulfillTaskFragment extends Fragment {
      * @returns false is the form was completed incorrectly, else true.
      */
     protected Boolean onFormCompletion() {
-        /* TODO: FINISH THIS METHOD! */
         
         View taskForm = getView();
         RadioGroup sharingButtons = (RadioGroup)
@@ -157,6 +157,7 @@ public class FulfillTaskFragment extends Fragment {
             report.addResponse(obtainer.getResponse());
         }
         
+        Log.d("DEBUG", report.toString());
         
         //TaskManager.getInstance().addReport(report);
         return true;
