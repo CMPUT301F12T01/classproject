@@ -17,46 +17,47 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
+
 import java.util.List;
 
-import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * TaskAdapter -- 
+ * ReportAdapter -- 
  * 
  * @author padlesky
  *
  */
-public class TaskAdapter extends BaseAdapter{
+public class ReportAdapter extends BaseAdapter{
 	
 	LayoutInflater taskListInflater;
 	Context currentContext;
-	List<Task> taskList;
+	List<Report> reportList;
+	
 	
 	/**
 	 * 
 	 */
-	public TaskAdapter(Context context, List<Task> taskToUseForever) {
+	public ReportAdapter(Context context, List<Report> reportToUseForever) {
 		currentContext = context;
-		taskList = taskToUseForever;
+		reportList = reportToUseForever;
 		taskListInflater = (LayoutInflater) currentContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
 	public int getCount() {
-		return taskList.size();
+		return reportList.size();
 	}
 	
 	public Object getItem(int position) {
-		return taskList.get(position);
+		return reportList.get(position);
 	}
 	
 	public long getItemId(int position) {
@@ -68,20 +69,18 @@ public class TaskAdapter extends BaseAdapter{
 		View vi;
 		
 		if (convertView == null) {
-			vi = taskListInflater.inflate(R.layout.fragment_task_list_summary, null);
+			vi = taskListInflater.inflate(R.layout.fragment_report_list_summary, null);
 		} else {
 			vi = convertView;
 		}
 		
-		Task task = (Task) getItem(position);
+		Report report = (Report) getItem(position);
 		
-		TextView summary = (TextView) vi.findViewById(R.id.text_task_summary);
-		ImageView responseIndicator = (ImageView) vi.findViewById(R.id.image_status_indicator);
+		TextView mediaType = (TextView) vi.findViewById(R.id.text_report_media);
+		TextView timestamp = (TextView) vi.findViewById(R.id.text_report_timestamp);
 		
-		summary.setText(task.getSummary());
-		
-		//0 means Visible, 1 means Invisible, 2 means gone
-		responseIndicator.setVisibility(1);
+		mediaType.setText(report.responseTypes());
+		timestamp.setText(report.getTimestamp().toString());
 		
 		return vi;
 	}

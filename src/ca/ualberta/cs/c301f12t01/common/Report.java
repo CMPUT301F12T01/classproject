@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,13 +34,14 @@ import java.util.UUID;
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * @author Neil Borle
+ * @author padlesky
  * 
  */
 public class Report implements Iterable<Response> {
 
     final private UUID id;
     private UUID taskID;
-    private Collection<Response> responses;
+    private List<Response> responses;
     private Sharing sharing = Sharing.LOCAL;
     private Timestamp timestamp;
 
@@ -149,8 +151,21 @@ public class Report implements Iterable<Response> {
         return responses.iterator();
     }
 
-
-	
+    /**
+     * Used when you need to know the types of responses that the
+     * report used.
+     * @return Returns a string of the types of responses
+     */
+    public String responseTypes () {
+    	String mediaTypes = null;
+    	Iterator<Response> responseIterator = iterator();
+    	while(responseIterator.hasNext()) {
+    		Response response = responseIterator.next();
+    		mediaTypes = mediaTypes.concat(response.getMediaType().toString() + " ");
+    	}
+    	return mediaTypes;
+    }
+    
 	/**
      * @return the sharing
      */
