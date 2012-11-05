@@ -31,23 +31,26 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 
 /**
- * Breaking up concerns needs to be done, plus this header
+ * Obtaining an instance of this class allows for the storing
+ * and retrieving of Tasks, Reports, Requests and Responses
+ * from the SQLDatabase. This class is responsible for creating 
+ * a connection to a database in Android and providing the 
+ * functionality to write and retrieve objects from it
  * 
  * @author Neil Borle
  */
-
 public class DeviceStorage implements StorageInterface, Observer {
-	/**
-	 * This class is responsible for creating 
-	 * a connection to a database in Android
-	 * and providing the functionality to 
-	 * write and retrieve objects from it
-	 */ 
 	
 	private DBInstance instance;
 	private SQLiteDatabase database;
 	
 	// TODO HANDLE CLOSING THE DATABASE WITHOUT NULLPOINTEREXECPTIONS
+	/**
+	 * Obtain a new instance of the Device Storage and open()
+	 * to get a SQLiteDatabase
+	 * 
+	 * @param context
+	 */
 	public DeviceStorage(Context context) {
 		instance = new DBInstance(context);
 		open();
@@ -57,7 +60,9 @@ public class DeviceStorage implements StorageInterface, Observer {
 		database = instance.getWritableDatabase();
 	}
 
-	
+	/**
+	 * Close the database connection
+	 */
 	public void close() {
 		// close the database connection
 		if (database != null)
@@ -72,16 +77,27 @@ public class DeviceStorage implements StorageInterface, Observer {
 		
 	}
 
-	/**
+	/*
 	 * The following methods deal with the storage and 
 	 * retrieval of Tasks from the database. They delegate
 	 * the hard work off to the taskLocalStorage class
+	 */
+	
+	/**
+	 * Store a task to the database
+	 * 
+	 * @param Task
 	 */
 	public void storeTask(Task taskToStore) {
 		// Delegate task storage to taskLocalStorage class
 		TaskLocalStorage.storeTask(database, taskToStore);
 	}
 
+	/**
+	 * Find all the Tasks that belong to a specific user
+	 * 
+	 * @param UUID
+	 */
 	public Collection<Task> getOwnTasks(UUID userid) {
 		// Delegate task storage to taskLocalStorage class
 		Collection<Task> taskList;
@@ -90,6 +106,11 @@ public class DeviceStorage implements StorageInterface, Observer {
 		return taskList;
 	}
 
+	/**
+	 * Get all tasks with local scope
+	 * 
+	 * @param
+	 */
 	public Collection<Task> getLocalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		Collection<Task> taskList;
@@ -98,6 +119,11 @@ public class DeviceStorage implements StorageInterface, Observer {
 		return taskList;
 	}
 
+	/**
+	 * Get all tasks with global scope
+	 * 
+	 * @param
+	 */
 	public Collection<Task> getGlobalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		Collection<Task> taskList;
@@ -106,17 +132,28 @@ public class DeviceStorage implements StorageInterface, Observer {
 		return taskList;
 	}
 
-	/**
+	/*
 	 * The following methods deal with the storage and 
 	 * retrieval of Reports from the database.
 	 * The hard work has been delegated off to the
 	 * reportLocalStorage class
+	 */
+	
+	/**
+	 * Store a Report to the database
+	 * 
+	 * @param Report
 	 */
 	public void storeReport(Report reportToStore) {
 		// Delegate Report storage to ReportLocalStorage
 		ReportLocalStorage.storeReport(database, reportToStore);
 	}
 
+	/**
+	 * Get all local Reports associated with a specific Task
+	 * 
+	 * @param UUID
+	 */
 	public Collection<Report> getLocalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		Collection<Report> reportList;
@@ -125,6 +162,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 		return reportList;
 	}
 	
+	/**
+	 * Get all Reports for a task where only the task creator
+	 * and the task fulfiller can see that Report
+	 * 
+	 * @param UUID
+	 */
 	public Collection<Report> getTaskCreatorReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		Collection<Report> reportList;
@@ -133,6 +176,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 		return reportList;
 	}
 
+	/**
+	 * Get all the Reports with Global scope that are associated
+	 * with a particular Task
+	 * 
+	 * @param UUID
+	 */
 	public Collection<Report> getGlobalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		Collection<Report> reportList;
