@@ -70,11 +70,19 @@ public class DeviceStorage implements StorageInterface, Observer {
 	}
 
 	/**
-	 * Notify everyone!
+	 * Notify everyone! //That isnt what this method is for . . .
+	 * This method written by Mitchell Home
+	 * Should eliminate need for TaskObserver and ReportObserver
 	 */
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
+	public void update(Observable obsv, Object arg) {
+		if (arg instanceof Report){
+			Report newReport = (Report) arg;
+			storeReport(newReport);
+		}
+		if (arg instanceof Task){
+			Task newTask = (Task) arg;
+			storeTask(newTask);
+		}
 	}
 
 	/*

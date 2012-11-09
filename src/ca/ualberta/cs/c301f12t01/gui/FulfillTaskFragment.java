@@ -41,6 +41,7 @@ import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerObtainer;
+import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
@@ -167,7 +168,7 @@ public class FulfillTaskFragment extends Fragment {
         
         Log.d("DEBUG", report.toString());
         
-        TaskManager.getInstance().addReport(report);
+        ReportManager.getInstance().addReport(report);
         return true;
     }
 
