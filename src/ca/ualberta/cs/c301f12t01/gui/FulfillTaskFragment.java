@@ -120,17 +120,6 @@ public class FulfillTaskFragment extends Fragment {
                 ResponseObtainerObtainer.getResponseObtainer(
                     request.getType(), inflater, responseContainer));
         }
-    
-        
-        /* TODO: Figure out why menus don't work. Seriously. It's annoying. */
-        /* Why doesn't the Action Bar manager work? */
-        Button button_done = (Button) rootView.findViewById(R.id.button_done);
-        button_done.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                onFormCompletion();
-                Toast.makeText(getActivity(), "Report Saved", Toast.LENGTH_LONG).show();
-            }
-        });  
         
         return rootView;
     }
@@ -186,6 +175,7 @@ public class FulfillTaskFragment extends Fragment {
         switch (item.getItemId()) {
         case R.id.menu_done:
             onFormCompletion();
+            Toast.makeText(getActivity(), "Report Saved", Toast.LENGTH_LONG).show();
             /* TODO: Figure out how to navigate away from this fragment... */
             // NavUtils.???
             return true;
