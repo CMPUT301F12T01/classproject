@@ -62,6 +62,9 @@
     <string name="send_to_server">Server</string>
     <string name="do_not_send">Don\'t Send</string>
 
+    <!-- Report List for a Task -->
+    <string name="title_activity_report_list">View Reports</string>
+    
     <!-- Viewing a report -->
     <string name="task_report_header">This Report Contains:</string>
 
@@ -75,7 +78,7 @@
     <string name="TEST_REPORT_TIMESTAMP">March 05, 2011</string>
     <string name="done">Done</string>
     <string name="task_list_status_description">Fulfilled</string>
-
+    
 
 
 </resources>

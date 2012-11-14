@@ -118,9 +118,7 @@ public class TaskDetailFragment extends Fragment {
      * When the user wants to view reports, start the report viewing activity.
      */
     private void onUserSelectViewReports() {
-        // startActivityWithTask(ReportDetailActivity.class);
-        Toast.makeText(getActivity(), "Not implemented", Toast.LENGTH_LONG)
-                .show();
+        startActivityWithTask(ReportListActivity.class);
     }
 
     /**
