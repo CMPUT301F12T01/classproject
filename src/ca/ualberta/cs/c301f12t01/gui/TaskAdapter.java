@@ -20,6 +20,7 @@ package ca.ualberta.cs.c301f12t01.gui;
 import java.util.List;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 import ca.ualberta.cs.c301f12t01.R;
 import android.content.Context;
@@ -103,7 +104,7 @@ public class TaskAdapter extends BaseAdapter{
 		// Sets all values in the new view.
 		summary.setText(task.getSummary());
 
-		List<Report> reports = TaskManager.getInstance().getReports(task.getId());
+		List<Report> reports = ReportManager.getInstance().getReports(task.getId());
 		// Sets marker to visible if a report has been made to a task.
 		if (reports.size() != 0) {
 			responseIndicator.setVisibility(0);

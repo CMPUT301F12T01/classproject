@@ -18,13 +18,11 @@
 package ca.ualberta.cs.c301f12t01.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
 
-import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /* TODO: HashMaps. USE THEM. */
@@ -35,151 +33,119 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  * @author Mitchell Home
  */
 public class TaskManager extends Observable {
-    // our collections
-    private List<Task> localTasks = new ArrayList<Task>();
-    private List<Task> globalTasks = new ArrayList<Task>();
+	// our collections
+	private List<Task> localTasks = new ArrayList<Task>();
+	private List<Task> globalTasks = new ArrayList<Task>();
 
-    // our instance
-    private static final TaskManager instance = new TaskManager();
+	// our instance
+	private static final TaskManager instance = new TaskManager();
 
-    // our StorageInterface
-    private StorageInterface localStorage;
+	// our StorageInterface
 
-    /** TODO Implement server stuff */
+	/** TODO Implement server stuff */
 
-    /**
-     * private constructor
-     */
-    private TaskManager() {
-        // nothing to do really
-    }
+	/**
+	 * private constructor
+	 */
+	private TaskManager() {
+		// nothing to do really
+	}
 
-    /**
-     * adds a new task into either localTasks or globalTasks
-     * 
-     * @param newTask
-     *            task to be added
-     */
-    public void addTask(Task newTask) {
-        if (newTask.isLocal()) {
-            localTasks.add(newTask);
+	/**
+	 * adds a new task into either localTasks or globalTasks
+	 * 
+	 * @param newTask
+	 *            task to be added
+	 */
+	public void addTask(Task newTask) {
+		if (newTask.isLocal()) {
+			localTasks.add(newTask);
 
-        } else if (newTask.isGlobal()) {
-            globalTasks.add(newTask);
+		} else if (newTask.isGlobal()) {
+			globalTasks.add(newTask);
 
-        } else {
-            // handle errors??
-        }
-        // notify that we changed
-        setChanged();
-        notifyObservers(newTask);
-    }
+		} else {
+			// handle errors??
+		}
+		// notify that we changed
+		setChanged();
+		notifyObservers(newTask);
+	}
 
-    /**
-     * given a UUID, return the task
-     * 
-     * @param id
-     *            ID of task we are looking for
-     * @return Task that matches ID
-     */
-    public Task get(UUID id) {
+	/**
+	 * given a UUID, return the task
+	 * 
+	 * @param id
+	 *            ID of task we are looking for
+	 * @return Task that matches ID
+	 */
+	public Task get(UUID id) {
 
-        // This is a little ugly
-        // first check local tasks
-        List<Task> l = getLocalTasks();
-        Iterator<Task> i = l.iterator();
-        while (i.hasNext()) {
-            Task t = i.next();
+		// This is a little ugly
+		// first check local tasks
+		List<Task> l = getLocalTasks();
+		Iterator<Task> i = l.iterator();
+		while (i.hasNext()) {
+			Task t = i.next();
 
-            if (t.getId().equals(id)) {
+			if (t.getId().equals(id)) {
 
-                return t;
-            }
-        }
-        // If we didn't find it in our local tasks
-        // check our global tasks
-        l = getGlobalTasks();
-        i = l.iterator();
-        List<Task> g = getGlobalTasks();
-        i = g.iterator();
-        while (i.hasNext()) {
-            Task t = i.next();
-            if (t.getId().equals(id)) {
+				return t;
+			}
+		}
+		// If we didn't find it in our local tasks
+		// check our global tasks
+		l = getGlobalTasks();
+		i = l.iterator();
+		List<Task> g = getGlobalTasks();
+		i = g.iterator();
+		while (i.hasNext()) {
+			Task t = i.next();
+			if (t.getId().equals(id)) {
 
-                return t;
-            }
-        }
-        // If we got here, we didn't find the task
-        return null;
+				return t;
+			}
+		}
+		// If we got here, we didn't find the task
+		return null;
 
-    }
+	}
 
-    /**
-     * returns all local tasks
-     * 
-     * @return ArrayList of local tasks
-     */
-    public List<Task> getLocalTasks() {
-        return localTasks;
-    }
+	/**
+	 * returns all local tasks
+	 * 
+	 * @return ArrayList of local tasks
+	 */
+	public List<Task> getLocalTasks() {
+		return localTasks;
+	}
 
-    /**
-     * returns all global tasks
-     * 
-     * @return ArrayList of local tasks
-     */
-    public List<Task> getGlobalTasks() {
-        return globalTasks;
-    }
+	/**
+	 * returns all global tasks
+	 * 
+	 * @return ArrayList of local tasks
+	 */
+	public List<Task> getGlobalTasks() {
+		return globalTasks;
+	}
 
-    /**
-     * let them get our instance
-     * 
-     * @return Singleton instance of TaskManager
-     */
-    public static TaskManager getInstance() {
-        return instance;
-    }
+	/**
+	 * let them get our instance
+	 * 
+	 * @return Singleton instance of TaskManager
+	 */
+	public static TaskManager getInstance() {
+		return instance;
+	}
 
-    /**
-     * 
-     * @param taskID
-     *            Task that you want to get reports for
-     * @return The Collection of reports associated with our task
-     */
-    public List<Report> getReports(UUID taskID) {
-        
-    	Collection<Report> c = localStorage.getLocalReports(taskID);
-    	List<Report> l = (List<Report>) c;
-    	return l;
-        // return localStorage.getLocalReports(taskID);
-    }
-    
-    public void setLocalStorage(StorageInterface localStorage){
-    	this.localStorage = localStorage;
-    }
-    
-    /**
-     * 
-     * @param localStorage
-     * 			Where our local storage is
-     */
-    public void loadTasks(StorageInterface localStorage){
-    	localTasks = (List<Task>) localStorage.getLocalTasks();
-    	/*TODO Make Neil use Lists and not collections*/
-    }
-
-    /**
-     * 
-     * @param report
-     */
-    public void addReport(Report newReport) {
-        /**
-         * TODO make this handle global as well
-         */
-    	setChanged();
-        notifyObservers(newReport);
-        // localStorage.storeReport(report);
-    }
+	/**
+	 * 
+	 * @param localStorage
+	 *            Where our local storage is
+	 */
+	public void loadTasks(StorageInterface localStorage) {
+		localTasks = (List<Task>) localStorage.getLocalTasks();
+		/* TODO Make Neil use Lists and not collections */
+	}
 
 }

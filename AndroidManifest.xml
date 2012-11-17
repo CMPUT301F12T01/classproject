@@ -45,6 +45,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
         </activity>
+        <activity
+            android:name=".gui.ReportListActivity"
+            android:label="@string/title_activity_report_list" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
+        </activity>
     </application>
 
 </manifest>

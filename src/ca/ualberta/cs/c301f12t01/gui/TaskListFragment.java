@@ -33,6 +33,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
@@ -66,6 +67,9 @@ public class TaskListFragment extends ListFragment implements Observer {
         super.onCreate(savedInstanceState);
 
         TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+        /**TODO Somewhere we have to initialize Report Manager as well. Imma put it here for now */
+        ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
+
         /*TODO Take into account global tasks maybe?*/
         setListAdapter(new TaskAdapter(getActivity(),
                 tm.getLocalTasks()));
