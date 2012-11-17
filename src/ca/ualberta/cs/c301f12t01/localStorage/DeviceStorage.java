@@ -17,7 +17,7 @@
  */
 package ca.ualberta.cs.c301f12t01.localStorage;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
@@ -98,9 +98,9 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public Collection<Task> getOwnTasks(UUID userid) {
+	public ArrayList<Task> getOwnTasks(UUID userid) {
 		// Delegate task storage to taskLocalStorage class
-		Collection<Task> taskList;
+		ArrayList<Task> taskList;
 		taskList = TaskLocalStorage.getOwnTasks(database, userid);
 		
 		return taskList;
@@ -111,9 +111,9 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param
 	 */
-	public Collection<Task> getLocalTasks() {
+	public ArrayList<Task> getLocalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
-		Collection<Task> taskList;
+		ArrayList<Task> taskList;
 		taskList = TaskLocalStorage.getTasks(database, false);
 		
 		return taskList;
@@ -124,9 +124,9 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param
 	 */
-	public Collection<Task> getGlobalTasks() {
+	public ArrayList<Task> getGlobalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
-		Collection<Task> taskList;
+		ArrayList<Task> taskList;
 		taskList = TaskLocalStorage.getTasks(database, true);
 		
 		return taskList;
@@ -154,9 +154,9 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public Collection<Report> getLocalReports(UUID taskid) {
+	public ArrayList<Report> getLocalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		Collection<Report> reportList;
+		ArrayList<Report> reportList;
 		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
 		
 		return reportList;
@@ -168,9 +168,9 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public Collection<Report> getTaskCreatorReports(UUID taskid) {
+	public ArrayList<Report> getTaskCreatorReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		Collection<Report> reportList;
+		ArrayList<Report> reportList;
 		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR);
 		
 		return reportList;
@@ -182,9 +182,9 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public Collection<Report> getGlobalReports(UUID taskid) {
+	public ArrayList<Report> getGlobalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		Collection<Report> reportList;
+		ArrayList<Report> reportList;
 		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL);
 		
 		return reportList;

@@ -63,7 +63,7 @@ public class ReportLocalStorage
 	/**
 	 * Stores a Report to the local SQLiteDatabase.
 	 * 
-	 * @param SQLiteDatabase db
+	 * @param SQLiteDatabase dbgit
 	 * @param reportToStore
 	 */
 	public static void storeReport(SQLiteDatabase db, Report reportToStore) {
@@ -193,12 +193,12 @@ public class ReportLocalStorage
 					in = new ObjectInputStream(bis);
 					newResponse.setResponseData((Serializable) in.readObject());
 
-					bis.close();
-					in.close();
+					bis.close(); 
+					in.close(); 
 				} catch (IOException e) {
-					e.printStackTrace();
+					e.printStackTrace(); 
 				} catch (ClassNotFoundException e){
-					e.printStackTrace();
+					e.printStackTrace(); 
 				} 
 
 				newReport.addResponse(newResponse);

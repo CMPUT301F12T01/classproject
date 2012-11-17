@@ -17,7 +17,7 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
@@ -37,19 +37,19 @@ public interface StorageInterface {
 	// Storage and retrieval of Tasks
 	public void storeTask(Task taskToStore);
 	
-	public Collection<Task> getOwnTasks(UUID userid);
+	public ArrayList<Task> getOwnTasks(UUID userid);
 	
-	public Collection<Task> getLocalTasks();
+	public ArrayList<Task> getLocalTasks();
 	
-	public Collection<Task> getGlobalTasks();
+	public ArrayList<Task> getGlobalTasks();
 	
 	// Storage and retrieval of reports
 	public void storeReport(Report reportToStore);
 	
-	public Collection<Report> getLocalReports(UUID taskid);
+	public ArrayList<Report> getLocalReports(UUID taskid);
 	
-	public Collection<Report> getTaskCreatorReports(UUID taskid);
+	public ArrayList<Report> getTaskCreatorReports(UUID taskid);
 	
-	public Collection<Report> getGlobalReports(UUID taskid);
+	public ArrayList<Report> getGlobalReports(UUID taskid);
 
 }
