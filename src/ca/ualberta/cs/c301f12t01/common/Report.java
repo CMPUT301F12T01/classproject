@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import ca.ualberta.cs.c301f12t01.common.Sharing;
+
 
 /**
  * Report -- Contains Responses that fulfill Tasks.
