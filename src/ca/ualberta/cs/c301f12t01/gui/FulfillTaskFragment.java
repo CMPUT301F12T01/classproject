@@ -18,7 +18,6 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -28,9 +27,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +39,6 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerObtainer;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
-import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * 

@@ -17,6 +17,8 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -65,7 +67,6 @@ public class ReportListFragment extends ListFragment implements Observer {
 		public void onItemSelected(UUID reportId) {
 		}
 	};
-    
     
 	public ReportListFragment() {
 	}
