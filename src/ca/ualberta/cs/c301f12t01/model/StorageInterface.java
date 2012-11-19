@@ -46,6 +46,8 @@ public interface StorageInterface {
 	// Storage and retrieval of reports
 	public void storeReport(Report reportToStore);
 	
+	public ArrayList<Report> getReports(UUID taskid);
+	
 	public ArrayList<Report> getLocalReports(UUID taskid);
 	
 	public ArrayList<Report> getTaskCreatorReports(UUID taskid);
