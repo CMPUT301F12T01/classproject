@@ -127,11 +127,42 @@ public class FulfillTaskFragment extends Fragment {
      */
     protected Boolean onFormCompletion() {
         
-        View taskForm = getView();
-        RadioGroup sharingButtons = (RadioGroup)
-                taskForm.findViewById(R.id.radio_group_send_options);
-        Sharing selectedSharing = Sharing.TASK_CREATOR;
+        Report report = new Report(task);
         
+        attachReportSharingMode(report);
+        attachResponsesToReport(report);
+
+        ReportManager.getInstance().addReport(report);
+
+        return true;
+    }
+
+    /**
+     * Attaches every Response on the current fragment
+     * to the given Report.
+     * 
+     * @param report
+     */
+    private void attachResponsesToReport(Report report) {
+        for (ResponseObtainer obtainer : obtainers) {
+            report.addResponse(obtainer.getResponse());
+        }
+    }
+
+    /**
+     * Attaches the sharing mode on the current fragment
+     * to the given Report.
+     * 
+     * @param report
+     */
+    private void attachReportSharingMode(Report report) {
+        View taskForm = getView();
+        
+        RadioGroup sharingButtons = (RadioGroup) taskForm
+                .findViewById(R.id.radio_group_send_options);
+
+        Sharing selectedSharing = Sharing.TASK_CREATOR;
+
         switch (sharingButtons.getCheckedRadioButtonId()) {
         case R.id.radio_send_to_owner:
             selectedSharing = Sharing.TASK_CREATOR;
@@ -143,18 +174,9 @@ public class FulfillTaskFragment extends Fragment {
             selectedSharing = Sharing.LOCAL;
             break;
         }
-        
-        /* Create the new report. */
-        Report report = new Report(task);
+
         report.setSharing(selectedSharing);
-        for (ResponseObtainer obtainer : obtainers) {
-            report.addResponse(obtainer.getResponse());
-        }
         
-        Log.d("DEBUG", report.toString());
-        
-        ReportManager.getInstance().addReport(report);
-        return true;
     }
 
     /* TODO: Template some of this stuff away into a superclass. */

@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
+import ca.ualberta.cs.c301f12t01.util.LinkedOPCollection;
 
 /**
  * Testing for TaskCollection
@@ -35,7 +36,7 @@ public class TaskCollectionTest {
 
 	@Test
 	public void check_collection_size() {
-		TaskCollection tc = new TaskCollection();
+		LinkedOPCollection tc = new TaskCollection();
 		Task t = TestUtils.makeSimpleTask();
 		for (int i = 0; i < 17; i++){
 			tc.add(t);
@@ -45,7 +46,7 @@ public class TaskCollectionTest {
 	
 	@Test
 	public void check_iterator(){
-		TaskCollection tc = new TaskCollection();
+		LinkedOPCollection tc = new TaskCollection();
 		Task t = TestUtils.makeSimpleTask();
 		tc.add(t);
 		Iterator<Task> iter = tc.iterator();

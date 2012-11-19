@@ -41,7 +41,7 @@ public class Task implements Iterable<Request> {
     private String summary = "";
     private String description = "";
     private List<Request> requests = new ArrayList<Request>();
-    private Boolean shared = true;
+    private Sharing shared = Sharing.GLOBAL;
     final private UUID id;
     private UUID user;
 
@@ -137,14 +137,14 @@ public class Task implements Iterable<Request> {
      * @return Returns whether the Task is local to the device only.
      */
     public Boolean isLocal() {
-        return shared == false;
+        return shared.isLocal();
     }
 
     /**
      * Sets the task to local by changing shared to false.
      */
     public void setLocal() {
-        shared = false;
+        shared = Sharing.LOCAL;
     }
 
     /**
@@ -152,14 +152,14 @@ public class Task implements Iterable<Request> {
      * @return Returns whether the Task is globally shared.
      */
     public Boolean isGlobal() {
-        return shared == true;
+        return shared.isGlobal();
     }
 
     /**
      * Set the task to global by changing shared to true.
      */
     public void setGlobal() {
-        shared = true;
+        shared = Sharing.GLOBAL;
     }
 
     /**
