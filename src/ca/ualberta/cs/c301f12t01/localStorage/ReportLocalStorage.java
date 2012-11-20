@@ -38,6 +38,7 @@ import ca.ualberta.cs.c301f12t01.common.PhotoResponse;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Response;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
+import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.common.TextResponse;
 
 
@@ -129,7 +130,7 @@ public class ReportLocalStorage
 	 * @param Sharing state
 	 * @return ArrayList<Report>
 	 */
-	public static ArrayList<Report> getReports(SQLiteDatabase db, UUID taskid, Sharing state) {
+	public static ArrayList<Report> getReports(SQLiteDatabase db, Task matchingTask, Sharing state) {
 		/**
 		 * 
 		 */
@@ -141,7 +142,8 @@ public class ReportLocalStorage
 
 		// Get all Reports in a given scope {LOCAL, GLOBAL or TASK_CREATOR}
 		Cursor scopedReports = db.query(reportTable, 
-				reportSelectCollumns, reportSelectCollumns[2] + " = '" + state.toString() + "'", 
+				reportSelectCollumns, reportSelectCollumns[2] + " = '" + state.toString() + "' "
+				+ "AND " + reportSelectCollumns[0] + " = '" + matchingTask.getId().toString() + "'", 
 				null, null, null, null);
 
 		// Create a new report with a all the fields set

@@ -17,7 +17,7 @@
  */
 package ca.ualberta.cs.c301f12t01.localStorage;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 import android.content.ContentValues;
@@ -105,14 +105,14 @@ public class TaskLocalStorage {
 	 * @param UUID userid
 	 * @return ArrayList<Task>
 	 */
-	public static ArrayList<Task> getOwnTasks(SQLiteDatabase db, UUID userid) {
+	public static HashMap<UUID, Task> getOwnTasks(SQLiteDatabase db, UUID userid) {
 		
 		String taskTable = "Tasks";
 		String requestTable = "Requests";
 		String []taskSelectColumns = {"userid", "id", "global", "summary", "description"};
 		String []requestSelectColumns = {"task_id", "description", "quantity", "mediatype"};
 		
-		ArrayList<Task> tasklist = new ArrayList<Task>();
+		HashMap<UUID, Task> taskHash = new HashMap<UUID, Task>();
 		String user = userid.toString();
 		
 		Cursor userTasks = db.query(taskTable, 
@@ -155,10 +155,10 @@ public class TaskLocalStorage {
 				newTask.addRequest(newRequest);
 			}
 			
-			tasklist.add(newTask);
+			taskHash.put(newTask.getId(), newTask);
 		}
 		
-		return tasklist;
+		return taskHash;
 	}
 	
 	/**
@@ -169,13 +169,13 @@ public class TaskLocalStorage {
 	 * @param boolean global
 	 * @return ArrayList<Task>
 	 */
-	public static ArrayList<Task> getTasks(SQLiteDatabase db, boolean global) {
+	public static HashMap<UUID, Task> getTasks(SQLiteDatabase db, boolean global) {
 		
 		String taskTable = "Tasks";
 		String requestTable = "Requests";
 		String []taskSelectColumns = {"userid", "id", "global", "summary", "description"};
 		String []requestSelectColumns = {"task_id", "description", "quantity", "mediatype"};
-		ArrayList<Task> tasklist = new ArrayList<Task>();
+		HashMap<UUID, Task> taskHash = new HashMap<UUID, Task>();
 		
 		Cursor scopedTasks;
 		
@@ -223,10 +223,10 @@ public class TaskLocalStorage {
 				newTask.addRequest(newRequest);
 			}
 
-			tasklist.add(newTask);
+			taskHash.put(newTask.getId(), newTask);
 		}
 		
-		return tasklist;
+		return taskHash;
 	}
 	
 }
