@@ -162,6 +162,21 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
+	public ArrayList<Report> getReports(UUID taskid) {
+		// Delegate Report retrieval to ReportLocalStorage class
+		ArrayList<Report> reportList;
+		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
+		reportList.addAll(ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL));
+		reportList.addAll(ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR));
+		
+		return reportList;
+	}
+	
+	/**
+	 * Get all local Reports associated with a specific Task
+	 * 
+	 * @param UUID
+	 */
 	public ArrayList<Report> getLocalReports(UUID taskid) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		ArrayList<Report> reportList;
