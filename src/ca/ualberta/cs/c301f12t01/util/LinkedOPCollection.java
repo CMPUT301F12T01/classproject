@@ -22,6 +22,28 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 
+/*
+ * TODOTODOTODO    TODO     TODOTODO        TODO     
+ *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
+ *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
+ *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
+ *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
+ *     TODO        TODO     TODOTODO        TODO     :
+ *
+ *  - Rename OPCollection to ObservableCollection
+ *  - Rename this class to DualIndexedObservableCollection
+ *  - Make this a dual-indexed, obeservable collection!
+ *  - The "concrete" TaskCollection should extend from this class
+ *    whilst the view should extend from this class.
+ *  - The ReportCollection should extend from ObservableCollection.
+ *  - Figure out mutability: the ability to change Tasks (maybe not
+ *    Reports).  Perhaps create a new interface and make this class
+ *    implement that? Also, I think it should be "replace". Or
+ *    something.
+ *
+ */
+
+
 /**
  * Implementation of {@link OPCollection}, using {@link LinkedHashMap}.
  * 
@@ -34,7 +56,7 @@ public abstract class LinkedOPCollection<Key, Element> extends
     protected LinkedHashMap<Key, Element> linkedCollection = new LinkedHashMap<Key, Element>();
 
     /**
-     * 
+     *  DERP.
      */
     public LinkedOPCollection() {
         super();
@@ -48,6 +70,8 @@ public abstract class LinkedOPCollection<Key, Element> extends
     /**
      * If the element itself contains the key, then this is the abstract method
      * for you! Simply return the key from the element and all will be dandy.
+     *
+     * TODO: SHOULD THIS EVEN EXIST?
      * 
      * @param element
      * @return the key for the element.
