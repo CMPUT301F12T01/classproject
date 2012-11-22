@@ -40,7 +40,8 @@ public abstract class ObservableCollection<Key, Element> extends Observable impl
     public boolean add(Element element) {
         if (addNoNotify(element)) {
             setChanged();
-            notifyObservers(element);
+            Message message = Message.makeAdded(element);
+            notifyObservers(message);
             return true;
         } else {
             return false;
@@ -51,7 +52,8 @@ public abstract class ObservableCollection<Key, Element> extends Observable impl
     public boolean replace(Element oldElement, Element newElement) {
         if (replaceNoNotify(oldElement, newElement)) {
             setChanged();
-            notifyObservers(newElement);
+            Message message = Message.makeModified(newElement);
+            notifyObservers(message);
             return true;
         } else {
             return false;
@@ -62,7 +64,8 @@ public abstract class ObservableCollection<Key, Element> extends Observable impl
     public boolean removeElement(Element element) {
         if (removeNoNotify(element)) {
             setChanged();
-            notifyObservers(element);
+            Message message = Message.makeRemoved(element);
+            notifyObservers(message);
             return true;
         } else {
             return false;
