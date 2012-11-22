@@ -72,7 +72,7 @@ public abstract class ObservableCollection<Key, Element> extends Observable impl
     
     public boolean addAll(Collection<? extends Element> elements) {
         for (Element element : elements) {
-            if (addNoNotify(element)) {
+            if (add(element)) {
                 setChanged();
             } else {
                 return false;

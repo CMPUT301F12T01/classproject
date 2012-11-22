@@ -33,7 +33,7 @@ import java.util.List;
  *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
  *     TODO        TODO     TODOTODO        TODO     :
  *
- *  - Make this a dual-indexed, obeservable collection!
+ *  - Make this a dual-indexed, observable collection!
  *  - The "concrete" TaskCollection should extend from this class
  *    whilst the view should extend from this class.
  *  - The ReportCollection should extend from ObservableCollection.
@@ -65,7 +65,7 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
         super();
     }
     //Public till tests are done.
-    public boolean addNoNotify(Element element) {
+    protected boolean addNoNotify(Element element) {
         primraryIndex.put(getKey(element), element);
         orderedIndex.add(getKey(element));
         return true;
@@ -81,9 +81,10 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
     
     protected boolean removeNoNotify(Element element) {
     	primraryIndex.remove(getKey(element));
-    	orderedIndex.remove(orderedIndex.indexOf(getKey(element)));
+    	orderedIndex.remove(getKey(element));
     	return true;
     }
+
 
     /**
      * If the element itself contains the key, then this is the abstract method
@@ -109,14 +110,8 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
         if (position >= size() || position < 0) {
             return null;
         }
-
+        
         Element element = primraryIndex.get(orderedIndex.get(position));
-        /*
-        Iterator<Element> iter = primraryIndex.values().iterator();
-
-        for (int i = 0; i < position; i++)
-            iter.next();
-		*/
         return element;
     }
 
@@ -177,6 +172,10 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
         return primraryIndex.remove(key);
     }
 
+    public int grabIndex (Element element) {
+    	return orderedIndex.indexOf(getKey(element));
+    }
+    
     /**
      * @deprecated NOT IMPLEMENTED AND NEVER WILL BE.
      */
