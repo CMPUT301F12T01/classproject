@@ -19,7 +19,7 @@ package ca.ualberta.cs.c301f12t01.model;
 
 import java.util.UUID;
 
-import ca.ualberta.cs.c301f12t01.util.LinkedOPCollection;
+import ca.ualberta.cs.c301f12t01.util.DualIndexedObservableCollection;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
@@ -28,7 +28,7 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  * @author Mitchell Home
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
-public class TaskCollection extends LinkedOPCollection<UUID, Task> {
+public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> {
 
     /**
      * Adds a task. The UUID is determined automatically.

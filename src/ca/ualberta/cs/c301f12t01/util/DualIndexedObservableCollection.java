@@ -17,9 +17,12 @@
  */
 package ca.ualberta.cs.c301f12t01.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 
 /*
@@ -30,8 +33,6 @@ import java.util.LinkedHashMap;
  *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
  *     TODO        TODO     TODOTODO        TODO     :
  *
- *  - Rename OPCollection to ObservableCollection
- *  - Rename this class to DualIndexedObservableCollection
  *  - Make this a dual-indexed, obeservable collection!
  *  - The "concrete" TaskCollection should extend from this class
  *    whilst the view should extend from this class.
@@ -45,26 +46,42 @@ import java.util.LinkedHashMap;
 
 
 /**
- * Implementation of {@link OPCollection}, using {@link LinkedHashMap}.
+ * Implementation of {@link ObservableCollection}, using {@link LinkedHashMap}.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * 
  */
-public abstract class LinkedOPCollection<Key, Element> extends
-        OPCollection<Key, Element> {
+public abstract class DualIndexedObservableCollection<Key, Element> extends
+        ObservableCollection<Key, Element> {
 
-    protected LinkedHashMap<Key, Element> linkedCollection = new LinkedHashMap<Key, Element>();
-
+    protected HashMap<Key, Element> primraryIndex = new HashMap<Key, Element>();
+    protected List<Key> orderedIndex = new ArrayList<Key>();
+    
     /**
      *  DERP.
      */
-    public LinkedOPCollection() {
+    public DualIndexedObservableCollection() {
         super();
     }
-
+    //Public till tests are done.
     public boolean addNoNotify(Element element) {
-        linkedCollection.put(getKey(element), element);
+        primraryIndex.put(getKey(element), element);
+        orderedIndex.add(getKey(element));
         return true;
+    }
+    
+    protected boolean replaceNoNotify(Element oldElement, Element newElement) {
+    	if(getKey(oldElement) .equals(getKey(newElement))){
+        	primraryIndex.put(getKey(oldElement), newElement);
+        	return true;
+    	}
+    	return false;
+    }
+    
+    protected boolean removeNoNotify(Element element) {
+    	primraryIndex.remove(getKey(element));
+    	orderedIndex.remove(orderedIndex.indexOf(getKey(element)));
+    	return true;
     }
 
     /**
@@ -83,7 +100,7 @@ public abstract class LinkedOPCollection<Key, Element> extends
      * 
      * NEEDS TO BE SUPER TESTED.
      * 
-     * @see ca.ualberta.cs.c301f12t01.util.OPCollection#getAt(int)
+     * @see ca.ualberta.cs.c301f12t01.util.ObservableCollection#getAt(int)
      */
     @Override
     public Element getAt(int position) {
@@ -92,12 +109,14 @@ public abstract class LinkedOPCollection<Key, Element> extends
             return null;
         }
 
-        Iterator<Element> iter = linkedCollection.values().iterator();
+        Element element = primraryIndex.get(orderedIndex.get(position));
+        /*
+        Iterator<Element> iter = primraryIndex.values().iterator();
 
         for (int i = 0; i < position; i++)
             iter.next();
-
-        return iter.next();
+		*/
+        return element;
     }
 
     /**
@@ -105,33 +124,38 @@ public abstract class LinkedOPCollection<Key, Element> extends
      * 
      * @return Iterator from taskCollection
      */
+    
     public Iterator<Element> iterator() {
         /* Two dots condoned by Bronte! */
-        return linkedCollection.values().iterator();
+    	List<Element> element = new ArrayList<Element>();
+    	for (int i = 0; i < orderedIndex.size(); i++) {
+    		element.add(primraryIndex.get(orderedIndex.get(i)));
+    	}
+        return element.iterator();
     }
 
     /**
      * 
-     * @see ca.ualberta.cs.c301f12t01.util.OPCollection#get(java.lang.Object)
+     * @see ca.ualberta.cs.c301f12t01.util.ObservableCollection#get(java.lang.Object)
      */
     @Override
     public Element get(Key key) {
-        return linkedCollection.get(key);
+        return primraryIndex.get(key);
     }
 
     /**
      * @return The size of taskCollection
      */
     public int size() {
-        return linkedCollection.size();
+        return primraryIndex.size();
     }
 
     public void clear() {
-        linkedCollection.clear();
+    	primraryIndex.clear();
     }
 
     public boolean contains(Object thing) {
-        return linkedCollection.containsValue(thing);
+        return primraryIndex.containsValue(thing);
     }
 
     public boolean containsAll(Collection<?> things) {
@@ -145,11 +169,11 @@ public abstract class LinkedOPCollection<Key, Element> extends
     }
 
     public boolean isEmpty() {
-        return linkedCollection.isEmpty();
+        return primraryIndex.isEmpty();
     }
 
     public Element removeKey(Key key) {
-        return linkedCollection.remove(key);
+        return primraryIndex.remove(key);
     }
 
     /**

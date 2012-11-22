@@ -28,12 +28,14 @@ import java.util.Observable;
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  *
  */
-public abstract class OPCollection<Key, Element> extends Observable implements Iterable<Element>, Collection<Element> {
+public abstract class ObservableCollection<Key, Element> extends Observable implements Iterable<Element>, Collection<Element> {
     
     public abstract Element get(Key key);
     public abstract Element getAt(int position);
 
     protected abstract boolean addNoNotify(Element element);
+    protected abstract boolean replaceNoNotify(Element oldElement, Element newElement);
+    protected abstract boolean removeNoNotify(Element element);
 
     public boolean add(Element element) {
         if (addNoNotify(element)) {
@@ -46,6 +48,28 @@ public abstract class OPCollection<Key, Element> extends Observable implements I
   
     }
 
+    public boolean replace(Element oldElement, Element newElement) {
+        if (replaceNoNotify(oldElement, newElement)) {
+            setChanged();
+            notifyObservers(newElement);
+            return true;
+        } else {
+            return false;
+        }
+  
+    }
+
+    public boolean removeElement(Element element) {
+        if (removeNoNotify(element)) {
+            setChanged();
+            notifyObservers(element);
+            return true;
+        } else {
+            return false;
+        }
+  
+    }
+    
     public boolean addAll(Collection<? extends Element> elements) {
         for (Element element : elements) {
             if (addNoNotify(element)) {
