@@ -18,6 +18,7 @@
 package ca.ualberta.cs.c301f12t01.localStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
@@ -36,6 +37,9 @@ import ca.ualberta.cs.c301f12t01.model.StorageInterface;
  * from the SQLDatabase. This class is responsible for creating 
  * a connection to a database in Android and providing the 
  * functionality to write and retrieve objects from it
+ * 
+ * Refactored to deal with HashMaps and to pass Task object
+ * instead of UUIDs to get reports
  * 
  * @author Neil Borle
  */
@@ -106,12 +110,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public ArrayList<Task> getOwnTasks(UUID userid) {
+	public HashMap<UUID, Task> getOwnTasks(UUID userid) {
 		// Delegate task storage to taskLocalStorage class
-		ArrayList<Task> taskList;
-		taskList = TaskLocalStorage.getOwnTasks(database, userid);
+		HashMap<UUID, Task> taskHash;
+		taskHash = TaskLocalStorage.getOwnTasks(database, userid);
 		
-		return taskList;
+		return taskHash;
 	}
 
 	/**
@@ -119,12 +123,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param
 	 */
-	public ArrayList<Task> getLocalTasks() {
+	public HashMap<UUID, Task> getLocalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
-		ArrayList<Task> taskList;
-		taskList = TaskLocalStorage.getTasks(database, false);
+		HashMap<UUID, Task> taskHash;
+		taskHash = TaskLocalStorage.getTasks(database, false);
 		
-		return taskList;
+		return taskHash;
 	}
 
 	/**
@@ -132,12 +136,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param
 	 */
-	public ArrayList<Task> getGlobalTasks() {
+	public HashMap<UUID, Task> getGlobalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
-		ArrayList<Task> taskList;
-		taskList = TaskLocalStorage.getTasks(database, true);
+		HashMap<UUID, Task> taskHash;
+		taskHash = TaskLocalStorage.getTasks(database, true);
 		
-		return taskList;
+		return taskHash;
 	}
 
 	/*
@@ -162,12 +166,13 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public ArrayList<Report> getReports(UUID taskid) {
+	public ArrayList<Report> getReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
+		//TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
-		reportList.addAll(ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL));
-		reportList.addAll(ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR));
+		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.LOCAL);
+		reportList.addAll(ReportLocalStorage.getReports(database, matchingTask, Sharing.GLOBAL));
+		reportList.addAll(ReportLocalStorage.getReports(database, matchingTask, Sharing.TASK_CREATOR));
 		
 		return reportList;
 	}
@@ -177,10 +182,10 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public ArrayList<Report> getLocalReports(UUID taskid) {
+	public ArrayList<Report> getLocalReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.LOCAL);
+		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.LOCAL);
 		
 		return reportList;
 	}
@@ -191,10 +196,10 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public ArrayList<Report> getTaskCreatorReports(UUID taskid) {
+	public ArrayList<Report> getTaskCreatorReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.TASK_CREATOR);
+		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.TASK_CREATOR);
 		
 		return reportList;
 	}
@@ -205,10 +210,10 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public ArrayList<Report> getGlobalReports(UUID taskid) {
+	public ArrayList<Report> getGlobalReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, taskid, Sharing.GLOBAL);
+		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.GLOBAL);
 		
 		return reportList;
 	}
