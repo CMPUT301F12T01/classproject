@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import org.junit.Test;
 
+import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.TextResponse;
 
 
@@ -91,7 +92,7 @@ public class TextResponseTest {
 	public void getMediaType () {
 		TextResponse testTextResponse = new TextResponse("This is a text response.");
 		String media = testTextResponse.getMediaType().toString();
-		assertTrue(media == "TEXT");
+		assertTrue(testTextResponse.getMediaType().equals(MediaType.TEXT));
 	}
 	
 }
