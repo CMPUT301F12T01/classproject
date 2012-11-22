@@ -20,9 +20,8 @@ package ca.ualberta.cs.c301f12t01.model;
 import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
-import java.util.UUID;
-
 import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
  * Class to manage all of our reports Singleton design pattern
@@ -39,15 +38,15 @@ public class ReportManager extends Observable{
 
 	/**
 	 * 
-	 * @param taskID
+	 * @param task
 	 *            Task that you want to get reports for
 	 * @return The Collection of reports associated with our task
 	 */
-	public List<Report> getReports(UUID taskID) {
+	public List<Report> getReports(Task task) {
 		if(localStorage == null){
 			System.out.println("local storage was null");
 		}
-		Collection<Report> c = localStorage.getLocalReports(taskID);
+		Collection<Report> c = localStorage.getLocalReports(task);
 		List<Report> l = (List<Report>) c;
 		return l;
 		// return localStorage.getLocalReports(taskID);

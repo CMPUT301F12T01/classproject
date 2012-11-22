@@ -88,7 +88,7 @@ public class Message {
     public static Message makeRemoved(Object payload) {
         return new Message(MessageAction.REMOVED, payload);
     }
-    /** Creates a new "modfied" Message with the given payload. */
+    /** Creates a new "modified" Message with the given payload. */
     public static Message makeModified(Object payload) {
         return new Message(MessageAction.MODIFIED, payload);
     }
@@ -99,7 +99,7 @@ public class Message {
         return payload;
     }
 
-    /** Gets the action assosiated with the payload. */
+    /** Gets the action associated with the payload. */
     public MessageAction getAction() {
         return action;
     }

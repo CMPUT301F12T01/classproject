@@ -49,6 +49,7 @@ import java.util.List;
  * Implementation of {@link ObservableCollection}, using {@link LinkedHashMap}.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author padlesky
  * 
  */
 public abstract class DualIndexedObservableCollection<Key, Element> extends

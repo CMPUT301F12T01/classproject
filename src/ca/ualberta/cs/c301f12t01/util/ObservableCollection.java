@@ -26,7 +26,7 @@ import java.util.Observable;
  * order, and can be observed.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
- *
+ * @author padlesky
  */
 public abstract class ObservableCollection<Key, Element> extends Observable implements Iterable<Element>, Collection<Element> {
     

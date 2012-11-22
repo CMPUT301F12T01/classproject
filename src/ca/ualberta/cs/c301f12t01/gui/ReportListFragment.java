@@ -17,8 +17,6 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -90,14 +88,14 @@ public class ReportListFragment extends ListFragment implements Observer {
 			task = tm.get(taskId);
 		}
 
-		setListAdapter(new ReportAdapter(getActivity(), rm.getReports(task.getId())));
+		setListAdapter(new ReportAdapter(getActivity(), rm.getReports(task)));
 		
 		/* Proving Toast statements */
 		Toast.makeText(getActivity(), "TaskID: " + task.getId().toString(), 
 				Toast.LENGTH_SHORT).show();
 		
 		Toast.makeText(getActivity(), "Number of Reports: " + 
-				rm.getReports(task.getId()).size(), 
+				rm.getReports(task).size(), 
 				Toast.LENGTH_SHORT).show();
 		
 		
@@ -145,7 +143,7 @@ public class ReportListFragment extends ListFragment implements Observer {
 
 		/* Need to swap to getting reports */
 		ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
-		List<Report> list = rm.getReports(task.getId());
+		List<Report> list = rm.getReports(task);
 		callbacks.onItemSelected(list.get(position).getId());
 
 	}
