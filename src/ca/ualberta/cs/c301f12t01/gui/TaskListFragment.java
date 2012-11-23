@@ -81,6 +81,8 @@ public class TaskListFragment extends ListFragment implements Observer {
         /* Action bar config! */
         //ActionBar menubar = getActivity().getActionBar();
         //menubar.setDisplayShowTitleEnabled(false);
+        
+        android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate");
     }
 
     @Override
@@ -90,6 +92,8 @@ public class TaskListFragment extends ListFragment implements Observer {
                 .containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
+      
+        android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onViewCreate");
     }
     
 
@@ -106,12 +110,15 @@ public class TaskListFragment extends ListFragment implements Observer {
         }
 
         callbacks = (Callbacks) activity;
+        
+        android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onAttach");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         callbacks = doNothingCallbacks;
+        android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onDetach");
     }
 
     @Override
@@ -143,7 +150,7 @@ public class TaskListFragment extends ListFragment implements Observer {
         } else {
             getListView().setItemChecked(position, true);
         }
-
+ 
         activatedPosition = position;
     }
 

@@ -25,17 +25,23 @@
     android:padding="16dp"
     tools:context=".gui.DefineTaskFragment" >
 
-    <!-- Summary enter text field (maximum of 2 lines showing at a time), Request options -->
+    <!--
+         Summary enter text field. In order to have the 'next' keyboard button
+    	we need to have say the inputType is text.
+    -->
 
     <EditText
         android:id="@+id/edit_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/task_summary"
-        android:maxLines="2" >
+        android:imeOptions="actionNext"
+        android:inputType="text" >
 
         <requestFocus android:layout_width="wrap_content" />
     </EditText>
+
+    <!-- Requests -->
 
     <TextView
         android:id="@+id/text_requests"
@@ -76,7 +82,10 @@
             android:textOn="@string/task_audio" />
     </TableRow>
 
-    <!-- Description -->
+    <!--
+    Description. The actionDone may not show up on some keyboards, but there isn't
+    a way to get both multiline AND have the done button from what I've seen.
+    -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -89,9 +98,15 @@
         android:id="@+id/edit_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine" />
+        android:gravity="bottom"
+        android:hint="@string/task_description"
+        android:imeOptions="actionDone"
+        android:lines="2"
+        android:maxLines="2"
+        android:minLines="2"
+        android:scrollHorizontally="false" />
 
-    <!-- Sharing and 'tiny description'. Will fix to make it like additional Android option descriptions -->
+    <!-- Sharing and 'tiny description'. -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,8 +134,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/task_local"
-            android:checked="true" />
+            android:checked="true"
+            android:text="@string/task_local" />
 
         <RadioButton
             android:id="@+id/radio_global"

@@ -46,11 +46,15 @@ public class DefineTaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        setHasOptionsMenu(true);
 
         /* Initialize stuff if it hasn't been initialized yet. */
         if (savedInstanceState == null) {
             setHasOptionsMenu(true);
         }
+        
+        android.util.Log.d("Frag-LIFECYCLE", "DefineTaskFragment-onCreate");
     }
     
     /** Called when the user confirms that the fields make up the new task. */
@@ -76,6 +80,13 @@ public class DefineTaskFragment extends Fragment {
         String descriptionText = descriptionView.getText().toString();
         String summaryText = summaryView.getText().toString();
         
+        /* We need to have a summary filled out! */
+        if ( summaryText.equals("") ) {
+        	/* Dialog or Toast? */
+        	Toast.makeText(getActivity(), "Please fill out a summary.", Toast.LENGTH_SHORT).show();
+        	return;
+        }
+        
         /* Now set up the new task with the extracted data. */
         /* TODO: Get rid of this dummy user crud. */
         Task newTask = new Task(TaskSourceApplication.hack__user);
@@ -93,15 +104,28 @@ public class DefineTaskFragment extends Fragment {
                 break;
         }
 
+        /* Is a toggle button boolean? We need one of these toggled! */
+        boolean addARequest = false;
+        
         /* Add requests. */
         if (text_toggle.isChecked()) {
             newTask.addRequest(new Request(MediaType.TEXT));
+            addARequest = true;
         }
         if (photo_toggle.isChecked()) {
             newTask.addRequest(new Request(MediaType.PHOTO));
+            addARequest = true;
         }
         if (audio_toggle.isChecked()) {
             newTask.addRequest(new Request(MediaType.AUDIO));
+            addARequest = true;
+        }
+        
+        /* So if we didn't add a request... */
+        if (!addARequest) {
+        	/* Toast or Dialog? */
+        	Toast.makeText(getActivity(), "Please add a request.", Toast.LENGTH_SHORT).show();
+        	return;
         }
         
         //add task using TaskManager
@@ -116,6 +140,8 @@ public class DefineTaskFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
        inflater.inflate(R.menu.fragment_define_task, menu);
+       
+       android.util.Log.d("Frag-LIFECYCLE", "DefineTaskFragment-onCreateOptionsMenu");
     }
 
     @Override
@@ -125,7 +151,10 @@ public class DefineTaskFragment extends Fragment {
         View rootView = inflater
                 .inflate(R.layout.fragment_define_task, container, false);
 
+        android.util.Log.d("Frag-LIFECYCLE", "DefineTaskFragment-onViewCreate");
+        
         return rootView;
+
     }
     
     
