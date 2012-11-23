@@ -38,8 +38,15 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 
 public interface StorageInterface {
 	
+	// Handle closing the Database
+	public void close();
+	
 	// Storage and retrieval of Tasks
 	public void storeTask(Task taskToStore);
+	
+	public void updateTask(Task taskToUpdate);
+	
+	public void removeTask(Task taskToRemove);
 	
 	public HashMap<UUID, Task> getOwnTasks(UUID userid);
 	
@@ -49,6 +56,10 @@ public interface StorageInterface {
 	
 	// Storage and retrieval of reports
 	public void storeReport(Report reportToStore);
+	
+	public void updateReport(Report reportToUpdate);
+	
+	public void removeReport(Report reportToRemove);
 	
 	public ArrayList<Report> getReports(Task matchingTask);
 	

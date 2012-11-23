@@ -27,28 +27,20 @@ import android.database.sqlite.SQLiteDatabase;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Response;
 
-
 /**
- * This class is responsible for decomposing 
- * responses by attributes to be stored into 
- * the database
  * 
- * IMPORTANT!!!!
- * This class cannot guarantee that response
- * objects can be stored at the present time.
- * 
- * @author Neil Borle
+ * @author Neil
  *
  */
-public class ReportLocalStorage
-{
+public class ReportLocalModify {
+	
 	/**
-	 * Stores a Report to the local SQLiteDatabase.
+	 * Updates a report in the database
 	 * 
 	 * @param SQLiteDatabase db
-	 * @param reportToStore
+	 * @param Report reportToUpdate
 	 */
-	public static void storeReport(SQLiteDatabase db, Report reportToStore) {
+	public static void updateReport(SQLiteDatabase db, Report reportToUpdate) {
 
 		String reportTable = "Reports";
 		String responseTable = "Responses";
@@ -58,10 +50,10 @@ public class ReportLocalStorage
 		"media"};
 
 		// Get all the fields from the task 
-		String taskId = reportToStore.getTaskID().toString();
-		String id = reportToStore.getId().toString();
-		String state = reportToStore.getSharing().toString();
-		String timestamp = reportToStore.getTimestamp().toString();
+		String taskId = reportToUpdate.getTaskID().toString();
+		String id = reportToUpdate.getId().toString();
+		String state = reportToUpdate.getSharing().toString();
+		String timestamp = reportToUpdate.getTimestamp().toString();
 
 		// store all the extracted fields into the database
 		ContentValues reportValues = new ContentValues();
@@ -71,13 +63,16 @@ public class ReportLocalStorage
 		reportValues.put(reportCollumns[3], timestamp);
 
 		//TODO ERROR HANDLING IF db.insert returns -1
-		db.insert(reportTable, null, reportValues);
+		db.update(reportTable, reportValues, reportCollumns[1] + " = '" + id
+				+ "'", null);
+				
+		deleteResponses(db, reportToUpdate);
 
-		for (Response response : reportToStore) {
+		for (Response response : reportToUpdate) {
 
 			ContentValues requestValues = new ContentValues();
 			requestValues.put(responseCollumns[0], 
-					reportToStore.getId().toString());
+					reportToUpdate.getId().toString());
 			requestValues.put(responseCollumns[1], 
 					response.getMediaType().toString());
 
@@ -101,4 +96,40 @@ public class ReportLocalStorage
 		}
 	}
 
+	/**
+	 * Remove a report from the database
+	 * 
+	 * @param SQLiteDatabase db
+	 * @param Report reportToRemove
+	 */
+	public static void removeReport(SQLiteDatabase db, Report reportToRemove) {
+
+		String reportTable = "Reports";
+
+		// Get the report id
+		String id = reportToRemove.getId().toString();
+
+		deleteResponses(db, reportToRemove);
+		
+		db.delete(reportTable, "id = '" + id
+				+ "'", null);
+
+	}
+	
+	/**
+	 * remove all responses from the database
+	 * 
+	 * @param db
+	 * @param reportToRemove
+	 */
+	private static void deleteResponses(SQLiteDatabase db, Report reportToRemove) {
+
+		String responseTable = "Responses";
+
+		// Get the report id
+		String id = reportToRemove.getId().toString();
+
+		db.delete(responseTable, "report_id = '" + id + "'", null);
+		
+	}
 }

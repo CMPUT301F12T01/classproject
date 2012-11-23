@@ -23,32 +23,23 @@ import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
- * This class abstracts out the storage 
- * Tasks from Device storage
- * in the interest of flexible code
+ * This class is responsible for updating or
+ * removing a Task that already exists in the
+ * database
  * 
- * This assembles and disassembles the Tasks
- * and the associated requests
- * 
- * @author Neil Borle
+ * @author Neil
  *
  */
-public class TaskLocalStorage {
-
+public class TaskLocalModify {
+	
 	/**
-	 * Takes a Task and stores it to the local
-	 * SQLiteDatabase
+	 * Updates a Task in the Database
 	 * 
-	 * @param SQLiteDatabase db
-	 * @param Task taskToStore
+	 * @param Database db
+	 * @param Task taskToUpdate
 	 */
-	public static void storeTask(SQLiteDatabase db, Task taskToStore) {
-		/*
-		 * Order of operations: first the task is decomposed into by it's
-		 * attributes which are then stored in the database, then each
-		 * request associated with the task is decomposed and stored in
-		 * the data base
-		 */
+	public static void updateTask(SQLiteDatabase db, Task taskToUpdate) {
+		
 		String taskTable = "Tasks";
 		String requestTable = "Requests";
 		String []taskCollumns = {"userid", "id", "global", 
@@ -57,31 +48,33 @@ public class TaskLocalStorage {
 				"quantity", "amountfulfilled", "mediatype"};
 
 		// Get all the fields from the task 
-		String userId = taskToStore.getUser().toString();
-		String id = taskToStore.getId().toString();
+		String userId = taskToUpdate.getUser().toString();
+		String id = taskToUpdate.getId().toString();
 		int global = 0;
-		String summary = taskToStore.getSummary();
-		String description = taskToStore.getDescription();
+		String summary = taskToUpdate.getSummary();
+		String description = taskToUpdate.getDescription();
 
-		if (taskToStore.isGlobal()) {
+		if (taskToUpdate.isGlobal()) {
 			global = 1;
 		}
 
 		// store all the extracted fields into the database
 		ContentValues taskValues = new ContentValues();
 		taskValues.put(taskCollumns[0], userId);
-		taskValues.put(taskCollumns[1], id);
 		taskValues.put(taskCollumns[2], global);
 		taskValues.put(taskCollumns[3], summary);
 		taskValues.put(taskCollumns[4], description);
 
 		//TODO ERROR HANDLING IF db.insert returns -1
-		db.insert(taskTable, null, taskValues);
+		db.update(taskTable, taskValues, taskCollumns[1] + " = '" + id
+		+ "'", null);
+		
+		deleteRequests(db, taskToUpdate);
 
-		for (Request request : taskToStore) {
+		for (Request request : taskToUpdate) {
 
 			ContentValues requestValues = new ContentValues();
-			requestValues.put(reqCollumns[0], taskToStore.getId().toString());
+			requestValues.put(reqCollumns[0], taskToUpdate.getId().toString());
 			requestValues.put(reqCollumns[1], request.getDescription());
 			requestValues.put(reqCollumns[2], request.getQuantity());
 			requestValues.put(reqCollumns[3], 0);
@@ -90,5 +83,35 @@ public class TaskLocalStorage {
 
 		}
 
+	}
+
+	/**
+	 * Removes a Task entry from the database
+	 * 
+	 * @param Database db
+	 * @param Task taskToRemove
+	 */
+	public static void removeTask(SQLiteDatabase db, Task taskToRemove) {
+
+		String taskTable = "Tasks";
+		String id = taskToRemove.getId().toString();
+		
+		//TODO ERROR HANDLING IF db.insert returns -1
+		db.delete(taskTable, "id = '" + id
+				+ "'", null);
+		
+		deleteRequests(db, taskToRemove);
+
+	}
+	
+	private static void deleteRequests(SQLiteDatabase db, Task taskToRemove) {
+
+		String requestTable = "Requests";
+
+		// Get the task it
+		String id = taskToRemove.getId().toString();
+		
+		db.delete(requestTable, "task_id = '" + id
+				+ "'", null);
 	}
 }

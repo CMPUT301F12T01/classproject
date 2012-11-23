@@ -30,6 +30,7 @@ import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
+import ca.ualberta.cs.c301f12t01.util.Message;
 
 /**
  * Obtaining an instance of this class allows for the storing
@@ -74,19 +75,49 @@ public class DeviceStorage implements StorageInterface, Observer {
 	}
 
 	/**
-	 * Notify everyone! //That isnt what this method is for . . .
-	 * This method written by Mitchell Home
-	 * Should eliminate need for TaskObserver and ReportObserver
+	 * The database can be notified when a Task or Report
+	 * has been remove/added/updated so that it can update
+	 * itself as needed.
+	 * 
+	 * @param Observable, Object message
 	 */
-	public void update(Observable obsv, Object arg) {
-		if (arg instanceof Report){
-			Report newReport = (Report) arg;
-			storeReport(newReport);
+	public void update(Observable obsv, Object message) {
+		
+		Message newMessage = (Message) message;
+		
+		if (newMessage.getPayload() instanceof Task) {
+			
+			Task newTask = (Task) newMessage.getPayload();
+			
+			switch (newMessage.getAction()) {
+				case ADDED:
+					storeTask(newTask);
+					break;
+				case REMOVED:
+					removeTask(newTask);
+					break;
+				case MODIFIED:
+					updateTask(newTask);
+					break;
+			}
+		} 
+		else if (newMessage.getPayload() instanceof Report) {
+			
+			Report newReport = (Report) newMessage.getPayload();
+			
+			switch (newMessage.getAction()) {
+			case ADDED:
+				storeReport(newReport);
+				break;
+			case REMOVED:
+				removeReport(newReport);
+				break;
+			case MODIFIED:
+				updateReport(newReport);
+				break;
+			}
 		}
-		if (arg instanceof Task){
-			Task newTask = (Task) arg;
-			storeTask(newTask);
-		}
+		
 	}
 
 	/*
@@ -104,6 +135,24 @@ public class DeviceStorage implements StorageInterface, Observer {
 		// Delegate task storage to taskLocalStorage class
 		TaskLocalStorage.storeTask(database, taskToStore);
 	}
+	
+	/**
+	 * Update a Task in the database
+	 * 
+	 * @param Task
+	 */
+	public void updateTask(Task taskToUpdate) {
+		TaskLocalModify.updateTask(database, taskToUpdate);
+	}
+	
+	/**
+	 * Remove a task from the database
+	 * 
+	 * @param Task
+	 */
+	public void removeTask(Task taskToRemove) {
+		TaskLocalModify.removeTask(database, taskToRemove);
+	}
 
 	/**
 	 * Find all the Tasks that belong to a specific user
@@ -113,7 +162,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public HashMap<UUID, Task> getOwnTasks(UUID userid) {
 		// Delegate task storage to taskLocalStorage class
 		HashMap<UUID, Task> taskHash;
-		taskHash = TaskLocalStorage.getOwnTasks(database, userid);
+		taskHash = TaskLocalRetrieval.getOwnTasks(database, userid);
 		
 		return taskHash;
 	}
@@ -126,7 +175,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public HashMap<UUID, Task> getLocalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		HashMap<UUID, Task> taskHash;
-		taskHash = TaskLocalStorage.getTasks(database, false);
+		taskHash = TaskLocalRetrieval.getTasks(database, false);
 		
 		return taskHash;
 	}
@@ -139,7 +188,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public HashMap<UUID, Task> getGlobalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		HashMap<UUID, Task> taskHash;
-		taskHash = TaskLocalStorage.getTasks(database, true);
+		taskHash = TaskLocalRetrieval.getTasks(database, true);
 		
 		return taskHash;
 	}
@@ -160,19 +209,34 @@ public class DeviceStorage implements StorageInterface, Observer {
 		// Delegate Report storage to ReportLocalStorage
 		ReportLocalStorage.storeReport(database, reportToStore);
 	}
+	
+	/**
+	 * Update a report in the database
+	 * 
+	 * @param Report
+	 */
+	public void updateReport(Report reportToUpdate) {
+		ReportLocalModify.updateReport(database, reportToUpdate);
+	}
+	
+	/**
+	 * remove a report from the database
+	 * 
+	 * @param Report
+	 */
+	public void removeReport(Report reportToRemove) {
+		ReportLocalModify.removeReport(database, reportToRemove);
+	}
 
 	/**
 	 * Get all local Reports associated with a specific Task
 	 * 
-	 * @param UUID
+	 * @param Task
 	 */
 	public ArrayList<Report> getReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
-		//TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.LOCAL);
-		reportList.addAll(ReportLocalStorage.getReports(database, matchingTask, Sharing.GLOBAL));
-		reportList.addAll(ReportLocalStorage.getReports(database, matchingTask, Sharing.TASK_CREATOR));
+		reportList = ReportLocalRetrieval.getReports(database, matchingTask, null);
 		
 		return reportList;
 	}
@@ -180,12 +244,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 	/**
 	 * Get all local Reports associated with a specific Task
 	 * 
-	 * @param UUID
+	 * @param Task
 	 */
 	public ArrayList<Report> getLocalReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.LOCAL);
+		reportList = ReportLocalRetrieval.getReports(database, matchingTask, Sharing.LOCAL);
 		
 		return reportList;
 	}
@@ -194,12 +258,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * Get all Reports for a task where only the task creator
 	 * and the task fulfiller can see that Report
 	 * 
-	 * @param UUID
+	 * @param Task
 	 */
 	public ArrayList<Report> getTaskCreatorReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.TASK_CREATOR);
+		reportList = ReportLocalRetrieval.getReports(database, matchingTask, Sharing.TASK_CREATOR);
 		
 		return reportList;
 	}
@@ -208,12 +272,12 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * Get all the Reports with Global scope that are associated
 	 * with a particular Task
 	 * 
-	 * @param UUID
+	 * @param Task
 	 */
 	public ArrayList<Report> getGlobalReports(Task matchingTask) {
 		// Delegate Report retrieval to ReportLocalStorage class
 		ArrayList<Report> reportList;
-		reportList = ReportLocalStorage.getReports(database, matchingTask, Sharing.GLOBAL);
+		reportList = ReportLocalRetrieval.getReports(database, matchingTask, Sharing.GLOBAL);
 		
 		return reportList;
 	}
