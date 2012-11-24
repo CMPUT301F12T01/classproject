@@ -23,10 +23,13 @@ import ca.ualberta.cs.c301f12t01.util.DualIndexedObservableCollection;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
- * Task collection class
+ * ObservableCollection that handles task.
+ * 
+ * Instantiate one for local and global tasks.
  * 
  * @author Mitchell Home
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Aaron Padlesky <padlesky@ualberta.ca>
  */
 public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> {
 
@@ -35,7 +38,7 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
      * 
      * @param task
      *            The task to be added
-     * @return True because collection says so
+     * @return Whether the value was succesfully added.
      */
     @Override
     public boolean add(Task task) {
@@ -48,12 +51,18 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
 
     /**
      * Does the same as {@link removeKey}.
-     * 
-     * @return
      */
     public boolean remove(UUID taskId) {
         return removeKey(taskId) != null;
     }
+    
+    /**
+     * Does the same thing as {@link removeKey}(task.getId()).
+     */
+    public boolean remove(Task task) {
+        return removeElement(task);
+    }
+
 
     /*
      * (non-Javadoc)
