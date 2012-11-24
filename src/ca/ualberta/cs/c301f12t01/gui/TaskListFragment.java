@@ -33,6 +33,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
@@ -71,9 +72,12 @@ public class TaskListFragment extends ListFragment implements Observer {
         ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
 
         /*TODO Take into account global tasks maybe?*/
-        setListAdapter(new TaskAdapter(getActivity(),
-                tm.getLocalTasks()));
+      //  setListAdapter(new TaskAdapter(getActivity(),
+        //        tm.getLocalTasks()));
 
+        setListAdapter(new TaskAdapter(getActivity(), DummyTasks.ITEMS));
+
+        
         
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);

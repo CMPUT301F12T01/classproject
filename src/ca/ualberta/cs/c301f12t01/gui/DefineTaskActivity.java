@@ -34,6 +34,7 @@ import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 
@@ -153,6 +154,8 @@ public class DefineTaskActivity extends Activity {
 		//add task using TaskManager
 		TaskManager tm = ((TaskSourceApplication) getApplication()).getTaskManager();
 		//tm.addTask(newTask);
+		
+		DummyTasks.addItem(newTask);
 
 		Toast.makeText(getBaseContext(), "Task created.", Toast.LENGTH_SHORT).show();
 		
