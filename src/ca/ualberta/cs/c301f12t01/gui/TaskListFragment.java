@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
@@ -74,10 +75,10 @@ public class TaskListFragment extends ListFragment implements Observer {
         /*TODO Take into account global tasks maybe?*/
       //  setListAdapter(new TaskAdapter(getActivity(),
         //        tm.getLocalTasks()));
-
-        setListAdapter(new TaskAdapter(getActivity(), DummyTasks.ITEMS));
-
         
+        setListAdapter(new TaskAdapter(getActivity(),
+                DummyTasks.ITEMS));
+
         
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);
@@ -128,9 +129,14 @@ public class TaskListFragment extends ListFragment implements Observer {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
+        
+        /* TODO: REMOVE DUMMY */
+        callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
+        /*
         TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         List<Task> list = tm.getLocalTasks();
         callbacks.onItemSelected(list.get(position).getId());
+        */
         /*TODO This also needs to handle global tasks*/
     }
 
