@@ -16,9 +16,149 @@
   limitations under the License. 
 -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Scrolling is cool -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/define_task_container"
-    android:layout_width="match_parent"
+    android:id="@+id/activity_define_task"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.DefineTaskActivity" />
+    android:padding="16dp"
+    tools:context=".gui.DefineTaskActivity" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!--
+         Summary enter text field. In order to have the 'next' keyboard button
+    	we need to have say the inputType is text.
+        -->
+
+        <EditText
+            android:id="@+id/edit_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_summary"
+            android:imeOptions="actionNext"
+            android:inputType="text" >
+
+            <requestFocus android:layout_width="wrap_content" />
+        </EditText>
+
+        <!-- Requests -->
+
+        <TextView
+            android:id="@+id/text_requests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/task_request"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <!-- Using a Table row to display these three buttons evenly -->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ToggleButton
+                android:id="@+id/toggle_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="@string/task_text"
+                android:textOn="@string/task_text" />
+
+            <ToggleButton
+                android:id="@+id/toggle_photo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="@string/task_photo"
+                android:textOn="@string/task_photo" />
+
+            <ToggleButton
+                android:id="@+id/toggle_audio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="@string/task_audio"
+                android:textOn="@string/task_audio" />
+        </TableRow>
+
+        <!--
+    Description. The actionDone may not show up on some keyboards, but there isn't
+    a way to get both multiline AND have the done button from what I've seen.
+        -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/task_description"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:hint="@string/task_description"
+            android:imeOptions="actionDone"
+            android:lines="2"
+            android:maxLines="2"
+            android:minLines="2"
+            android:scrollHorizontally="false" />
+
+        <!-- Sharing and 'tiny description'. -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/task_sharing"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_sharing_description"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <!-- RadioGroup for two buttons side by side -->
+
+        <RadioGroup
+            android:id="@+id/radio_group_sharing"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio_local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/task_local" />
+
+            <RadioButton
+                android:id="@+id/radio_global"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/task_global" />
+        </RadioGroup>
+
+        <!-- Temporary button? -->
+
+        <Button
+            android:id="@+id/button_done_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/done" />
+    </LinearLayout>
+
+</ScrollView>

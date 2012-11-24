@@ -17,9 +17,12 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.Collection;
+
 import android.app.Application;
 import android.content.Context;
 import android.telephony.TelephonyManager;
+import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
@@ -36,7 +39,6 @@ public class TaskSourceApplication extends Application {
 
 	private TaskManager taskManager = null;
 	private ReportManager reportManager = null;
-	/* TODO MAKE THIS LESS UGLY PLEASE */
 	private String user = null;
 
 	/** Returns the user ID as a string. */
@@ -84,7 +86,11 @@ public class TaskSourceApplication extends Application {
 		/* TODO: Get the server interface working! */
 		// StorageInterface serverStorage = null;
 
-		taskManager = TaskManager.getInstance();
+		/* Initialize TaskManager with stuff loaded from local storage. */
+		Collection<Task> localTaskList = localStorage.getLocalTasks().values();
+		Collection<Task> globalTaskList = localStorage.getGlobalTasks().values();
+		
+		taskManager = TaskManager.initializeTaskMananger(localTaskList, globalTaskList);
 		taskManager.getLocalTaskCollection().addObserver(localStorage);
 
 		return taskManager;

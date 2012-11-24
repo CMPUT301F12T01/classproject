@@ -29,10 +29,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
@@ -71,8 +73,14 @@ public class TaskListFragment extends ListFragment implements Observer {
         ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
 
         /*TODO Take into account global tasks maybe?*/
+      //  setListAdapter(new TaskAdapter(getActivity(),
+        //        tm.getLocalTasks()));
+        
         setListAdapter(new TaskAdapter(getActivity(),
-                tm.getLocalTaskCollection()));
+                // Uncomment when this ISN'T broken,
+                //tm.getLocalTaskCollection()));
+                DummyTasks.ITEMS));
+
 
         
         /* Add action bar options, because they are super cool. */
@@ -124,9 +132,14 @@ public class TaskListFragment extends ListFragment implements Observer {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
+        
+        /* TODO: REMOVE DUMMY */
+        callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
+        /*
         TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         List<Task> list = tm.getLocalTaskCollection();
         callbacks.onItemSelected(list.get(position).getId());
+        */
         /*TODO This also needs to handle global tasks*/
     }
 
