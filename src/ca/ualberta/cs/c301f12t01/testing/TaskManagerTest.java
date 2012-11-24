@@ -39,7 +39,7 @@ public class TaskManagerTest {
 		TaskManager tm = TaskManager.getInstance();
 		Task t1 = TestUtils.makeSimpleTask();
 		tm.addTask(t1); //now we should have one global task
-		List<Task> l = tm.getGlobalTasks();
+		List<Task> l = tm.getGlobalTaskCollection();
 		Task t2 = l.get(0);
 		assertTrue(t1.equals(t2));
 	}
@@ -50,7 +50,7 @@ public class TaskManagerTest {
 		Task t1 = TestUtils.makeSimpleTask();
 		t1.setLocal();
 		tm.addTask(t1); //now we should have one local task
-		List<Task> l = tm.getLocalTasks();
+		List<Task> l = tm.getLocalTaskCollection();
 		Task t2 = l.get(0);
 		assertTrue(t1.equals(t2));		
 	}

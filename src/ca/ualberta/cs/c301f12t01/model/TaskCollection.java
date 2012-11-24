@@ -17,6 +17,7 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.util.DualIndexedObservableCollection;
@@ -34,11 +35,22 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> {
 
     /**
+     * Constructs a TaskCollection from the given plain collection of tasks.
+     */
+    public TaskCollection(Collection<Task> tasks) {
+        super();
+
+        for (Task task : tasks)
+            addNoNotify(task);
+    }
+
+    /**
      * Adds a task. The UUID is determined automatically.
      * 
      * @param task
      *            The task to be added
-     * @return Whether the value was succesfully added.
+     * @return Whether the value was succesfully@SuppressWarnings("unused")
+     *         added.
      */
     @Override
     public boolean add(Task task) {
@@ -55,7 +67,7 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
     public boolean remove(UUID taskId) {
         return removeKey(taskId) != null;
     }
-    
+
     /**
      * Does the same thing as {@link removeKey}(task.getId()).
      */
@@ -63,11 +75,12 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
         return removeElement(task);
     }
 
-
     /*
      * (non-Javadoc)
      * 
-     * @see ca.ualberta.cs.c301f12t01.util.LinkedOPCollection#getKey(java.lang.Object)
+     * @see
+     * ca.ualberta.cs.c301f12t01.util.LinkedOPCollection#getKey(java.lang.Object
+     * )
      */
     @Override
     public UUID getKey(Task task) {

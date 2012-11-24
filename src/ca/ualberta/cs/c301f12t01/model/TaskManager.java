@@ -17,135 +17,128 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Observable;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
-
-/* TODO: HashMaps. USE THEM. */
 
 /**
  * Class to manage all of our tasks Singleton design pattern
  * 
  * @author Mitchell Home
+ * @author Eddie Antonio Santos
  */
-public class TaskManager extends Observable {
-	// our collections
-	private List<Task> localTasks = new ArrayList<Task>();
-	private List<Task> globalTasks = new ArrayList<Task>();
+public class TaskManager {
+    // our collections
+    private TaskCollection localTasks = null;
+    private TaskCollection globalTasks = null;
+    private HashMap<String, TaskCollection> allCollections = new HashMap<String, TaskCollection>();
+    
+    /* Always instantiate with these collections. */
+    {
+        allCollections.put("local", localTasks);
+        allCollections.put("global", globalTasks);
+    }
 
-	// our instance
-	private static final TaskManager instance = new TaskManager();
+    // our singleton instance
+    private static TaskManager singleton = null;
 
-	// our StorageInterface
 
-	/** TODO Implement server stuff */
+    /**
+     * Initialize singleton TaskManager.
+     */
+    private TaskManager(Collection<Task> initialLocalTasks, Collection<Task> intitialGlobalTasks) {
+        localTasks = new TaskCollection(initialLocalTasks);
+        globalTasks = new TaskCollection(intitialGlobalTasks);
+    }
 
-	/**
-	 * private constructor
-	 */
-	private TaskManager() {
-		// nothing to do really
+    /**
+     * adds a new task into either localTasks or globalTasks
+     * 
+     * @param newTask
+     *            task to be added
+     */
+    public void addTask(Task newTask) {
+	    TaskCollection appropriateCollection;
+
+	    /* Figure out which collection to dump the task in. */
+	    appropriateCollection = getCollectionForTask(newTask);
+	    
+	    appropriateCollection.add(newTask);
 	}
 
-	/**
-	 * adds a new task into either localTasks or globalTasks
-	 * 
-	 * @param newTask
-	 *            task to be added
-	 */
-	public void addTask(Task newTask) {
-		if (newTask.isLocal()) {
-			localTasks.add(newTask);
+    public TaskCollection getCollectionForTask(Task task) {
 
-		} else if (newTask.isGlobal()) {
-			globalTasks.add(newTask);
+        if (task.isLocal()) {
+            return localTasks;
+        } else if (task.isGlobal()) {
+            return globalTasks;
+        } else {
+            return null;
+        }
 
-		} else {
-			// handle errors??
-		}
-		// notify that we changed
-		setChanged();
-		notifyObservers(newTask);
-	}
+    }
 
-	/**
-	 * given a UUID, return the task
-	 * 
-	 * @param id
-	 *            ID of task we are looking for
-	 * @return Task that matches ID
-	 */
-	public Task get(UUID id) {
+    /**
+     * given a UUID, return the task
+     * 
+     * @param id
+     *            ID of task we are looking for
+     * @return Task that matches ID
+     */
+    public Task get(UUID id) {
 
-		// This is a little ugly
-		// first check local tasks
-		List<Task> l = getLocalTasks();
-		Iterator<Task> i = l.iterator();
-		while (i.hasNext()) {
-			Task t = i.next();
+        /* Look in every collection to see if we can find the task. */
+        /* TODO: should probably prioritize local storage. */
+        for (TaskCollection collection : allCollections.values()) {
+            
+            if (collection == null)
+                continue;
+            
+            Task maybeTask = collection.get(id);
+            if (maybeTask != null) {
+                return maybeTask;
+            }
+        }
+        
+        // If we got here, we didn't find the task
+        return null;
 
-			if (t.getId().equals(id)) {
+    }
 
-				return t;
-			}
-		}
-		// If we didn't find it in our local tasks
-		// check our global tasks
-		l = getGlobalTasks();
-		i = l.iterator();
-		List<Task> g = getGlobalTasks();
-		i = g.iterator();
-		while (i.hasNext()) {
-			Task t = i.next();
-			if (t.getId().equals(id)) {
+    /**
+     * returns all local tasks
+     * 
+     * @return ArrayList of local tasks
+     */
+    public TaskCollection getLocalTaskCollection() {
+        return localTasks;
+    }
 
-				return t;
-			}
-		}
-		// If we got here, we didn't find the task
-		return null;
+    /**
+     * returns all global tasks
+     * 
+     * @return ArrayList of local tasks
+     */
+    public TaskCollection getGlobalTaskCollection() {
+        return globalTasks;
+    }
 
-	}
+    /**
+     * let them get our instance
+     * 
+     * @return Singleton instance of TaskManager
+     */
+    public static TaskManager getInstance() {
+        return singleton;
+    }
+    
+    public static TaskManager initializeTaskMananger(Collection<Task> initialLocalTasks, Collection<Task> intitialGlobalTasks) {
+        singleton = new TaskManager(initialLocalTasks, intitialGlobalTasks);
+        
+        return singleton;
 
-	/**
-	 * returns all local tasks
-	 * 
-	 * @return ArrayList of local tasks
-	 */
-	public List<Task> getLocalTasks() {
-		return localTasks;
-	}
-
-	/**
-	 * returns all global tasks
-	 * 
-	 * @return ArrayList of local tasks
-	 */
-	public List<Task> getGlobalTasks() {
-		return globalTasks;
-	}
-
-	/**
-	 * let them get our instance
-	 * 
-	 * @return Singleton instance of TaskManager
-	 */
-	public static TaskManager getInstance() {
-		return instance;
-	}
-
-	/**
-	 * 
-	 * @param localStorage
-	 *            Where our local storage is
-	 */
-	public void loadTasks(StorageInterface localStorage) {
-		localTasks = (List<Task>) localStorage.getLocalTasks();
-		/* TODO Make Neil use Lists and not collections */
-	}
+    }
 
 }

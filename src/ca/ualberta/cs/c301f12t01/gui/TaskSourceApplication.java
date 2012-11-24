@@ -17,54 +17,65 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.util.UUID;
-
+import android.app.Application;
+import android.content.Context;
+import android.telephony.TelephonyManager;
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
-import android.app.Application;
 
 /**
+ * Maintains global singleton variables.
  * 
- * @author easantos
+ * Many of these are lazily loaded.
  * 
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
 public class TaskSourceApplication extends Application {
 
-	private TaskManager Tmanager = null;
-	private ReportManager Rmanager = null;
+	private TaskManager taskManager = null;
+	private ReportManager reportManager = null;
 	/* TODO MAKE THIS LESS UGLY PLEASE */
-	public static UUID hack__user = UUID.randomUUID();
+	private String user = null;
 
-	/** Returns the Task Manager. */
+	/** Returns the user ID as a string. */
+    public String getUserID() {
+        if (user == null) {
+            user = fetchAndroidDeviceId();
+        }
+        
+        return user;
+    }
+
+    /** Returns the Task Manager. */
 	public TaskManager getTaskManager() {
 		/* Lazily loads the manager. */
-		if (Tmanager == null) {
+		if (taskManager == null) {
 			setupTaskManager();
 		}
 
-		return Tmanager;
+		return taskManager;
 	}
-
+	
 	/** Returns the Report Manager */
 	public ReportManager getReportManager() {
 		/* Lazily loads the manager. */
-		if (Rmanager == null) {
+		if (reportManager == null) {
 			setupReportManager();
 		}
 
-		return Rmanager;
+		return reportManager;
 	}
 
 	private ReportManager setupReportManager() {
 		StorageInterface localStorage = new DeviceStorage(getApplicationContext());
 		/* TODO: Get the server interface working! */
-		Rmanager = ReportManager.getInstance();
+		reportManager = ReportManager.getInstance();
 		//Rmanager.addObserver(localStorage);
-		Rmanager.setLocalStorage(localStorage);
+		reportManager.setLocalStorage(localStorage);
 
-		return Rmanager;
+		return reportManager;
 
 	}
 
@@ -73,10 +84,18 @@ public class TaskSourceApplication extends Application {
 		/* TODO: Get the server interface working! */
 		// StorageInterface serverStorage = null;
 
-		Tmanager = TaskManager.getInstance();
-		Tmanager.addObserver(localStorage);
+		taskManager = TaskManager.getInstance();
+		taskManager.getLocalTaskCollection().addObserver(localStorage);
 
-		return Tmanager;
+		return taskManager;
+	}
+	
+	/* Gets the device ID. */
+	private String fetchAndroidDeviceId() {
+	    TelephonyManager tManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+	    String uid = tManager.getDeviceId();
+	    
+	    return uid;
 	}
 
 }

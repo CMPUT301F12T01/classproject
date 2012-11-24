@@ -43,14 +43,14 @@ public class Task implements Iterable<Request> {
     private List<Request> requests = new ArrayList<Request>();
     private Sharing shared = Sharing.GLOBAL;
     final private UUID id;
-    private UUID user;
+    private String user;
 
     /**
      * Constructs a new task. This is used by the GUI.
      * It takes in a user ID to keep track of who created the task.
      * @param user
      */
-    public Task(UUID user) {
+    public Task(String user) {
         setUser(user);
         id = UUID.randomUUID();
     }
@@ -61,7 +61,7 @@ public class Task implements Iterable<Request> {
      * @param taskId
      * @param user
      */
-    public Task(UUID taskId, UUID user) {
+    public Task(UUID taskId, String user) {
     	setUser(user);
     	id = taskId;
     }
@@ -174,7 +174,7 @@ public class Task implements Iterable<Request> {
      * Used to get the Task creator's ID.
      * @return Returns the Task creator's ID.
      */
-    public UUID getUser() {
+    public String getUser() {
         return user;
     }
 
@@ -198,7 +198,7 @@ public class Task implements Iterable<Request> {
      * Sets the user to the Task.
      * @param user
      */
-    public void setUser(UUID user) {
+    public void setUser(String user) {
         this.user = user;
     }
 

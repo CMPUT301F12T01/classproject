@@ -72,7 +72,7 @@ public class TaskListFragment extends ListFragment implements Observer {
 
         /*TODO Take into account global tasks maybe?*/
         setListAdapter(new TaskAdapter(getActivity(),
-                tm.getLocalTasks()));
+                tm.getLocalTaskCollection()));
 
         
         /* Add action bar options, because they are super cool. */
@@ -125,7 +125,7 @@ public class TaskListFragment extends ListFragment implements Observer {
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
         TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
-        List<Task> list = tm.getLocalTasks();
+        List<Task> list = tm.getLocalTaskCollection();
         callbacks.onItemSelected(list.get(position).getId());
         /*TODO This also needs to handle global tasks*/
     }
