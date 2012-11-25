@@ -87,9 +87,6 @@ public class TaskListFragment extends ListFragment implements Observer {
                 //tm.getLocalTaskCollection()));
                 hack__dummyTaskCollection
                ));
-
-        /* Even though this is for a HACK object, this will be used when this is un-hack'd. */
-        hack__dummyTaskCollection.addObserver(this);
         
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);
@@ -113,32 +110,23 @@ public class TaskListFragment extends ListFragment implements Observer {
     }
     
 
-    /* Set list adapter was moved here to allow refresh, but this should be changed later, right? */
+    /** Re-subscribes to the TaskCollection and refreshes the view. */
 	@Override
 	public void onResume() {
 		super.onResume();
 		
-		/*
-		 * TODO: This part is a hack. Things need to be Observed and things must get refreshed.
-		 * 
-		 */
+        android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onResume");
 		
-        //TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
-        /**TODO Somewhere we have to initialize Report Manager as well. Imma put it here for now */
-        //ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
-
-        /*TODO Take into account global tasks maybe?*/
-        //  setListAdapter(new TaskAdapter(getActivity(),
-        //        tm.getLocalTasks()));
-		
-		/* TODO: Remove DUMMY */
-		//setListAdapter(new TaskAdapter(getActivity(),
-        //        DummyTasks.ITEMS));
-		
+		hack__dummyTaskCollection.addObserver(this);
+        refreshListAdaptor();
 	}
 	
+	/** Unsubscribe from the changes in the TaskCollection. */
 	@Override
-	public void onDestroy() {
+	public void onPause() {
+	    super.onPause();
+
+        android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onPause");
 	    hack__dummyTaskCollection.deleteObserver(this);
 	}
     
@@ -203,12 +191,17 @@ public class TaskListFragment extends ListFragment implements Observer {
  
         activatedPosition = position;
     }
+    
+    /** Refreshes this view's BaseAdaptor subclass. */
+    protected void refreshListAdaptor () {
+        ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+    }
 
     /* (non-Javadoc)
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void update(Observable observable, Object ignored) {
         /* Tell our list adaptor that the data has changed. */
-        ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+        refreshListAdaptor();
     }
 }

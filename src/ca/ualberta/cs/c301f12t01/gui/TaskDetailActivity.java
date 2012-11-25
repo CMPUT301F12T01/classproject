@@ -191,8 +191,7 @@ public class TaskDetailActivity extends Activity {
 			return true;
 		
 		case R.id.menu_fulfill_task:
-			//onUserSelectFulfill();
-			Toast.makeText(getBaseContext(), "Turned off for now!", Toast.LENGTH_SHORT).show();
+			onUserSelectFulfill();
 			return true;
 		case R.id.menu_view_reports:
 			//onUserSelectViewReports();

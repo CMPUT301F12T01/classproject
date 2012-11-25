@@ -106,11 +106,14 @@ public class TaskAdapter extends BaseAdapter {
         // Sets the main text to be the summary.
         summary.setText(task.getSummary());
 
+        /* TODO: Get reports to not crash on start-up... */
+        /*
         boolean hasReports = ReportManager.getInstance().taskHasReports(task);
         // Hides the marker if no reports have been made.
         if (!hasReports) {
             responseIndicator.setVisibility(View.INVISIBLE);
         }
+        */
 
         return constructedView;
     }

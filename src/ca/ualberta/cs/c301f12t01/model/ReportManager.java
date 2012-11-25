@@ -34,7 +34,7 @@ public class ReportManager extends Observable{
 	// our instance
 	private static final ReportManager instance = new ReportManager();
 	// our storage
-	private StorageInterface localStorage;
+	private StorageInterface localStorage = null;
 
 	/**
 	 * 
