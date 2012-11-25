@@ -16,9 +16,65 @@
   limitations under the License. 
 -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Scrolling is cool -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/task_detail_container"
-    android:layout_width="match_parent"
+    android:id="@+id/activity_task_detail"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.TaskDetailActivity" />
+    android:padding="16dp"
+    tools:context=".gui.TaskDetailActivity" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- Display the summary, description and media type of the requirements -->
+
+        <TextView
+            android:id="@+id/task_summary"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/task_description"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/task_requires"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_requirements" />
+
+        <!-- Display the media requests as a list of text, not as buttons (as originally designed)? -->
+
+        <TextView
+            android:id="@+id/task_requests"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Show if it's local or global -->
+
+        <TextView
+            android:id="@+id/text_sharing"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/task_sharing" />
+
+        <TextView
+            android:id="@+id/task_sharing_setting"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp" />
+    </LinearLayout>
+</ScrollView>

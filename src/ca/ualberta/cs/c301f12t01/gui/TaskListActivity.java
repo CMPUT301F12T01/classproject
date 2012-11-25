@@ -39,6 +39,7 @@ import android.app.FragmentTransaction;
 public class TaskListActivity extends Activity implements
 TaskListFragment.Callbacks {
 
+	public static final String ARG_TASK_ID = "task_id";
 	/** Denotes that the screen has two panes. */
 	private boolean hasTwoPanes;
 
@@ -80,11 +81,18 @@ TaskListFragment.Callbacks {
 
 	/**
 	 * The list fragment calls this when an item in the list is selected
-	 * (therefore spawning the detail fragment.
+	 * (therefore spawning the task detail activity.
 	 */
 	public void onItemSelected(UUID taskId) {
-		startNewFragment(TaskDetailFragment.class, TaskDetailActivity.class,
-		        TaskDetailFragment.ARG_TASK_ID, taskId);
+	
+		Intent intent = new Intent(getApplicationContext(), TaskDetailActivity.class);
+        intent.putExtra(ARG_TASK_ID, taskId);
+        
+        android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onItemSelected taskId " +
+        					taskId);
+        
+        startActivity(intent);
+		
 	}
 
 	/** Starts the "define new task" screen. */
@@ -95,9 +103,8 @@ TaskListFragment.Callbacks {
 		Intent intent = new Intent(getBaseContext(), DefineTaskActivity.class);
 		startActivity(intent);
 
-
 	}
-
+	
 	/*
 	 * TODO: Create a superclass that contains the following two methods
 	 * because... geez. Maybe call it `TwoPaneActivity`.
