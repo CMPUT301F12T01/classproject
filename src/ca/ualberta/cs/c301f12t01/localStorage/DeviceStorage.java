@@ -159,10 +159,10 @@ public class DeviceStorage implements StorageInterface, Observer {
 	 * 
 	 * @param UUID
 	 */
-	public HashMap<UUID, Task> getOwnTasks(UUID userid) {
+	public HashMap<UUID, Task> getOwnTasks(String userid) {
 		// Delegate task storage to taskLocalStorage class
 		HashMap<UUID, Task> taskHash;
-		taskHash = TaskLocalRetrieval.getOwnTasks(database, userid);
+		taskHash = TaskLocalRetrieval.getTasks(database, userid, false);
 		
 		return taskHash;
 	}
@@ -175,7 +175,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public HashMap<UUID, Task> getLocalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		HashMap<UUID, Task> taskHash;
-		taskHash = TaskLocalRetrieval.getTasks(database, false);
+		taskHash = TaskLocalRetrieval.getTasks(database, null, false);
 		
 		return taskHash;
 	}
@@ -188,7 +188,7 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public HashMap<UUID, Task> getGlobalTasks() {
 		// Delegate task retrieval to taskLocalStorage class
 		HashMap<UUID, Task> taskHash;
-		taskHash = TaskLocalRetrieval.getTasks(database, true);
+		taskHash = TaskLocalRetrieval.getTasks(database, null, true);
 		
 		return taskHash;
 	}
