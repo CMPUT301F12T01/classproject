@@ -33,12 +33,14 @@ import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
+import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
- * 
+ * Android view that displays a list of the Tasks that belong to a TaskCollection.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Bronte Lee <bronte@ualbert.ca>
  *
  */
 public class TaskListFragment extends ListFragment implements Observer {
@@ -58,17 +60,24 @@ public class TaskListFragment extends ListFragment implements Observer {
         }
     };
 
+
+    // TEMPORARY: we just create our own TaskCollection here... that's not good
+    // TODO: use the TaskCollection obtained from... I dunno.
+    protected TaskCollection hack__dummyTaskCollection =  new TaskCollection(DummyTasks.ITEMS);
+    
     public TaskListFragment() {
+        // HACK! This is here so that
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+        //TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         /**TODO Somewhere we have to initialize Report Manager as well. Imma put it here for now */
-        ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
+        //ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
 
+        
         /*TODO Take into account global tasks maybe?*/
       //  setListAdapter(new TaskAdapter(getActivity(),
         //        tm.getLocalTasks()));
@@ -76,8 +85,11 @@ public class TaskListFragment extends ListFragment implements Observer {
         setListAdapter(new TaskAdapter(getActivity(),
                 // Uncomment when this ISN'T broken,
                 //tm.getLocalTaskCollection()));
-                DummyTasks.ITEMS));
+                hack__dummyTaskCollection
+               ));
 
+        /* Even though this is for a HACK object, this will be used when this is un-hack'd. */
+        hack__dummyTaskCollection.addObserver(this);
         
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);
@@ -106,18 +118,28 @@ public class TaskListFragment extends ListFragment implements Observer {
 	public void onResume() {
 		super.onResume();
 		
-        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+		/*
+		 * TODO: This part is a hack. Things need to be Observed and things must get refreshed.
+		 * 
+		 */
+		
+        //TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         /**TODO Somewhere we have to initialize Report Manager as well. Imma put it here for now */
-        ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
+        //ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
 
         /*TODO Take into account global tasks maybe?*/
         //  setListAdapter(new TaskAdapter(getActivity(),
         //        tm.getLocalTasks()));
 		
 		/* TODO: Remove DUMMY */
-		setListAdapter(new TaskAdapter(getActivity(),
-                DummyTasks.ITEMS));
+		//setListAdapter(new TaskAdapter(getActivity(),
+        //        DummyTasks.ITEMS));
 		
+	}
+	
+	@Override
+	public void onDestroy() {
+	    hack__dummyTaskCollection.deleteObserver(this);
 	}
     
     @Override
@@ -186,7 +208,7 @@ public class TaskListFragment extends ListFragment implements Observer {
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void update(Observable observable, Object ignored) {
-        
+        /* Tell our list adaptor that the data has changed. */
         ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
     }
 }

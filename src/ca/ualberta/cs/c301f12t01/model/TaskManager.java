@@ -37,6 +37,11 @@ public class TaskManager {
     private TaskCollection globalTasks = null;
     private HashMap<String, TaskCollection> allCollections = new HashMap<String, TaskCollection>();
 
+    /** Key for local task collection. */
+    static public final String LOCAL = "local";
+    /** Key for global task collection. */
+    static public final String GLOBAL = "global";
+
     // our singleton instance
     private static TaskManager singleton = null;
 
@@ -50,8 +55,8 @@ public class TaskManager {
         globalTasks = new TaskCollection(intitialGlobalTasks);
 
         /* Always instantiate the list with these collections: */
-        allCollections.put("local", localTasks);
-        allCollections.put("global", globalTasks);
+        allCollections.put(LOCAL, localTasks);
+        allCollections.put(GLOBAL, globalTasks);
     }
 
     /**
@@ -69,6 +74,10 @@ public class TaskManager {
         appropriateCollection.add(newTask);
     }
 
+    /**
+     * Gets the appropriate TaskCollection for the sharing specified by the
+     * given Task.
+     */
     public TaskCollection getCollectionForTask(Task task) {
 
         if (task.isLocal()) {
@@ -78,11 +87,20 @@ public class TaskManager {
         } else {
             return null;
         }
-
     }
 
     /**
-     * given a UUID, return the task
+     * Returns the TaskCollection that goes by the given name.
+     * 
+     * @param name
+     * @return The TaskCollection or null if it does not exist.
+     */
+    public TaskCollection getCollectionByName(String name) {
+        return allCollections.get(name);
+    }
+
+    /**
+     * Given a UUID, return the task
      * 
      * @param id
      *            ID of task we are looking for
@@ -90,7 +108,10 @@ public class TaskManager {
      */
     public Task get(UUID id) {
 
-        /* Try to get the local task first -- this will be faster. */
+        /*
+         * Prioritize search in the local task collection. This will be the
+         * fastest look-up.
+         */
         {
             Task localTask = localTasks.get(id);
 

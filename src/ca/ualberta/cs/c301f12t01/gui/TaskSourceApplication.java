@@ -26,6 +26,7 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
+import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
@@ -37,79 +38,113 @@ import ca.ualberta.cs.c301f12t01.model.TaskManager;
  */
 public class TaskSourceApplication extends Application {
 
-	private TaskManager taskManager = null;
-	private ReportManager reportManager = null;
-	private String user = null;
+    private TaskManager taskManager = null;
+    private ReportManager reportManager = null;
+    private String user = null;
 
+    private static TaskSourceApplication app = null;
 
-	/** Returns the user ID as a string. */
-    public String getUserID() {
+    /** Sets the static application to the singleton instance. */
+    public TaskSourceApplication() {
+        if (app == null) {
+            app = this;
+        }
+    }
+
+    /** Gets this device's user ID as a string. */
+    public static String getUserID() {
+        return app.getUserIDFromInstance();
+    }
+
+    /** Gets the named TaskCollection from the singleton TaskManager. */
+    public static TaskCollection getTaskCollectionByName(String name) {
+        return app.getTaskManager().getCollectionByName(name);
+    }
+
+    /**
+     * Adds a task to the singleton TaskManager. This Task will find itself into
+     * the appropriate TaskCollections.
+     */
+    public static void addTask(Task newTask) {
+        app.getTaskManager().addTask(newTask);
+    }
+
+    /** Returns the user ID as a string. */
+    protected String getUserIDFromInstance() {
         if (user == null) {
             user = fetchAndroidDeviceId();
         }
-        
+
         return user;
     }
 
     /** Returns the Task Manager. */
-	public TaskManager getTaskManager() {
-		/* Lazily loads the manager. */
-		if (taskManager == null) {
-			setupTaskManager();
-		}
+    public TaskManager getTaskManager() {
+        /* Lazily loads the manager. */
+        if (taskManager == null) {
+            setupTaskManager();
+        }
 
-		return taskManager;
-	}
-	
-	/** Returns the Report Manager */
-	public ReportManager getReportManager() {
-		/* Lazily loads the manager. */
-		if (reportManager == null) {
-			setupReportManager();
-		}
+        return taskManager;
+    }
 
-		return reportManager;
-	}
-	
-	/* Methods that setup the  global instances. */
+    /** Returns the Report Manager */
+    public ReportManager getReportManager() {
+        /* Lazily loads the manager. */
+        if (reportManager == null) {
+            setupReportManager();
+        }
 
-	private ReportManager setupReportManager() {
-		StorageInterface localStorage = new DeviceStorage(getApplicationContext());
-		/* TODO: Get the server interface working! */
-		reportManager = ReportManager.getInstance();
-		//Rmanager.addObserver(localStorage);
-		reportManager.setLocalStorage(localStorage);
+        return reportManager;
+    }
 
-		return reportManager;
+    /* Methods that setup the global instances. */
 
-	}
+    /* Sets up and returns the singleton ReportManager. */
+    private ReportManager setupReportManager() {
+        StorageInterface localStorage = new DeviceStorage(
+                getApplicationContext());
+        /* TODO: Get the server interface working! */
+        reportManager = ReportManager.getInstance();
+        // Rmanager.addObserver(localStorage);
+        reportManager.setLocalStorage(localStorage);
 
-	private TaskManager setupTaskManager() {
-		DeviceStorage localStorage = new DeviceStorage(getApplicationContext());
+        return reportManager;
 
-		/* TODO: Get the server interface working! */
-		// StorageInterface serverStorage = null;
+    }
 
-		/* Initialize TaskManager with stuff loaded from local storage. */
-		Collection<Task> localTaskList = localStorage.getLocalTasks().values();
-		Collection<Task> globalTaskList = localStorage.getGlobalTasks().values();
-		
-		taskManager = TaskManager.initializeTaskMananger(localTaskList, globalTaskList);
-		
-		/* Make sure the storage thingymobobbers are observing the TaskCollections. */
-		taskManager.getLocalTaskCollection().addObserver(localStorage);
-	    taskManager.getGlobalTaskCollection().addObserver(localStorage);
-	    //taskManager.getGlobalTaskCollection().addObserver(serverStorage);
+    /* Sets up the singleton TaskManager. */
+    private TaskManager setupTaskManager() {
+        DeviceStorage localStorage = new DeviceStorage(getApplicationContext());
 
-		return taskManager;
-	}
-	
-	/* Gets the device ID. */
-	private String fetchAndroidDeviceId() {
-	    TelephonyManager tManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-	    String uid = tManager.getDeviceId();
-	    
-	    return uid;
-	}
+        /* TODO: Get the server interface working! */
+        // StorageInterface serverStorage = null;
+
+        /* Initialize TaskManager with stuff loaded from local storage. */
+        Collection<Task> localTaskList = localStorage.getLocalTasks().values();
+        Collection<Task> globalTaskList = localStorage.getGlobalTasks()
+                .values();
+
+        taskManager = TaskManager.initializeTaskMananger(localTaskList,
+                globalTaskList);
+
+        /*
+         * Make sure the storage thingymobobbers are observing the
+         * TaskCollections.
+         */
+        taskManager.getLocalTaskCollection().addObserver(localStorage);
+        taskManager.getGlobalTaskCollection().addObserver(localStorage);
+        // taskManager.getGlobalTaskCollection().addObserver(serverStorage);
+
+        return taskManager;
+    }
+
+    /* Gets the device ID. */
+    private String fetchAndroidDeviceId() {
+        TelephonyManager tManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String uid = tManager.getDeviceId();
+
+        return uid;
+    }
 
 }

@@ -51,6 +51,11 @@ public class ReportManager extends Observable{
 		return l;
 		// return localStorage.getLocalReports(taskID);
 	}
+	
+	/** Returns true if the given task has reports. */
+	public boolean taskHasReports(Task task) {
+	    return getReports(task).size() > 0;
+	}
 
 	/**
 	 * 
