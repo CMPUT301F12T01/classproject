@@ -34,9 +34,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
@@ -72,8 +74,11 @@ public class TaskDetailFragment extends Fragment {
             if (getArguments().containsKey(ARG_TASK_ID)) {
                 UUID taskId = (UUID) getArguments()
                         .getSerializable(ARG_TASK_ID);
-                TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
-                task = tm.get(taskId);
+                
+                /* TODO: REMOVE DUMMY */
+                //TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+                //task = tm.get(taskId);
+                task = DummyTasks.ITEM_MAP.get(taskId);
 
 
             }
@@ -240,10 +245,12 @@ public class TaskDetailFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
         case R.id.menu_fulfill_task:
-            onUserSelectFulfill();
+            //onUserSelectFulfill();
+        	Toast.makeText(getActivity(), "Turned off for now!", Toast.LENGTH_SHORT).show();
             return true;
         case R.id.menu_view_reports:
-            onUserSelectViewReports();
+            //onUserSelectViewReports();
+        	Toast.makeText(getActivity(), "Turned off for now!", Toast.LENGTH_SHORT).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);
