@@ -116,15 +116,15 @@ public class ReportLocalRetrieval {
 
 				// Figure out what type of response it is, instantiate it and append it to the report's list
 				if (MediaType.valueOf(reportResponses.getString(
-						
 						reportResponses.getColumnIndex(responseSelectCollumns[1]))) == MediaType.AUDIO) {
+					
 					newResponse = new AudioResponse();
 				
 				}
 				else if (MediaType.valueOf(reportResponses.getString(
-				
 						reportResponses.getColumnIndex(responseSelectCollumns[1]))) == MediaType.PHOTO) {
-					newResponse = new PhotoResponse();
+					
+					newResponse = new PhotoResponse(null, null);
 				
 				}
 				else {

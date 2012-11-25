@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
@@ -81,7 +80,6 @@ public class TaskListFragment extends ListFragment implements Observer {
                 //tm.getLocalTaskCollection()));
                 DummyTasks.ITEMS));
 
-
         
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);
@@ -105,6 +103,25 @@ public class TaskListFragment extends ListFragment implements Observer {
     }
     
 
+    /* Set list adapter was moved here to allow refresh, but this should be changed later, right? */
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+        /**TODO Somewhere we have to initialize Report Manager as well. Imma put it here for now */
+        ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
+
+        /*TODO Take into account global tasks maybe?*/
+        //  setListAdapter(new TaskAdapter(getActivity(),
+        //        tm.getLocalTasks()));
+		
+		/* TODO: Remove DUMMY */
+		setListAdapter(new TaskAdapter(getActivity(),
+                DummyTasks.ITEMS));
+		
+	}
+    
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
        inflater.inflate(R.menu.activity_task_list , menu);
