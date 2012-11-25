@@ -35,6 +35,8 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  */
 public class TaskLocalRetrieval {
 
+    /* TODO: fix the ridiculous code duplication in this file, but retain the interface. */
+    
 	/**
 	 * Get all of the Tasks that belong to a particular
 	 * user from the Database
@@ -61,8 +63,8 @@ public class TaskLocalRetrieval {
 			Task newTask = new Task(
 					UUID.fromString(userTasks.getString(
 							userTasks.getColumnIndex(taskSelectColumns[1]))), 
-					UUID.fromString(userTasks.getString(
-							userTasks.getColumnIndex(taskSelectColumns[0]))));
+					userTasks.getString(
+							userTasks.getColumnIndex(taskSelectColumns[0])));
 			
 			newTask.setSummary(userTasks.getString(
 					userTasks.getColumnIndex(taskSelectColumns[3])));
@@ -131,8 +133,8 @@ public class TaskLocalRetrieval {
 			Task newTask = new Task(
 					UUID.fromString(scopedTasks.getString(
 							scopedTasks.getColumnIndex(taskSelectColumns[1]))), 
-					UUID.fromString(scopedTasks.getString(
-							scopedTasks.getColumnIndex(taskSelectColumns[0]))));
+					scopedTasks.getString(
+							scopedTasks.getColumnIndex(taskSelectColumns[0])));
 			
 			newTask.setSummary(scopedTasks.getString(
 					scopedTasks.getColumnIndex(taskSelectColumns[3])));
