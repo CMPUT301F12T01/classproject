@@ -18,7 +18,6 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
@@ -32,7 +31,6 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;

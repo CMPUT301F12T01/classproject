@@ -95,7 +95,11 @@ public class TaskSourceApplication extends Application {
 		Collection<Task> globalTaskList = localStorage.getGlobalTasks().values();
 		
 		taskManager = TaskManager.initializeTaskMananger(localTaskList, globalTaskList);
+		
+		/* Make sure the storage thingymobobbers are observing the TaskCollections. */
 		taskManager.getLocalTaskCollection().addObserver(localStorage);
+	    taskManager.getGlobalTaskCollection().addObserver(localStorage);
+	    //taskManager.getGlobalTaskCollection().addObserver(serverStorage);
 
 		return taskManager;
 	}

@@ -44,12 +44,19 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
             addNoNotify(task);
     }
 
+    /** Blank constructor. It's recommended that the TaskCollection is constructed using 
+     * {@link #TaskCollection(Collection)}
+     */
+    public TaskCollection(){
+        
+    }
+    
     /**
      * Adds a task. The UUID is determined automatically.
      * 
      * @param task
      *            The task to be added
-     * @return Whether the value was succesfully@SuppressWarnings("unused")
+     * @return Whether the value was succesfully
      *         added.
      */
     @Override
