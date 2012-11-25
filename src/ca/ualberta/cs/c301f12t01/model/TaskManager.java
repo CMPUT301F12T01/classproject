@@ -23,6 +23,8 @@ import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
 
+/* TODO: THIS MUST BE SUPER TESTED! */
+
 /**
  * Class to manage all of our tasks Singleton design pattern
  * 
@@ -34,23 +36,22 @@ public class TaskManager {
     private TaskCollection localTasks = null;
     private TaskCollection globalTasks = null;
     private HashMap<String, TaskCollection> allCollections = new HashMap<String, TaskCollection>();
-    
-    /* Always instantiate with these collections. */
-    {
-        allCollections.put("local", localTasks);
-        allCollections.put("global", globalTasks);
-    }
 
     // our singleton instance
     private static TaskManager singleton = null;
 
-
     /**
      * Initialize singleton TaskManager.
      */
-    private TaskManager(Collection<Task> initialLocalTasks, Collection<Task> intitialGlobalTasks) {
+    private TaskManager(Collection<Task> initialLocalTasks,
+            Collection<Task> intitialGlobalTasks) {
+
         localTasks = new TaskCollection(initialLocalTasks);
         globalTasks = new TaskCollection(intitialGlobalTasks);
+
+        /* Always instantiate the list with these collections: */
+        allCollections.put("local", localTasks);
+        allCollections.put("global", globalTasks);
     }
 
     /**
@@ -60,13 +61,13 @@ public class TaskManager {
      *            task to be added
      */
     public void addTask(Task newTask) {
-	    TaskCollection appropriateCollection;
+        TaskCollection appropriateCollection;
 
-	    /* Figure out which collection to dump the task in. */
-	    appropriateCollection = getCollectionForTask(newTask);
-	    
-	    appropriateCollection.add(newTask);
-	}
+        /* Figure out which collection to dump the task in. */
+        appropriateCollection = getCollectionForTask(newTask);
+
+        appropriateCollection.add(newTask);
+    }
 
     public TaskCollection getCollectionForTask(Task task) {
 
@@ -89,19 +90,30 @@ public class TaskManager {
      */
     public Task get(UUID id) {
 
-        /* Look in every collection to see if we can find the task. */
-        /* TODO: should probably prioritize local storage. */
+        /* Try to get the local task first -- this will be faster. */
+        {
+            Task localTask = localTasks.get(id);
+
+            if (localTask != null) {
+                return localTask;
+            }
+        }
+
+        /*
+         * If that fails, look in every collection to see if we can find the
+         * task.
+         */
         for (TaskCollection collection : allCollections.values()) {
-            
+
             if (collection == null)
                 continue;
-            
+
             Task maybeTask = collection.get(id);
             if (maybeTask != null) {
                 return maybeTask;
             }
         }
-        
+
         // If we got here, we didn't find the task
         return null;
 
@@ -133,10 +145,19 @@ public class TaskManager {
     public static TaskManager getInstance() {
         return singleton;
     }
-    
-    public static TaskManager initializeTaskMananger(Collection<Task> initialLocalTasks, Collection<Task> intitialGlobalTasks) {
-        singleton = new TaskManager(initialLocalTasks, intitialGlobalTasks);
-        
+
+    /** Sets up the singleton. class. */
+    public static TaskManager initializeTaskMananger(
+            Collection<Task> initialLocalTasks,
+            Collection<Task> intitialGlobalTasks) {
+
+        if (singleton == null) {
+            singleton = new TaskManager(initialLocalTasks, intitialGlobalTasks);
+        } else {
+            System.err.println("WARNING: setting up the TaskManager twice.");
+
+        }
+
         return singleton;
 
     }

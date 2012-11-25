@@ -31,7 +31,7 @@ import ca.ualberta.cs.c301f12t01.model.TaskManager;
 /**
  * Maintains global singleton variables.
  * 
- * Many of these are lazily loaded.
+ * Many of the instances managed here are lazily loaded.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
@@ -40,6 +40,7 @@ public class TaskSourceApplication extends Application {
 	private TaskManager taskManager = null;
 	private ReportManager reportManager = null;
 	private String user = null;
+
 
 	/** Returns the user ID as a string. */
     public String getUserID() {
@@ -69,6 +70,8 @@ public class TaskSourceApplication extends Application {
 
 		return reportManager;
 	}
+	
+	/* Methods that setup the  global instances. */
 
 	private ReportManager setupReportManager() {
 		StorageInterface localStorage = new DeviceStorage(getApplicationContext());
@@ -83,6 +86,7 @@ public class TaskSourceApplication extends Application {
 
 	private TaskManager setupTaskManager() {
 		DeviceStorage localStorage = new DeviceStorage(getApplicationContext());
+
 		/* TODO: Get the server interface working! */
 		// StorageInterface serverStorage = null;
 
