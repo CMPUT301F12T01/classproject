@@ -32,155 +32,157 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  * @author Eddie Antonio Santos
  */
 public class TaskManager {
-    // our collections
-    private TaskCollection localTasks = null;
-    private TaskCollection globalTasks = null;
-    private HashMap<String, TaskCollection> allCollections = new HashMap<String, TaskCollection>();
+	// our collections
+	private TaskCollection localTasks = null;
+	private TaskCollection globalTasks = null;
+	private HashMap<String, TaskCollection> allCollections = new HashMap<String, TaskCollection>();
 
-    /** Key for local task collection. */
-    static public final String LOCAL = "local";
-    /** Key for global task collection. */
-    static public final String GLOBAL = "global";
+	/** Key for local task collection. */
+	static public final String LOCAL = "local";
+	/** Key for global task collection. */
+	static public final String GLOBAL = "global";
 
-    // our singleton instance
-    private static TaskManager singleton = null;
+	// our singleton instance
+	private static TaskManager singleton = null;
 
-    /**
-     * Initialize singleton TaskManager.
-     */
-    private TaskManager(Collection<Task> initialLocalTasks,
-            Collection<Task> intitialGlobalTasks) {
+	/**
+	 * Initialize singleton TaskManager.
+	 */
+	private TaskManager(Collection<Task> initialLocalTasks,
+			Collection<Task> intitialGlobalTasks) {
 
-        localTasks = new TaskCollection(initialLocalTasks);
-        globalTasks = new TaskCollection(intitialGlobalTasks);
+		localTasks = new TaskCollection(initialLocalTasks);
+		globalTasks = new TaskCollection(intitialGlobalTasks);
 
-        /* Always instantiate the list with these collections: */
-        allCollections.put(LOCAL, localTasks);
-        allCollections.put(GLOBAL, globalTasks);
-    }
+		/* Always instantiate the list with these collections: */
+		allCollections.put(LOCAL, localTasks);
+		allCollections.put(GLOBAL, globalTasks);
+	}
 
-    /**
-     * adds a new task into either localTasks or globalTasks
-     * 
-     * @param newTask
-     *            task to be added
-     */
-    public void addTask(Task newTask) {
-        TaskCollection appropriateCollection;
+	/**
+	 * adds a new task into either localTasks or globalTasks
+	 * 
+	 * @param newTask
+	 *            task to be added
+	 */
+	public void addTask(Task newTask) {
+		TaskCollection appropriateCollection;
 
-        /* Figure out which collection to dump the task in. */
-        appropriateCollection = getCollectionForTask(newTask);
+		/* Figure out which collection to dump the task in. */
+		appropriateCollection = getCollectionForTask(newTask);
 
-        appropriateCollection.add(newTask);
-    }
+		appropriateCollection.add(newTask);
+	}
 
-    /**
-     * Gets the appropriate TaskCollection for the sharing specified by the
-     * given Task.
-     */
-    public TaskCollection getCollectionForTask(Task task) {
+	/**
+	 * Gets the appropriate TaskCollection for the sharing specified by the
+	 * given Task.
+	 */
+	public TaskCollection getCollectionForTask(Task task) {
 
-        if (task.isLocal()) {
-            return localTasks;
-        } else if (task.isGlobal()) {
-            return globalTasks;
-        } else {
-            return null;
-        }
-    }
+		if (task.isLocal()) {
+			return localTasks;
+		} else if (task.isGlobal()) {
+			return globalTasks;
+		} else {
+			return null;
+		}
+	}
 
-    /**
-     * Returns the TaskCollection that goes by the given name.
-     * 
-     * @param name
-     * @return The TaskCollection or null if it does not exist.
-     */
-    public TaskCollection getCollectionByName(String name) {
-        return allCollections.get(name);
-    }
+	/**
+	 * Returns the TaskCollection that goes by the given name.
+	 * 
+	 * @param name
+	 * @return The TaskCollection or null if it does not exist.
+	 */
+	public TaskCollection getCollectionByName(String name) {
+		return allCollections.get(name);
+	}
 
-    /**
-     * Given a UUID, return the task
-     * 
-     * @param id
-     *            ID of task we are looking for
-     * @return Task that matches ID
-     */
-    public Task get(UUID id) {
+	/**
+	 * Given a UUID, return the task
+	 * 
+	 * @param id
+	 *            ID of task we are looking for
+	 * @return Task that matches ID
+	 */
+	public Task get(UUID id) {
 
-        /*
-         * Prioritize search in the local task collection. This will be the
-         * fastest look-up.
-         */
-        {
-            Task localTask = localTasks.get(id);
+		/*
+		 * Prioritize search in the local task collection. This will be the
+		 * fastest look-up.
+		 */
+		{
+			Task localTask = localTasks.get(id);
 
-            if (localTask != null) {
-                return localTask;
-            }
-        }
+			if (localTask != null) {
+				return localTask;
+			}
+		}
 
-        /*
-         * If that fails, look in every collection to see if we can find the
-         * task.
-         */
-        for (TaskCollection collection : allCollections.values()) {
+		/*
+		 * If that fails, look in every collection to see if we can find the
+		 * task.
+		 */
+		for (TaskCollection collection : allCollections.values()) {
 
-            if (collection == null)
-                continue;
+			if (collection == null) {
+				System.err.println("Found a null collection.");
+				continue;
+			}
 
-            Task maybeTask = collection.get(id);
-            if (maybeTask != null) {
-                return maybeTask;
-            }
-        }
+			Task maybeTask = collection.get(id);
+			if (maybeTask != null) {
+				return maybeTask;
+			}
+		}
 
-        // If we got here, we didn't find the task
-        return null;
+		// If we got here, we didn't find the task
+		return null;
 
-    }
+	}
 
-    /**
-     * returns all local tasks
-     * 
-     * @return ArrayList of local tasks
-     */
-    public TaskCollection getLocalTaskCollection() {
-        return localTasks;
-    }
+	/**
+	 * returns all local tasks
+	 * 
+	 * @return ArrayList of local tasks
+	 */
+	public TaskCollection getLocalTaskCollection() {
+		return localTasks;
+	}
 
-    /**
-     * returns all global tasks
-     * 
-     * @return ArrayList of local tasks
-     */
-    public TaskCollection getGlobalTaskCollection() {
-        return globalTasks;
-    }
+	/**
+	 * returns all global tasks
+	 * 
+	 * @return ArrayList of local tasks
+	 */
+	public TaskCollection getGlobalTaskCollection() {
+		return globalTasks;
+	}
 
-    /**
-     * let them get our instance
-     * 
-     * @return Singleton instance of TaskManager
-     */
-    public static TaskManager getInstance() {
-        return singleton;
-    }
+	/**
+	 * let them get our instance
+	 * 
+	 * @return Singleton instance of TaskManager
+	 */
+	public static TaskManager getInstance() {
+		return singleton;
+	}
 
-    /** Sets up the singleton. class. */
-    public static TaskManager initializeTaskMananger(
-            Collection<Task> initialLocalTasks,
-            Collection<Task> intitialGlobalTasks) {
+	/** Sets up the singleton. class. */
+	public static TaskManager initializeTaskMananger(
+			Collection<Task> initialLocalTasks,
+			Collection<Task> intitialGlobalTasks) {
 
-        if (singleton == null) {
-            singleton = new TaskManager(initialLocalTasks, intitialGlobalTasks);
-        } else {
-            System.err.println("WARNING: setting up the TaskManager twice.");
+		if (singleton == null) {
+			singleton = new TaskManager(initialLocalTasks, intitialGlobalTasks);
+		} else {
+			System.err.println("WARNING: setting up the TaskManager twice.");
 
-        }
+		}
 
-        return singleton;
+		return singleton;
 
-    }
+	}
 
 }
