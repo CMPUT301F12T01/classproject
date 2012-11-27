@@ -110,8 +110,11 @@ public class DefineTaskActivity extends Activity {
 		/* Now set up the new task with the extracted data. */
 		/* TODO: Get rid of this dummy user crud. */
 		
-		String user = ((TaskSourceApplication) getApplication()).getUserID();
+		String user = TaskSourceApplication.getUserID();
 		Task newTask = new Task(user);
+		//The *correct* way to do it.
+		//Task newTask = TaskSourceApplication.newTaskForCurrentUser();
+
 
 		newTask.setDescription(descriptionText);
 		newTask.setSummary(summaryText);
@@ -156,6 +159,8 @@ public class DefineTaskActivity extends Activity {
 		//add task using TaskManager
 		TaskManager tm = ((TaskSourceApplication) getApplication()).getTaskManager();
 		//tm.addTask(newTask);
+		// Again: the "correct" way to do it.
+		//TaskSourceApplication.addTask(newTask);
 		
 		DummyTasks.addItem(newTask);
 

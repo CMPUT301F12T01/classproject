@@ -41,83 +41,112 @@ import ca.ualberta.cs.c301f12t01.model.TaskManager;
  */
 public class TaskSourceApplication extends Application {
 
-
 	private TaskManager taskManager = null;
-    private ReportManager reportManager = null;
-    private String user = null;
+	private ReportManager reportManager = null;
+	private String user = null;
 
-    private static TaskSourceApplication app = null;
-    
-    /*
-     *  STATIC DELEGATE METHODS.
-     */
+	private static TaskSourceApplication app = null;
 
-    /**
-     * Adds a task to the singleton TaskManager. This Task will find itself into
-     * the appropriate TaskCollections.
-     */
-    public static void singletonAddTask(Task newTask) {
-        app.addTask(newTask);
-    }
+	/*
+	 * STATIC DELEGATE METHODS.
+	 * 
+	 * USE THESE IN YOUR CODE.
+	 */
+
+	/** Instantiates a new Task with the current user ID. */
+	public static Task newTaskForCurrentUser() {
+		return new Task(getUserID());
+	}
 
 	/** Gets this device's user ID as a string. */
-    public static String getSingletonUserID() {
-        return app.getUserID();
-    }
+	public static String getUserID() {
+		return app.getUserIDFromInstance();
+	}
 
-    /** Gets the named TaskCollection from the singleton TaskManager. */
-    public static TaskCollection getTaskCollectionByName(String name) {
-        return app.getCollectionByName(name);
-    }
+	/**
+	 * Adds a task to the singleton TaskManager. This Task will find itself into
+	 * the appropriate TaskCollections.
+	 */
+	public static void addTask(Task newTask) {
+		app.addTaskFromInstance(newTask);
+	}
 
+	/** Gets the task with the give task ID from the TaskManager. */
+	public static Task getTask(UUID taskId) {
+		return app.getTaskFromInstance(taskId);
+	}
 
-    
-    /*
-     * Handles the singleton's instantiation.
-     */
+	/** Gets the named TaskCollection from the singleton TaskManager. */
+	public static TaskCollection getTaskCollectionByName(String name) {
+		return app.getCollectionByNameFromInstance(name);
+	}
 
-    /** Sets the static application to the singleton instance. */
-    public TaskSourceApplication() {
-        if (app == null) {
-            app = this;
-        }
-    }
+	/** Gets the TaskCollection that maintains local tasks. */
+	public static TaskCollection getLocalTaskCollection() {
+		return app.getLocalTaskCollectionFromInstance();
+	}
 
-    /** On create, we set the instance and load everything. */
-    @Override
-    public void onCreate() {
-      super.onCreate();  
-      app = this;
+	/** Gets the TaskCollection that maintains local tasks. */
+	public static TaskCollection getGlobalTaskCollection() {
+		return app.getGlobalTaskCollectionFromInstance();
+	}
 
-      /* I LIED! Let's eagerly set everything up. */
-      //setupReportManager();
-      //setupTaskManager();
-      setupUserId();
-      
-      /* I JUST KEEP ON LIEING! */
-    }
+	/** Gets reports for the given Task from the singleton ReportManager. */
+	public List<Report> getReports(Task task) {
+		return app.getReportsFromInstance(task);
+	}
 
-    
-    /*
-     * Delegate instance methods.
-     */
+	/**
+	 * Returns true if the given Task has at least one Report tracked in the
+	 * singleton ReportManager.
+	 */
+	public boolean taskHasReports(Task task) {
+		return app.taskHasReportsFromInstance(task);
+	}
 
-    /**
+	/*
+	 * Handles the singleton's instantiation.
+	 */
+
+	/** Sets the static application to the singleton instance. */
+	public TaskSourceApplication() {
+	}
+
+	/** On create, we set the instance and load everything. */
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		app = this;
+
+		/* I LIED! Let's eagerly set everything up. */
+		// setupReportManager();
+		// setupTaskManager();
+		setupUserId();
+
+		/* I JUST KEEP ON LIEING! */
+	}
+
+	/*
+	 * Delegate instance methods.
+	 */
+
+	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.TaskManager#getCollectionByName(java.lang.String)
 	 */
-	public TaskCollection getCollectionByName(String name) {
+	public TaskCollection getCollectionByNameFromInstance(String name) {
 		setupTaskManager();
 		return taskManager.getCollectionByName(name);
 	}
 
-	public void addTask(Task newTask) {
+	public void addTaskFromInstance(Task newTask) {
+		setupTaskManager();
 		taskManager.addTask(newTask);
 	}
 
 	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.TaskManager#get(java.util.UUID)
 	 */
-	public Task get(UUID id) {
+	public Task getTaskFromInstance(UUID id) {
 		setupTaskManager();
 		return taskManager.get(id);
 	}
@@ -125,7 +154,7 @@ public class TaskSourceApplication extends Application {
 	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.TaskManager#getLocalTaskCollection()
 	 */
-	public TaskCollection getLocalTaskCollection() {
+	public TaskCollection getLocalTaskCollectionFromInstance() {
 		setupTaskManager();
 		return taskManager.getLocalTaskCollection();
 	}
@@ -133,15 +162,15 @@ public class TaskSourceApplication extends Application {
 	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.TaskManager#getGlobalTaskCollection()
 	 */
-	public TaskCollection getGlobalTaskCollection() {
+	public TaskCollection getGlobalTaskCollectionFromInstance() {
 		setupTaskManager();
 		return taskManager.getGlobalTaskCollection();
 	}
 
-    /**
+	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.ReportManager#getReports(ca.ualberta.cs.c301f12t01.common.Task)
 	 */
-	public List<Report> getReports(Task task) {
+	public List<Report> getReportsFromInstance(Task task) {
 		setupReportManager();
 		return reportManager.getReports(task);
 	}
@@ -149,55 +178,49 @@ public class TaskSourceApplication extends Application {
 	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.ReportManager#taskHasReports(ca.ualberta.cs.c301f12t01.common.Task)
 	 */
-	public boolean taskHasReports(Task task) {
+	public boolean taskHasReportsFromInstance(Task task) {
 		setupReportManager();
 		return reportManager.taskHasReports(task);
 	}
-	
-	
+
 	/*
-	 * Methods that manage the instances that belong to an Application. 
+	 * Methods that manage the instances that belong to an Application.
 	 */
-	
-    /** Returns the user ID as a string. */
-    public String getUserID() {
-        setupUserId();
 
-        return user;
-    }
+	/** Returns the user ID as a string. */
+	public String getUserIDFromInstance() {
+		setupUserId();
+		return user;
+	}
 
-    /** Returns the Task Manager. */
-    public TaskManager getTaskManager() {
-        /* Lazily loads the manager. */
-        setupTaskManager();
+	/** Returns the Task Manager. */
+	public TaskManager getTaskManager() {
+		/* Lazily loads the manager. */
+		setupTaskManager();
+		return taskManager;
+	}
 
-        return taskManager;
-    }
+	/** Returns the Report Manager */
+	public ReportManager getReportManager() {
+		/* Lazily loads the manager. */
+		setupReportManager();
+		return reportManager;
+	}
 
-    /** Returns the Report Manager */
-    public ReportManager getReportManager() {
-        /* Lazily loads the manager. */
-    	setupReportManager();
+	/*
+	 * Methods that setup the global instances.
+	 */
 
-        return reportManager;
-    }
-
-    
-    
-    /*
-     * Methods that setup the global instances.
-     */
-
-    /** Gets the device ID. */
+	/** Gets the device ID. */
 	private String setupUserId() {
 		if (user != null) {
 			return user;
 		}
-		
-	    TelephonyManager tManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-	    user = tManager.getDeviceId();
-	    
-	    return user;
+
+		TelephonyManager tManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+		user = tManager.getDeviceId();
+
+		return user;
 	}
 
 	/** Sets up the singleton TaskManager. */
@@ -205,46 +228,46 @@ public class TaskSourceApplication extends Application {
 		if (taskManager != null) {
 			return taskManager;
 		}
-		
-	    DeviceStorage localStorage = new DeviceStorage(getApplicationContext());
-	
-	    /* TODO: Get the server interface working! */
-	    // StorageInterface serverStorage = null;
-	
-	    /* Initialize TaskManager with stuff loaded from local storage. */
-	    Collection<Task> localTaskList = localStorage.getLocalTasks().values();
-	    Collection<Task> globalTaskList = localStorage.getGlobalTasks()
-	            .values();
-	
-	    taskManager = TaskManager.initializeTaskMananger(localTaskList,
-	            globalTaskList);
-	
-	    /*
-	     * Make sure the storage thingymobobbers are observing the
-	     * TaskCollections.
-	     */
-	    taskManager.getLocalTaskCollection().addObserver(localStorage);
-	    taskManager.getGlobalTaskCollection().addObserver(localStorage);
-	    // taskManager.getGlobalTaskCollection().addObserver(serverStorage);
-	
-	    return taskManager;
+
+		DeviceStorage localStorage = new DeviceStorage(getApplicationContext());
+
+		/* TODO: Get the server interface working! */
+		// StorageInterface serverStorage = null;
+
+		/* Initialize TaskManager with stuff loaded from local storage. */
+		Collection<Task> localTaskList = localStorage.getLocalTasks().values();
+		Collection<Task> globalTaskList = localStorage.getGlobalTasks()
+				.values();
+
+		taskManager = TaskManager.initializeTaskMananger(localTaskList,
+				globalTaskList);
+
+		/*
+		 * Make sure the storage thingymobobbers are observing the
+		 * TaskCollections.
+		 */
+		taskManager.getLocalTaskCollection().addObserver(localStorage);
+		taskManager.getGlobalTaskCollection().addObserver(localStorage);
+		// taskManager.getGlobalTaskCollection().addObserver(serverStorage);
+
+		return taskManager;
 	}
 
 	/** Sets up and returns the singleton ReportManager. */
-    private ReportManager setupReportManager() {
-    	if (reportManager != null) {
-    		return reportManager;
-    	}
-    	
-        StorageInterface localStorage = new DeviceStorage(
-                getApplicationContext());
-        /* TODO: Get the server interface working! */
-        reportManager = ReportManager.getInstance();
-        // Rmanager.addObserver(localStorage);
-        reportManager.setLocalStorage(localStorage);
+	private ReportManager setupReportManager() {
+		if (reportManager != null) {
+			return reportManager;
+		}
 
-        return reportManager;
+		StorageInterface localStorage = new DeviceStorage(
+				getApplicationContext());
+		/* TODO: Get the server interface working! */
+		reportManager = ReportManager.getInstance();
+		// Rmanager.addObserver(localStorage);
+		reportManager.setLocalStorage(localStorage);
 
-    }
+		return reportManager;
+
+	}
 
 }
