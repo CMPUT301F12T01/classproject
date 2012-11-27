@@ -46,7 +46,7 @@ public class ReportServerStorage {
 		nvp.add(new BasicNameValuePair("content", reportJson));
 		// tell server
 		Server server = new Server();
-		server.put(nvp);
+		server.post(nvp);
 
 	}
 }

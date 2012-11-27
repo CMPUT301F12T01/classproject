@@ -17,35 +17,53 @@
  */
 package ca.ualberta.cs.c301f12t01.serverStorage;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.message.BasicNameValuePair;
-
-import com.google.gson.Gson;
-
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
+ * Object that is stored on the server Used for converting server json to Task
+ * Note that Task can be retrieved with getContent
  * 
  * @author home
- *
+ * 
  */
-public class TaskServerStorage {
-	
-	public static void storeTask(Task task){
-		
-		//first make task into json
-		Gson gson = new Gson();
-		String taskJson = gson.toJson(task);
-		//Build our get args
-		List <BasicNameValuePair> nvp = new ArrayList<BasicNameValuePair>();
-		nvp.add(new BasicNameValuePair("action", "post"));
-		nvp.add(new BasicNameValuePair("summary", "task"));
-		nvp.add(new BasicNameValuePair("content", taskJson));	
-		//tell server
-		Server server = new Server();
-		server.post(nvp);
-		
+public class ServerObj {
+
+	// This is how things are stored on the server
+	private String summary;
+	private Task content;
+	private String id;
+	private String description;
+
+	public String getSummary() {
+		return summary;
 	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public Task getContent() {
+		return content;
+	}
+
+	public void setContent(Task content) {
+		this.content = content;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

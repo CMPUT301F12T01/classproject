@@ -18,8 +18,10 @@
 package ca.ualberta.cs.c301f12t01.serverStorage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -27,6 +29,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 /**
  * 
@@ -42,7 +45,7 @@ public class Server {
 		HttpGet httpGet = new HttpGet(serverName + args);
 		try {
 			HttpResponse response1 = httpclient.execute(httpGet);
-			System.out.println(response1.getStatusLine());
+			// System.out.println(response1.getStatusLine());
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -50,18 +53,34 @@ public class Server {
 		}
 	}
 
-	public void put(List<BasicNameValuePair> nvp) {
+	/**
+	 * 
+	 * @param nvp
+	 * 			NameValuePair to post to the server
+	 * @return
+	 * 			The json formatted string we got back
+	 */
+	public String post(List<BasicNameValuePair> nvp) {
+		String jsonStringVersion = null;
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpGet = new HttpPost(serverName);
 		try {
 			httpGet.setEntity(new UrlEncodedFormEntity(nvp));
 			HttpResponse response = httpclient.execute(httpGet);
-			System.out.println(response.getStatusLine());
+			HttpEntity entity = response.getEntity();
+			if (entity != null) {
+				//System.out.println(response.getStatusLine());
+				InputStream is = entity.getContent();
+				jsonStringVersion = ServerUtils.convertStreamToString(is);
+			}
+
+			return jsonStringVersion;
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null; //hopefully we never get here
 	}
 
 }
