@@ -31,10 +31,7 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
-import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
-import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * Android view that displays a list of the Tasks that belong to a
@@ -48,11 +45,14 @@ public class TaskListFragment extends ListFragment implements Observer {
 
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
+	private TaskCollection trackedCollection = null;
 	private Callbacks callbacks = doNothingCallbacks;
 	private int activatedPosition = ListView.INVALID_POSITION;
 
+	
+
 	/**
-	 * Calbacks that should be handled by the activity that spawns this
+	 * Callbacks that should be handled by the activity that spawns this
 	 * fragment.
 	 */
 	public interface Callbacks {
@@ -68,36 +68,28 @@ public class TaskListFragment extends ListFragment implements Observer {
 		}
 	};
 
-	// TEMPORARY: we just create our own TaskCollection here... that's not good
-	// TODO: use the TaskCollection obtained from... I dunno.
-	protected TaskCollection hack__dummyTaskCollection = new TaskCollection(
-			DummyTasks.ITEMS);
-
+	
 	public TaskListFragment() {
-		// HACK! This is here so that
 	}
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// TaskManager tm = ((TaskSourceApplication)
-		// getActivity().getApplication()).getTaskManager();
-		/**
-		 * TODO Somewhere we have to initialize Report Manager as well. Imma put
-		 * it here for now
+		/*
+		 * TODO:
+		 * 
+		 * What's supposed to happen is that this fragment gets sent in its
+		 * fragment transaction the name of the TaskCollection to go manage.
+		 * Right now, I'm hard-coding the local collection to see if things work.
+		 * 
 		 */
-		// ReportManager rm = ((TaskSourceApplication)
-		// getActivity().getApplication()).getReportManager();
+		
+		//trackedCollection = TaskSourceApplication.getTaskCollectionByName(name);
+		trackedCollection = TaskSourceApplication.getLocalTaskCollection();
 
-		/* TODO Take into account global tasks maybe? */
-		// setListAdapter(new TaskAdapter(getActivity(),
-		// tm.getLocalTasks()));
-
-		setListAdapter(new TaskAdapter(getActivity(),
-		// Uncomment when this ISN'T broken,
-		// tm.getLocalTaskCollection()));
-				hack__dummyTaskCollection));
+		setListAdapter(new TaskAdapter(getActivity(), trackedCollection));
 
 		/* Add action bar options, because they are super cool. */
 		setHasOptionsMenu(true);
@@ -128,7 +120,7 @@ public class TaskListFragment extends ListFragment implements Observer {
 
 		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onResume");
 
-		hack__dummyTaskCollection.addObserver(this);
+		trackedCollection.addObserver(this);
 		refreshListAdaptor();
 	}
 
@@ -138,7 +130,8 @@ public class TaskListFragment extends ListFragment implements Observer {
 		super.onPause();
 
 		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onPause");
-		hack__dummyTaskCollection.deleteObserver(this);
+		
+		trackedCollection.deleteObserver(this);
 	}
 
 	@Override
@@ -149,6 +142,7 @@ public class TaskListFragment extends ListFragment implements Observer {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+		
 		if (!(activity instanceof Callbacks)) {
 			throw new IllegalStateException(
 					"Activity must implement fragment's callbacks.");
@@ -162,6 +156,7 @@ public class TaskListFragment extends ListFragment implements Observer {
 	@Override
 	public void onDetach() {
 		super.onDetach();
+		
 		callbacks = doNothingCallbacks;
 		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onDetach");
 	}
@@ -169,25 +164,20 @@ public class TaskListFragment extends ListFragment implements Observer {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position,
 			long id) {
+		
 		super.onListItemClick(listView, view, position, id);
 
-		/* TODO: REMOVE DUMMY */
-		callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
-		/*
-		 * TaskManager tm = ((TaskSourceApplication)
-		 * getActivity().getApplication()).getTaskManager(); List<Task> list =
-		 * tm.getLocalTaskCollection();
-		 * callbacks.onItemSelected(list.get(position).getId());
-		 */
-		/* TODO This also needs to handle global tasks */
+		callbacks.onItemSelected(trackedCollection.getAt(position).getId());
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		
 		if (activatedPosition != ListView.INVALID_POSITION) {
 			outState.putInt(STATE_ACTIVATED_POSITION, activatedPosition);
 		}
+		
 	}
 
 	public void setActivateOnItemClick(boolean activateOnItemClick) {
@@ -213,7 +203,6 @@ public class TaskListFragment extends ListFragment implements Observer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	public void update(Observable observable, Object ignored) {

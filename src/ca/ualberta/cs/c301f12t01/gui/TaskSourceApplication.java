@@ -117,6 +117,7 @@ public class TaskSourceApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		app = this;
+        android.util.Log.d("App-LIFECYCLE", "TaskListApplication - onCreate ");
 
 		/* I LIED! Let's eagerly set everything up. */
 		// setupReportManager();
