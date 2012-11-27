@@ -31,10 +31,10 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 
 /**
+ * The initial activity of stuff and things, yo.
  * 
- * 
+ * @author Bronte Lee <bronte@ualberta.ca>
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
- *
  */
 public class TaskListActivity extends Activity implements
 TaskListFragment.Callbacks {
@@ -47,6 +47,8 @@ TaskListFragment.Callbacks {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_list);
+		
+        android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onCreate ");
 
 		/* See if the view is using the two pane layout. */
 		if (findViewById(R.id.task_detail_container) != null) {
@@ -61,20 +63,19 @@ TaskListFragment.Callbacks {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		/* Check if we're defining a task. */
-		case R.id.menu_define_task:
-			onClickDefineTask(item);
-			return true;
+			/* Check if we're defining a task. */
+			case R.id.menu_define_task:
+				onClickDefineTask(item);
+				return true;
 			/* That's it. actually. */
-		default:
-			return super.onOptionsItemSelected(item);
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 
 	}
@@ -110,7 +111,7 @@ TaskListFragment.Callbacks {
 	 * because... geez. Maybe call it `TwoPaneActivity`.
 	 */
 
-	/* TODO: Call the next two methods `startNewDetail` or something... /
+	/* TODO: Call the next two methods `startNewDetail` or something... */
 
     /**
 	 * A shortcut for {@link #startNewFragment(Class, Class, String,
