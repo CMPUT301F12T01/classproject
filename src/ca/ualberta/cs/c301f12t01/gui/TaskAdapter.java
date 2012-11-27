@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 
 /**
@@ -106,14 +105,12 @@ public class TaskAdapter extends BaseAdapter {
         // Sets the main text to be the summary.
         summary.setText(task.getSummary());
 
-        /* TODO: Get reports to not crash on start-up... */
-        /*
-        boolean hasReports = ReportManager.getInstance().taskHasReports(task);
+
+        boolean hasReports = TaskSourceApplication.taskHasReports(task);
         // Hides the marker if no reports have been made.
         if (!hasReports) {
             responseIndicator.setVisibility(View.INVISIBLE);
         }
-        */
 
         return constructedView;
     }

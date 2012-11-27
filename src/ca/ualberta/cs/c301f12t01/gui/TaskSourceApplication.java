@@ -92,7 +92,7 @@ public class TaskSourceApplication extends Application {
 	}
 
 	/** Gets reports for the given Task from the singleton ReportManager. */
-	public List<Report> getReports(Task task) {
+	public static List<Report> getReports(Task task) {
 		return app.getReportsFromInstance(task);
 	}
 
@@ -100,7 +100,7 @@ public class TaskSourceApplication extends Application {
 	 * Returns true if the given Task has at least one Report tracked in the
 	 * singleton ReportManager.
 	 */
-	public boolean taskHasReports(Task task) {
+	public static boolean taskHasReports(Task task) {
 		return app.taskHasReportsFromInstance(task);
 	}
 

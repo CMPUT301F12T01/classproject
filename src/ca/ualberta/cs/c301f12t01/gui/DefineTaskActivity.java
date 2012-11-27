@@ -34,8 +34,6 @@ import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
-import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 
 /**
@@ -108,12 +106,7 @@ public class DefineTaskActivity extends Activity {
 		}
 
 		/* Now set up the new task with the extracted data. */
-		/* TODO: Get rid of this dummy user crud. */
-		
-		String user = TaskSourceApplication.getUserID();
-		Task newTask = new Task(user);
-		//The *correct* way to do it.
-		//Task newTask = TaskSourceApplication.newTaskForCurrentUser();
+		Task newTask = TaskSourceApplication.newTaskForCurrentUser();
 
 
 		newTask.setDescription(descriptionText);
@@ -155,14 +148,7 @@ public class DefineTaskActivity extends Activity {
 		
 		android.util.Log.d("Act-LIFECYCLE", "DefineTaskActivity-onTaskCreated");
 		
-		// TODO: turn this back on! So saving occurs again!
-		//add task using TaskManager
-		TaskManager tm = ((TaskSourceApplication) getApplication()).getTaskManager();
-		//tm.addTask(newTask);
-		// Again: the "correct" way to do it.
-		//TaskSourceApplication.addTask(newTask);
-		
-		DummyTasks.addItem(newTask);
+		TaskSourceApplication.addTask(newTask);
 
 		Toast.makeText(getBaseContext(), "Task created.", Toast.LENGTH_SHORT).show();
 		
