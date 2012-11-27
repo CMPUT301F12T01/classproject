@@ -90,6 +90,11 @@ public class TaskSourceApplication extends Application {
 	public static TaskCollection getGlobalTaskCollection() {
 		return app.getGlobalTaskCollectionFromInstance();
 	}
+	
+	/** Adds a report to be tracked by the singleton ReportManager instance. */
+	public static void addReport(Report newReport) {
+		 app.addReportFromInstance(newReport);
+	}
 
 	/** Gets reports for the given Task from the singleton ReportManager. */
 	public static List<Report> getReports(Task task) {
@@ -166,6 +171,14 @@ public class TaskSourceApplication extends Application {
 	public TaskCollection getGlobalTaskCollectionFromInstance() {
 		setupTaskManager();
 		return taskManager.getGlobalTaskCollection();
+	}
+
+	/**
+	 * @see ca.ualberta.cs.c301f12t01.model.ReportManager#addReport(ca.ualberta.cs.c301f12t01.common.Task)
+	 */
+	public void addReportFromInstance(Report newReport) {
+		setupReportManager();
+		reportManager.addReport(newReport);
 	}
 
 	/**
