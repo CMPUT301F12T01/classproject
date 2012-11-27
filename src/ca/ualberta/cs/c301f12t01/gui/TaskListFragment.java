@@ -33,6 +33,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
@@ -66,14 +67,6 @@ public class TaskListFragment extends ListFragment implements Observer {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
-        /**TODO Somewhere we have to initialize Report Manager as well. Imma put it here for now */
-        ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
-
-        /*TODO Take into account global tasks maybe?*/
-        setListAdapter(new TaskAdapter(getActivity(),
-                tm.getLocalTasks()));
-
         
         /* Add action bar options, because they are super cool. */
         setHasOptionsMenu(true);
@@ -97,6 +90,25 @@ public class TaskListFragment extends ListFragment implements Observer {
     }
     
 
+    /* Set list adapter was moved here to allow refresh, but this should be changed later, right? */
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+        TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
+        /**TODO Somewhere we have to initialize Report Manager as well. Imma put it here for now */
+        ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
+
+        /*TODO Take into account global tasks maybe?*/
+        //  setListAdapter(new TaskAdapter(getActivity(),
+        //        tm.getLocalTasks()));
+		
+		/* TODO: Remove DUMMY */
+		setListAdapter(new TaskAdapter(getActivity(),
+                DummyTasks.ITEMS));
+		
+	}
+    
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
        inflater.inflate(R.menu.activity_task_list , menu);
@@ -124,9 +136,14 @@ public class TaskListFragment extends ListFragment implements Observer {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
+        
+        /* TODO: REMOVE DUMMY */
+        callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
+        /*
         TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
         List<Task> list = tm.getLocalTasks();
         callbacks.onItemSelected(list.get(position).getId());
+        */
         /*TODO This also needs to handle global tasks*/
     }
 

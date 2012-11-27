@@ -16,13 +16,86 @@
   limitations under the License. 
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fulfill_task_fragment_container"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fulfill_task_activity"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".gui.TaskFulfillActivity" >
 
-    <!-- We'll add the appropriate fragment here programmatically.  -->
-    
-    
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- Show Task summary and description -->
+
+        <TextView
+            android:id="@+id/task_summary"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/task_description"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Requests -->
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/task_responses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" >
+
+            <!-- The contents will be added programatically. -->
+
+        </LinearLayout>
+
+        <!-- Select who gets the report: task creator, the server, or just store it locally -->
+
+        <TextView
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_report_to" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_send_options"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio_send_to_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/send_to_owner"
+                android:textSize="13dip" />
+
+            <RadioButton
+                android:id="@+id/radio_send_to_server"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/send_to_server"
+                android:textSize="13dip" />
+
+            <RadioButton
+                android:id="@+id/radio_do_not_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/do_not_send"
+                android:textSize="13dip" />
+        </RadioGroup>
+    </LinearLayout>
+</ScrollView>
