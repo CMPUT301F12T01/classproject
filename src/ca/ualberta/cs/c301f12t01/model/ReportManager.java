@@ -34,7 +34,7 @@ public class ReportManager extends Observable{
 	// our instance
 	private static final ReportManager instance = new ReportManager();
 	// our storage
-	private StorageInterface localStorage;
+	private StorageInterface localStorage = null;
 
 	/**
 	 * 
@@ -50,6 +50,11 @@ public class ReportManager extends Observable{
 		List<Report> l = (List<Report>) c;
 		return l;
 		// return localStorage.getLocalReports(taskID);
+	}
+	
+	/** Returns true if the given task has reports. */
+	public boolean taskHasReports(Task task) {
+	    return getReports(task).size() > 0;
 	}
 
 	/**

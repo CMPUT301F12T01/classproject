@@ -34,70 +34,6 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  *
  */
 public class TaskLocalRetrieval {
-
-	/**
-	 * Get all of the Tasks that belong to a particular
-	 * user from the Database
-	 * 
-	 * @param SQLiteDatabase db
-	 * @param UUID userid
-	 * @return ArrayList<Task>
-	 */
-	public static HashMap<UUID, Task> getOwnTasks(SQLiteDatabase db, UUID userid) {
-		
-		String taskTable = "Tasks";
-		String requestTable = "Requests";
-		String []taskSelectColumns = {"userid", "id", "global", "summary", "description"};
-		String []requestSelectColumns = {"task_id", "description", "quantity", "mediatype"};
-		
-		HashMap<UUID, Task> taskHash = new HashMap<UUID, Task>();
-		String user = userid.toString();
-		
-		Cursor userTasks = db.query(taskTable, 
-				taskSelectColumns, taskSelectColumns[0] + " = '" + user + "'", 
-				null, null, null, null);
-		
-		for (userTasks.moveToFirst(); !userTasks.isAfterLast(); userTasks.moveToNext()) {
-			Task newTask = new Task(
-					UUID.fromString(userTasks.getString(
-							userTasks.getColumnIndex(taskSelectColumns[1]))), 
-					UUID.fromString(userTasks.getString(
-							userTasks.getColumnIndex(taskSelectColumns[0]))));
-			
-			newTask.setSummary(userTasks.getString(
-					userTasks.getColumnIndex(taskSelectColumns[3])));
-			newTask.setDescription(userTasks.getString(
-					userTasks.getColumnIndex(taskSelectColumns[4])));
-			
-			if (userTasks.getInt(userTasks.getColumnIndex(taskSelectColumns[2])) == 1) {
-				newTask.isGlobal();
-			}
-			else {
-				newTask.isLocal();
-			}
-			
-			// GET ALL REQUESTS ASSOCIATED WITH THE TASK
-			Cursor taskRequests = db.query(requestTable, requestSelectColumns, 
-					requestSelectColumns[0] + " = '" + userTasks.getString(
-							userTasks.getColumnIndex(taskSelectColumns[1])) + "'", 
-					null, null, null, null);
-			
-			for (taskRequests.moveToFirst(); !taskRequests.isAfterLast(); taskRequests.moveToNext()) {
-				
-				Request newRequest = new Request(MediaType.valueOf(taskRequests.getString(
-						taskRequests.getColumnIndex(requestSelectColumns[3]))));
-				newRequest.setDescription(taskRequests.getString(
-						taskRequests.getColumnIndex(requestSelectColumns[1])));
-				newRequest.setQuantity(taskRequests.getInt(
-						taskRequests.getColumnIndex(requestSelectColumns[2])));
-				newTask.addRequest(newRequest);
-			}
-			
-			taskHash.put(newTask.getId(), newTask);
-		}
-		
-		return taskHash;
-	}
 	
 	/**
 	 * Get all of the Tasks that have a particular
@@ -107,7 +43,7 @@ public class TaskLocalRetrieval {
 	 * @param boolean global
 	 * @return ArrayList<Task>
 	 */
-	public static HashMap<UUID, Task> getTasks(SQLiteDatabase db, boolean global) {
+	public static HashMap<UUID, Task> getTasks(SQLiteDatabase db, String userid, boolean global) {
 		
 		String taskTable = "Tasks";
 		String requestTable = "Requests";
@@ -117,7 +53,12 @@ public class TaskLocalRetrieval {
 		
 		Cursor scopedTasks;
 		
-		if (global) {
+		if (userid != null) {
+			scopedTasks = db.query(taskTable, 
+					taskSelectColumns, taskSelectColumns[0] + " = '" + userid + "'", 
+					null, null, null, null);
+		}
+		else if (global) {
 			scopedTasks = db.query(taskTable, 
 					taskSelectColumns, taskSelectColumns[2] + " = " + 1, 
 					null, null, null, null);
@@ -131,8 +72,8 @@ public class TaskLocalRetrieval {
 			Task newTask = new Task(
 					UUID.fromString(scopedTasks.getString(
 							scopedTasks.getColumnIndex(taskSelectColumns[1]))), 
-					UUID.fromString(scopedTasks.getString(
-							scopedTasks.getColumnIndex(taskSelectColumns[0]))));
+					scopedTasks.getString(
+							scopedTasks.getColumnIndex(taskSelectColumns[0])));
 			
 			newTask.setSummary(scopedTasks.getString(
 					scopedTasks.getColumnIndex(taskSelectColumns[3])));
