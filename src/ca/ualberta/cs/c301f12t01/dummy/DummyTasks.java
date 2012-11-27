@@ -50,7 +50,7 @@ public class DummyTasks {
 	/* Besides, the following is really poor practice. */
 	public static List<Task> ITEMS = new ArrayList<Task>();
 	public static Map<UUID, Task> ITEM_MAP = new HashMap<UUID, Task>();
-	public static final UUID DUMMY_USER = UUID.randomUUID();
+	public static final String DUMMY_USER = "";
 
 	/* Initialize this dummy task collection with some dummy tasks. */
 	static {

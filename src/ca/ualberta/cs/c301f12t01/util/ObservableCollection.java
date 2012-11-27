@@ -21,22 +21,30 @@ import java.util.Collection;
 import java.util.Observable;
 
 /**
- * Observable, Positional Collection -- Intended to be a collection that
- * can be accessed randomly with a key, can be iterated in a predictable
- * order, and can be observed.
+ * Observable, Positional Collection -- Intended to be a collection that can be
+ * accessed randomly with a key, can be iterated in a predictable order, and can
+ * be observed.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * @author padlesky
  */
-public abstract class ObservableCollection<Key, Element> extends Observable implements Iterable<Element>, Collection<Element> {
-    
+public abstract class ObservableCollection<Key, Element> extends Observable
+        implements Iterable<Element>, Collection<Element> {
+
     public abstract Element get(Key key);
+
     public abstract Element getAt(int position);
 
     protected abstract boolean addNoNotify(Element element);
-    protected abstract boolean replaceNoNotify(Element oldElement, Element newElement);
+
+    protected abstract boolean replaceNoNotify(Element oldElement,
+            Element newElement);
+
     protected abstract boolean removeNoNotify(Element element);
 
+    /**
+     * Adds the specified element to the collection and notifies all observers.
+     */
     public boolean add(Element element) {
         if (addNoNotify(element)) {
             setChanged();
@@ -46,9 +54,13 @@ public abstract class ObservableCollection<Key, Element> extends Observable impl
         } else {
             return false;
         }
-  
+
     }
 
+    /**
+     * Replaces the specified element in the collection with the new element and
+     * notifies all observers.
+     */
     public boolean replace(Element oldElement, Element newElement) {
         if (replaceNoNotify(oldElement, newElement)) {
             setChanged();
@@ -58,9 +70,14 @@ public abstract class ObservableCollection<Key, Element> extends Observable impl
         } else {
             return false;
         }
-  
+
     }
 
+    /**
+     * Removes the specified element from the collection and notifies all observers.
+     * @param element
+     * @return
+     */
     public boolean removeElement(Element element) {
         if (removeNoNotify(element)) {
             setChanged();
@@ -70,22 +87,23 @@ public abstract class ObservableCollection<Key, Element> extends Observable impl
         } else {
             return false;
         }
-  
+
     }
-    
+
+    /**
+     * Adds elements from the given collection to this collection.
+     * Notifies observers on each element added.
+     */
     public boolean addAll(Collection<? extends Element> elements) {
         for (Element element : elements) {
-            if (add(element)) {
-                setChanged();
-            } else {
+            if (!add(element)) {
                 return false;
             }
         }
-        notifyObservers();
-        
+
         return true;
     }
-    
+
     public abstract Element removeKey(Key key);
 
 }

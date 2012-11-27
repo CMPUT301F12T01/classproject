@@ -36,7 +36,6 @@ import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 
 /**
  * TaskDetailActivity -- Displays the user interface for Task Details.
@@ -60,6 +59,7 @@ public class TaskDetailActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
+		// uhhh....
 		if (savedInstanceState == null) {
 		}
 
@@ -69,11 +69,8 @@ public class TaskDetailActivity extends Activity {
 		if (taskBundle != null) {
 			
 			UUID taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
-
-			/* TODO: REMOVE DUMMY */
-			//TaskManager tm = ((TaskSourceApplication) getApplication()).getTaskManager();
-			//task = tm.get(taskId);
-			task = DummyTasks.ITEM_MAP.get(taskId);
+			
+			task = TaskSourceApplication.getTask(taskId);
 			
 		    android.util.Log.d("Act-LIFECYCLE", "TaskDetailAcivity - onCreated taskId " +
 					ARG_TASK_ID);

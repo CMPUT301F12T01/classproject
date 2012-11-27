@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-
 /*
  * TODOTODOTODO    TODO     TODOTODO        TODO     
  *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
@@ -44,7 +43,6 @@ import java.util.List;
  *
  */
 
-
 /**
  * Implementation of {@link ObservableCollection}, using {@link LinkedHashMap}.
  * 
@@ -57,39 +55,40 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
 
     protected HashMap<Key, Element> primraryIndex = new HashMap<Key, Element>();
     protected List<Key> orderedIndex = new ArrayList<Key>();
-    
+
     /**
-     *  DERP.
+     * Simple constructor for the dual-indexed observable collection.
      */
     public DualIndexedObservableCollection() {
         super();
     }
-    //Public till tests are done.
+
     protected boolean addNoNotify(Element element) {
         primraryIndex.put(getKey(element), element);
         orderedIndex.add(getKey(element));
         return true;
     }
-    
+
     protected boolean replaceNoNotify(Element oldElement, Element newElement) {
-    	if(getKey(oldElement) .equals(getKey(newElement))){
-        	primraryIndex.put(getKey(oldElement), newElement);
-        	return true;
-    	}
-    	return false;
-    }
-    
-    protected boolean removeNoNotify(Element element) {
-    	primraryIndex.remove(getKey(element));
-    	orderedIndex.remove(getKey(element));
-    	return true;
+        if (getKey(oldElement).equals(getKey(newElement))) {
+            primraryIndex.put(getKey(oldElement), newElement);
+            return true;
+        }
+        return false;
     }
 
+    protected boolean removeNoNotify(Element element) {
+        Key keyOfElement = getKey(element);
+        /* Remove from both data structures. */
+        primraryIndex.remove(keyOfElement);
+        orderedIndex.remove(keyOfElement);
+        return true;
+    }
 
     /**
      * If the element itself contains the key, then this is the abstract method
      * for you! Simply return the key from the element and all will be dandy.
-     *
+     * 
      * TODO: SHOULD THIS EVEN EXIST?
      * 
      * @param element
@@ -98,9 +97,7 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
     public abstract Key getKey(Element element);
 
     /**
-     * WARNING! O(n) operation ahead. CONTINUE AT YOUR OWN RISK.
-     * 
-     * NEEDS TO BE SUPER TESTED.
+     * Gets the element of the first occurrence of the element.
      * 
      * @see ca.ualberta.cs.c301f12t01.util.ObservableCollection#getAt(int)
      */
@@ -110,7 +107,7 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
         if (position >= size() || position < 0) {
             return null;
         }
-        
+
         Element element = primraryIndex.get(orderedIndex.get(position));
         return element;
     }
@@ -120,13 +117,12 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
      * 
      * @return Iterator from taskCollection
      */
-    
     public Iterator<Element> iterator() {
         /* Two dots condoned by Bronte! */
-    	List<Element> element = new ArrayList<Element>();
-    	for (int i = 0; i < orderedIndex.size(); i++) {
-    		element.add(primraryIndex.get(orderedIndex.get(i)));
-    	}
+        List<Element> element = new ArrayList<Element>();
+        for (int i = 0; i < orderedIndex.size(); i++) {
+            element.add(primraryIndex.get(orderedIndex.get(i)));
+        }
         return element.iterator();
     }
 
@@ -146,8 +142,12 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
         return primraryIndex.size();
     }
 
+    /**
+     * Empties the entire collection.
+     */
     public void clear() {
-    	primraryIndex.clear();
+        primraryIndex.clear();
+        orderedIndex.clear();
     }
 
     public boolean contains(Object thing) {
@@ -168,14 +168,30 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
         return primraryIndex.isEmpty();
     }
 
+    /**
+     * Removes the element found with the key value.
+     */
     public Element removeKey(Key key) {
-        return primraryIndex.remove(key);
+        Element toBeRemoved = get(key);
+
+        if (removeElement(toBeRemoved)) {
+            return toBeRemoved;
+        } else {
+            return null;
+        }
+
     }
 
-    public int grabIndex (Element element) {
-    	return orderedIndex.indexOf(getKey(element));
+    /**
+     * Returns the first index of the specified element.
+     * @param element
+     * @return
+     */
+    public int grabIndex(Element element) {
+        Key elementKey = getKey(element);
+        return orderedIndex.indexOf(elementKey);
     }
-    
+
     /**
      * @deprecated NOT IMPLEMENTED AND NEVER WILL BE.
      */
@@ -211,9 +227,10 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
     /**
      * @deprecated NOT IMPLEMENTED AND NEVER WILL BE.
      */
+    @SuppressWarnings("unchecked")
     public boolean remove(Object object) {
         // TODO Auto-generated method stub
-        return false;
+        return removeElement((Element) object);
     }
 
 }

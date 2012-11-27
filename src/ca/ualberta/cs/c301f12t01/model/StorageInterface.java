@@ -48,7 +48,8 @@ public interface StorageInterface {
 	
 	public void removeTask(Task taskToRemove);
 	
-	public HashMap<UUID, Task> getOwnTasks(UUID userid);
+	// wtf, neil
+	//public HashMap<UUID, Task> getOwnTasks(String userid);
 	
 	public HashMap<UUID, Task> getLocalTasks();
 	

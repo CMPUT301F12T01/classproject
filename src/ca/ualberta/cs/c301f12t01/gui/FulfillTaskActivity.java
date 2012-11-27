@@ -24,6 +24,7 @@ import java.util.UUID;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,11 +38,8 @@ import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerObtainer;
-import ca.ualberta.cs.c301f12t01.model.ReportManager;
-import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 /**
  * FulfillTaskActivity -- Displays the user interface for Fulfilling a Task.
@@ -76,10 +74,7 @@ public class FulfillTaskActivity extends Activity {
 			
 			UUID taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
 
-			/* TODO: REMOVE DUMMY */
-			//TaskManager tm = ((TaskSourceApplication) getApplication()).getTaskManager();
-			//task = tm.get(taskId);
-			task = DummyTasks.ITEM_MAP.get(taskId);
+			task = TaskSourceApplication.getTask(taskId);
 			
 		}
 
@@ -107,6 +102,7 @@ public class FulfillTaskActivity extends Activity {
     
         /* Get the container for the responses. */
         ViewGroup responseContainer = (ViewGroup) findViewById(R.id.task_responses);
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         
 
         /* Er, this displays the proper response fields, right? 
@@ -114,13 +110,11 @@ public class FulfillTaskActivity extends Activity {
          */
         
         /* Creates a response field for each respective request, and remember them. */
-        /*
         for (Request request : task) {
             obtainers.add(
                 ResponseObtainerObtainer.getResponseObtainer(
                     request.getType(), inflater, responseContainer));
         }
-    	*/
     	
     }
 
@@ -138,7 +132,7 @@ public class FulfillTaskActivity extends Activity {
         attachReportSharingMode(report);
         attachResponsesToReport(report);
 
-        ReportManager.getInstance().addReport(report);
+        TaskSourceApplication.addReport(report);
 
         return true;
     }
