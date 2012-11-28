@@ -80,6 +80,9 @@ public class ResponseObtainerObtainer {
             e.printStackTrace();
         }
         
+        // Set up the proper fields for fulfilling the request (ex: buttons)
+        obtainer.setupFulfillRequest();
+        
         return obtainer;
     }
 }

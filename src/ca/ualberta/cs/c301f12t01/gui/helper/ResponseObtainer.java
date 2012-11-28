@@ -35,6 +35,11 @@ public abstract class ResponseObtainer {
 	}
 	
 	public abstract Response getResponse();
+	
+	/* Different set up methods for setting up the proper fields. */
+	public abstract void setupFulfillRequest();
+	
+	public abstract void setupDisplayResponse(Response response);
 
 	public ViewGroup getView() {
 		return viewGroup;
@@ -43,5 +48,7 @@ public abstract class ResponseObtainer {
 	public void setView(ViewGroup view) {
 		this.viewGroup = view;
 	}
+	
+	
 
 }

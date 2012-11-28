@@ -40,4 +40,22 @@ public class AudioResponseObtainer extends ResponseObtainer {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupFulfillRequest()
+	 */
+	@Override
+	public void setupFulfillRequest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupDisplayResponse(ca.ualberta.cs.c301f12t01.common.Response)
+	 */
+	@Override
+	public void setupDisplayResponse(Response response) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

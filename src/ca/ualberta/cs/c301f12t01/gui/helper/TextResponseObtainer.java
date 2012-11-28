@@ -30,8 +30,8 @@ import ca.ualberta.cs.c301f12t01.R;
  *
  */
 public class TextResponseObtainer extends ResponseObtainer {
-	
-	
+
+
 	/**
 	 * @param view
 	 */
@@ -46,14 +46,35 @@ public class TextResponseObtainer extends ResponseObtainer {
 	public Response getResponse() {
 		// TODO Auto-generated method stub
 		int textID = R.id.edit_text_fulfill;
-		
+
 		TextView textView = (TextView) getView().findViewById(textID);
-		
+
 		String textMedia = textView.getText().toString();
-		
+
 		return new TextResponse(textMedia);
 
 	}
 
 
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupFulfillRequest()
+	 */
+	@Override
+	public void setupFulfillRequest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupDisplayResponse(ca.ualberta.cs.c301f12t01.common.Response)
+	 */
+	@Override
+	public void setupDisplayResponse(Response response) {
+		// TODO Auto-generated method stub
+
+		TextView textView = (TextView) getView().findViewById(R.id.text_response);
+
+		textView.setText(response.getResponseData().toString());
+		
+	}
 }

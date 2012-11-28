@@ -46,7 +46,8 @@ import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerObtainer;
  * 
  * Displays the layout for activity_fulfill_task.
  * 
- * @author Eddie Antonio Santos <easantos@ualberta.ca>, Bronte Lee <bronte@ualberta.ca>
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
 
@@ -80,7 +81,8 @@ public class FulfillTaskActivity extends Activity {
 
 		/* Display Fulfilling Task information */
 		displayFulfillTaskInformation();
-
+		
+		android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - onCreate");
 
     }
     
@@ -104,18 +106,13 @@ public class FulfillTaskActivity extends Activity {
         ViewGroup responseContainer = (ViewGroup) findViewById(R.id.task_responses);
         LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         
-
-        /* Er, this displays the proper response fields, right? 
-         * Leaving this to Eddie to  display the proper fields!
-         */
-        
         /* Creates a response field for each respective request, and remember them. */
         for (Request request : task) {
             obtainers.add(
                 ResponseObtainerObtainer.getResponseObtainer(
                     request.getType(), inflater, responseContainer));
-        }
-    	
+               
+        }    	
     }
 
     
@@ -134,6 +131,14 @@ public class FulfillTaskActivity extends Activity {
 
         TaskSourceApplication.addReport(report);
 
+        android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - onFormCompletion");
+
+        android.util.Log.d("Act-LIFECYCLE", "Response TYPE - " + report.responseTypes());
+        android.util.Log.d("Act-LIFECYCLE", "Response COUNT - " + report.responseCount());
+        
+        android.util.Log.d("Act-LIFECYCLE", "New number of reports for the task - " 
+        		+ TaskSourceApplication.getReports(task).size());
+        
         return true;
     }
     
@@ -144,6 +149,8 @@ public class FulfillTaskActivity extends Activity {
      * @param report
      */
     private void attachReportSharingMode(Report report) {
+    	
+    	android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - attachReportSharingMode");
 
         RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_send_options);
 
@@ -172,6 +179,8 @@ public class FulfillTaskActivity extends Activity {
      * @param report
      */
     private void attachResponsesToReport(Report report) {
+    	android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - attachResponsesToReport");
+    	
         for (ResponseObtainer obtainer : obtainers) {
             report.addResponse(obtainer.getResponse());
         }
@@ -189,11 +198,11 @@ public class FulfillTaskActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
-            NavUtils.navigateUpFromSameTask(this);
+        	finish();
             return true;
         case R.id.menu_done:
-            //onFormCompletion();
-            Toast.makeText(getBaseContext(), "Report soon to be saved", Toast.LENGTH_SHORT).show();
+            onFormCompletion();
+            Toast.makeText(getBaseContext(), "Report Saved", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
