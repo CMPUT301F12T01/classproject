@@ -201,8 +201,10 @@ public class FulfillTaskActivity extends Activity {
         	finish();
             return true;
         case R.id.menu_done:
-            onFormCompletion();
-            Toast.makeText(getBaseContext(), "Report Saved", Toast.LENGTH_SHORT).show();
+        	if (onFormCompletion()) {
+        		Toast.makeText(getBaseContext(), "Report Saved", Toast.LENGTH_SHORT).show();
+        		finish();
+        	}
             return true;
         }
         return super.onOptionsItemSelected(item);

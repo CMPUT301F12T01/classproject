@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/task_description"
-            style="?android:attr/textAppearanceLarge"
+            style="?android:attr/textAppearanceMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
