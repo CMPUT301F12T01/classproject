@@ -104,7 +104,7 @@ public class FulfillTaskActivity extends Activity {
     
         /* Get the container for the responses. */
         ViewGroup responseContainer = (ViewGroup) findViewById(R.id.task_responses);
-        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
         
         /* Creates a response field for each respective request, and remember them. */
         for (Request request : task) {

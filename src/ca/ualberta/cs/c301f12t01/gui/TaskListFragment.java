@@ -43,8 +43,8 @@ public class TaskListFragment extends ListFragment implements Observer {
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
 	/* Name of the task collection */
-	public static final String ARG_NAME = "name";
-	public static final String name = "name";
+	public static String ARG_NAME = "name";
+	public static String name = "name";
 
 	private TaskCollection trackedCollection = null;
 	private Callbacks callbacks = doNothingCallbacks;
@@ -77,13 +77,12 @@ public class TaskListFragment extends ListFragment implements Observer {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		
 		
 		if (getArguments().containsKey(ARG_NAME)) {
-			String name = (String) getArguments()
-					.getSerializable(ARG_NAME);
-			android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate - collection name :" +
+			
+			name = (String) getArguments().getSerializable(ARG_NAME);
+			android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate - collection name: " +
 					name);
 		}
 		
@@ -96,15 +95,22 @@ public class TaskListFragment extends ListFragment implements Observer {
 		 * 
 		 */
 		
-		//trackedCollection = TaskSourceApplication.getTaskCollectionByName(name);
-		trackedCollection = TaskSourceApplication.getLocalTaskCollection();
-
-		setListAdapter(new TaskAdapter(getActivity(), trackedCollection));
-
-		/* Add action bar options, because they are super cool. */
-		setHasOptionsMenu(true);
-
-		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate");
+		
+		if (name.equals("user")) {
+			trackedCollection = TaskSourceApplication.getLocalTaskCollection();
+		} else {
+			trackedCollection = TaskSourceApplication.getTaskCollectionByName(name);
+		}
+		
+		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate trackedCollection size" +
+				trackedCollection.size());
+		
+		if (!trackedCollection.isEmpty()) {
+			setListAdapter(new TaskAdapter(getActivity(), trackedCollection));
+		}
+		
+		
+	
 	}
 
 	@Override
@@ -115,6 +121,7 @@ public class TaskListFragment extends ListFragment implements Observer {
 			setActivatedPosition(savedInstanceState
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
+		
 
 		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onViewCreate");
 	}

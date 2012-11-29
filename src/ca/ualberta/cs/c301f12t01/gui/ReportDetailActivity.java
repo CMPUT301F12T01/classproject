@@ -100,7 +100,7 @@ public class ReportDetailActivity extends Activity {
 
 		/* Get the container for the responses. */
 		ViewGroup responseContainer = (ViewGroup) findViewById(R.id.report_responses);
-		LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+		LayoutInflater inflater = getLayoutInflater();
 
 		/* Show the responses of the report...first, inflate the proper fragment
 		 */

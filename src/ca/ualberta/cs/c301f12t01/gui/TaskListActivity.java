@@ -48,9 +48,9 @@ TaskListFragment.Callbacks, TabListener {
 	public static final String GLOBAL_TASKS = "Global Tasks";
 	
 	/* Add some default Tags..though I might have missed a global declaration somewhere */
-	public static final String USER = "USER";
-	public static final String LOCAL = "LOCAL";
-	public static final String GLOBAL = "GLOBAL";
+	public static final String USER = "user";
+	public static final String LOCAL = "local";
+	public static final String GLOBAL = "global";
 	
 	public static String ARG_NAME = "name";
 
@@ -190,19 +190,18 @@ TaskListFragment.Callbacks, TabListener {
 	 */
 	public void showListFrom(String name){
 		/* Tag contains the name of the TaskCollection we need */
-		ARG_NAME = name;
 		
 		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - showListFrom: " +
-				name);	
+				ARG_NAME);	
 		
 		Bundle arguments = new Bundle();
 
-		arguments.putSerializable(TaskListFragment.ARG_NAME,
-				getIntent().getSerializableExtra(TaskListFragment.ARG_NAME));
+		arguments.putSerializable(TaskListFragment.ARG_NAME, name);
 		
 		TaskListFragment fragment = new TaskListFragment();
 		
 		fragment.setArguments(arguments);
+		
 		getFragmentManager().beginTransaction()
 			.add(R.id.task_list, fragment)
 			.commit();

@@ -35,13 +35,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_response_info"
-        android:textColor="#000000" />
+         />
 
     <TextView
         android:id="@+id/text_response"
         style="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000" />
+         />
 
 </LinearLayout>
