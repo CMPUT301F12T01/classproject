@@ -25,12 +25,9 @@ import java.util.UUID;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 
 /**
@@ -44,6 +41,10 @@ import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 public class TaskListFragment extends ListFragment implements Observer {
 
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
+
+	/* Name of the task collection */
+	public static final String ARG_NAME = "name";
+	public static final String name = "name";
 
 	private TaskCollection trackedCollection = null;
 	private Callbacks callbacks = doNothingCallbacks;
@@ -77,6 +78,15 @@ public class TaskListFragment extends ListFragment implements Observer {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		
+		
+		if (getArguments().containsKey(ARG_NAME)) {
+			String name = (String) getArguments()
+					.getSerializable(ARG_NAME);
+			android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate - collection name :" +
+					name);
+		}
+		
 		/*
 		 * TODO:
 		 * 
@@ -93,10 +103,6 @@ public class TaskListFragment extends ListFragment implements Observer {
 
 		/* Add action bar options, because they are super cool. */
 		setHasOptionsMenu(true);
-
-		/* Action bar config! */
-		// ActionBar menubar = getActivity().getActionBar();
-		// menubar.setDisplayShowTitleEnabled(false);
 
 		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate");
 	}
@@ -134,10 +140,7 @@ public class TaskListFragment extends ListFragment implements Observer {
 		trackedCollection.deleteObserver(this);
 	}
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.activity_task_list, menu);
-	}
+
 
 	@Override
 	public void onAttach(Activity activity) {

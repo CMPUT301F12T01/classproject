@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menu_define_task" android:title="@string/menu_define_task" android:showAsAction="always|withText" android:visible="true"></item>
+    <item android:id="@+id/menu_define_task" 
+        android:title="@string/menu_define_task" 
+        android:showAsAction="always|withText" 
+        android:visible="true"></item>
     <!-- item android:id="@+id/define_task" android:titleCondensed="@string/menu_short_define_task" android:title="@string/menu_define_task" android:showAsAction="always|withText" android:visible="true"></item-->
 </menu>

@@ -18,64 +18,112 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.io.Serializable;
 import java.util.UUID;
-
 import ca.ualberta.cs.c301f12t01.R;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 
 /**
- * The initial activity of stuff and things, yo.
+ * The initial activity of our TaskSource App. It has three tabs for
+ * showing "Your Tasks", "Local Tasks" and "Global Tasks"
  * 
  * @author Bronte Lee <bronte@ualberta.ca>
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
 public class TaskListActivity extends Activity implements
-TaskListFragment.Callbacks {
+TaskListFragment.Callbacks, TabListener {
 
 	public static final String ARG_TASK_ID = "task_id";
-	/** Denotes that the screen has two panes. */
-	private boolean hasTwoPanes;
+	
+	/* Tab labels. Will remove if ActionBar Tab XML file gets created */
+	public static final String USER_TASKS = "Your Tasks";
+	public static final String LOCAL_TASKS = "Stored Tasks";
+	public static final String GLOBAL_TASKS = "Global Tasks";
+	
+	/* Add some default Tags..though I might have missed a global declaration somewhere */
+	public static final String USER = "USER";
+	public static final String LOCAL = "LOCAL";
+	public static final String GLOBAL = "GLOBAL";
+	
+	public static String ARG_NAME = "name";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_list);
-		
-        android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onCreate ");
 
-		/* See if the view is using the two pane layout. */
-		if (findViewById(R.id.task_detail_container) != null) {
+		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onCreate ");
 
-			hasTwoPanes = true;
+		actionBarTabSetup();
 
-			((TaskListFragment) getFragmentManager().findFragmentById(
-					R.id.task_list)).setActivateOnItemClick(true);
-		}
+		if (savedInstanceState == null) {
 
+			// by default, show stuff from user
+			showListFrom(USER);
+		}	
 	}
 
+	/** Sets up the ActionBar with tabs
+	 * 
+	 */
+	/*
+	 * TODO: Make this cleaner by setting up an XML file instead!
+	 */
+	public void actionBarTabSetup() {
+		// Use the action bar for tabs
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// Set the text of the tab
+		ActionBar.Tab userTasksTab = actionBar.newTab().setText(USER_TASKS);
+		ActionBar.Tab localTasksTab = actionBar.newTab().setText(LOCAL_TASKS);
+		ActionBar.Tab globalTasksTab = actionBar.newTab().setText(GLOBAL_TASKS);
+		
+		/* set the tag of each tab. This will be used to figure out which
+		 * TaskCollection to use when displaying the list of tasks
+		 */
+		userTasksTab.setTag(USER);
+		localTasksTab.setTag(LOCAL);
+		globalTasksTab.setTag(GLOBAL);
+
+		// Set the tabs to listen for any changes
+		userTasksTab.setTabListener(this);
+		localTasksTab.setTabListener(this);
+		globalTasksTab.setTabListener(this);
+
+		// add the tab to the action bar
+		actionBar.addTab(userTasksTab);
+		actionBar.addTab(localTasksTab);
+		actionBar.addTab(globalTasksTab);
+	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_task_list, menu);
+		return true;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
 		switch (item.getItemId()) {
-			/* Check if we're defining a task. */
-			case R.id.menu_define_task:
-				onClickDefineTask(item);
-				return true;
-			/* That's it. actually. */
-			default:
-				return super.onOptionsItemSelected(item);
+		/* Check if we're defining a task. */
+		case R.id.menu_define_task:
+			onClickDefineTask(item);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 
 	}
@@ -85,15 +133,15 @@ TaskListFragment.Callbacks {
 	 * (therefore spawning the task detail activity.
 	 */
 	public void onItemSelected(UUID taskId) {
-	
+
 		Intent intent = new Intent(getApplicationContext(), TaskDetailActivity.class);
-        intent.putExtra(ARG_TASK_ID, taskId);
-        
-        android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onItemSelected taskId " +
-        					taskId);
-        
-        startActivity(intent);
-		
+		intent.putExtra(ARG_TASK_ID, taskId);
+
+		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onItemSelected taskId " +
+				taskId);
+
+		startActivity(intent);
+
 	}
 
 	/** Starts the "define new task" screen. */
@@ -105,88 +153,59 @@ TaskListFragment.Callbacks {
 		startActivity(intent);
 
 	}
-	
-	/*
-	 * TODO: Create a superclass that contains the following two methods
-	 * because... geez. Maybe call it `TwoPaneActivity`.
-	 */
 
-	/* TODO: Call the next two methods `startNewDetail` or something... */
-
-    /**
-	 * A shortcut for {@link #startNewFragment(Class, Class, String,
-	 * Serializable}, but without the need of any String key/Serializable
-	 * schenanigans.
-	 * 
-	 * @see #startNewFragment(Class, Class, String, Serializable)
+	/* (non-Javadoc)
+	 * @see android.app.ActionBar.TabListener#onTabReselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
 	 */
-	@SuppressWarnings("rawtypes")
-	protected void startNewFragment(Class fragmentClass,
-			Class fragmentActivityClass) {
-		startNewFragment(fragmentClass, fragmentActivityClass, null, null);
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+
 	}
 
-	/**
-	 * Starts a new fragment in the appropriate place. If the screen has one
-	 * pane (as with a mobile phone), an intent is created with the given
-	 * FragmentActivity. Else, if the screen has two panes (such as with a large
-	 * tablet), the given Fragment is started in the detail pane.
-	 * 
-	 * Some fragments require some extra information. This is usually one
-	 * key/value pair. You may provide the String key and an arbitrary
-	 * {@link Serializable} value. If this behavior is not required, pass in
-	 * <code>null</code> for the key. One may also use the two-argument method
-	 * of the same name instead.
-	 * 
-	 * @param fragmentClass
-	 *            The {@link Fragment} that needs to be created in the detail
-	 *            pane.
-	 * @param fragmentActivityClass
-	 *            The {@link FragmentActivity} that should be spawned if there
-	 *            is no detail pane.
-	 * @param key
-	 *            The key attached either to the {@link FragmentTransaction} or
-	 *            the Activity spawning {@link Intent}. Set this to
-	 *            <code>null</code> if not needed.
-	 * @param arbitraryValue
-	 *            The {@link Serializable} value attached.
+	/* (non-Javadoc)
+	 * @see android.app.ActionBar.TabListener#onTabSelected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
 	 */
-	@SuppressWarnings("rawtypes")
-	protected void startNewFragment(Class fragmentClass,
-			Class fragmentActivityClass, String key, Serializable arbitraryValue) {
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
 
-		if (hasTwoPanes) {
+		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onTabSelected tag: " +
+				tab.getTag());		
 
-			Bundle arguments = new Bundle();
+		showListFrom((String)tab.getTag());
+		
 
-			/* If the user wants an extra value to tag along... */
-			if (key != null) {
-				arguments.putSerializable(key, arbitraryValue);
-			}
+	}
 
-			Fragment fragment;
-			try {
-				fragment = (Fragment) fragmentClass.newInstance();
-				fragment.setArguments(arguments);
-				getFragmentManager().beginTransaction()
-				.replace(R.id.task_detail_container, fragment).commit();
-			} catch (InstantiationException e) {
-				/* I DON'T KNOW WHAT TO DO HERE. */
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				/* OR HERE. */
-				e.printStackTrace();
-			}
+	/* (non-Javadoc)
+	 * @see android.app.ActionBar.TabListener#onTabUnselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
+	 */
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
 
-		} else {
-			Intent detailIntent = new Intent(this, fragmentActivityClass);
+	}
+	
+	/**Pass it the name of the task collection to display the tasks for the ListFragment
+	 * 
+	 * @param name
+	 */
+	public void showListFrom(String name){
+		/* Tag contains the name of the TaskCollection we need */
+		ARG_NAME = name;
+		
+		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - showListFrom: " +
+				name);	
+		
+		Bundle arguments = new Bundle();
 
-			if (key != null) {
-				detailIntent.putExtra(key, arbitraryValue);
-			}
-
-			startActivity(detailIntent);
-		}
+		arguments.putSerializable(TaskListFragment.ARG_NAME,
+				getIntent().getSerializableExtra(TaskListFragment.ARG_NAME));
+		
+		TaskListFragment fragment = new TaskListFragment();
+		
+		fragment.setArguments(arguments);
+		getFragmentManager().beginTransaction()
+			.add(R.id.task_list, fragment)
+			.commit();
 	}
 
 }

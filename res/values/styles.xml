@@ -1,3 +1,9 @@
 <resources>
     <style name="AppTheme" parent="android:Theme.Holo" />
+
+    <style name="MyActionBarTabTextStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+    <item name="android:textSize">14sp</item>
+    <item name="android:padding">0dip</item>s
+</style>
 </resources>
+
