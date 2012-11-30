@@ -37,11 +37,11 @@ import ca.ualberta.cs.c301f12t01.util.Message;
 public class ServerStorage implements StorageInterface, Observer {
 
 	/**
-	 * The server can be notified when a Task or Report
-	 * has been remove/added/updated so that it can update
-	 * itself as needed.
+	 * The server can be notified when a Task or Report has been
+	 * remove/added/updated so that it can update itself as needed.
 	 * 
-	 * @param Observable, Object message
+	 * @param Observable
+	 *            , Object message
 	 */
 	public void update(Observable obsv, Object message) {
 		Message newMessage = (Message) message;
@@ -88,20 +88,27 @@ public class ServerStorage implements StorageInterface, Observer {
 
 	/**
 	 * Stores a task on the server
+	 * 
 	 * @param taskToStore
-	 * 			The task we are storing
+	 *            The task we are storing
 	 */
 	public void storeTask(Task taskToStore) {
 		TaskServerStorage.storeTask(taskToStore);
 	}
 
+	/**
+	 * Works just be removing old task and adding new one
+	 * 
+	 * @param taskToUpdate
+	 *            The task to update
+	 */
 	public void updateTask(Task taskToUpdate) {
-		// TODO 
+		removeTask(taskToUpdate);
+		storeTask(taskToUpdate);
 	}
 
 	public void removeTask(Task taskToRemove) {
-		// TODO Auto-generated method stub
-
+		TaskServerRemove.remove(taskToRemove);
 	}
 
 	public HashMap<UUID, Task> getOwnTasks(UUID userid) {
