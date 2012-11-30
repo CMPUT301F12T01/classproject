@@ -16,43 +16,59 @@
   limitations under the License. 
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Scrolling is cool -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/report_detail_layout"
-    android:layout_width="match_parent"
+    android:id="@+id/report_task_detail"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".gui.ReportDetailACtivity" >
-
-    <!-- "This report contains..." Or something to that effect. -->
-
-    <TextView
-        android:id="@+id/text_report_header"
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/task_report_header" />
+    android:padding="10dp"
+    tools:context=".gui.ReportDetailActivity" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/report_responses"
-        android:layout_width="match_parent"
+        android:id="@+id/report_detail_linearlayout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp" >
+        android:orientation="vertical" >
 
-        <!-- The contents will be added programatically. -->
+        <!-- "This report contains..." Or something to that effect. -->
 
+        <TextView
+            android:id="@+id/text_report_header"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_report_header" />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/report_responses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- The contents will be added programatically. -->
+
+        </LinearLayout>
+
+        <!-- Set the text to display the timestamp at the bottom -->
+
+        <TextView
+            android:id="@+id/timestamp"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/timestamp" />
+
+        <TextView
+            android:id="@+id/text_timestamp_response"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textStyle="italic" />
     </LinearLayout>
 
-    <!-- Set the text to display the timestamp at the bottom -->
-
-    <TextView
-        android:id="@+id/text_timestamp_response"
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</ScrollView>

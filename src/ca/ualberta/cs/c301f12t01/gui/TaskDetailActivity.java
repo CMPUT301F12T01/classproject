@@ -18,6 +18,7 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -30,7 +31,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 import android.widget.TextView;
+import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
@@ -60,6 +63,9 @@ public class TaskDetailActivity extends Activity {
 		setContentView(R.layout.activity_task_detail);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		/* This forces overflow to appear on the action bar! */
+		getOverflowMenu();
 
 		
 		/* The list of tasks Activity passed us a taskID, so we should get it*/
@@ -85,7 +91,7 @@ public class TaskDetailActivity extends Activity {
 	protected void displayTaskInformation() {
 		TextView descriptionView = (TextView) findViewById(R.id.task_description);
 		TextView summaryView = (TextView) findViewById(R.id.task_summary);
-		TextView requirementView = (TextView) findViewById(R.id.task_requires);
+		TextView requirementView = (TextView) findViewById(R.id.task_requests);
 		TextView sharingView = (TextView) findViewById(R.id.task_sharing_setting);
 
 		/* Collect strings and stuff from the Task instance. */
@@ -156,6 +162,15 @@ public class TaskDetailActivity extends Activity {
     private void onUserSelectFulfill() {
         startActivityWithTask(FulfillTaskActivity.class);
     }
+    
+    private void onUserSelectEdit(){
+		if (true) {
+			startActivityWithTask(EditTaskActivity.class);
+		} else {
+			Toast.makeText(getBaseContext(), "This is not your task.", 
+					Toast.LENGTH_SHORT).show();
+		}
+    }
 
     /* TODO: This should really not be in *this* class. */
     @SuppressWarnings("rawtypes")
@@ -170,9 +185,12 @@ public class TaskDetailActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_task_detail, menu);
+		
 		return true;
 	}
 
+	 
+	
 	/* When a menu item is selected */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -187,9 +205,30 @@ public class TaskDetailActivity extends Activity {
 		case R.id.menu_view_reports:
 			onUserSelectViewReports();
 			return true;
+		case R.id.menu_edit_task:
+			onUserSelectEdit();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-		
 	}
+	
+	/** Disables hardware menu button for showing overflow. 
+	 * Instead the Action Bar will have vertical ellipsis to show
+	 * the overflow. Call in onCreate.
+	 * 
+	 */
+	private void getOverflowMenu() {
+	     try {
+	        ViewConfiguration config = ViewConfiguration.get(this);
+	        Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+	        if(menuKeyField != null) {
+	            menuKeyField.setAccessible(true);
+	            menuKeyField.setBoolean(config, false);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 }

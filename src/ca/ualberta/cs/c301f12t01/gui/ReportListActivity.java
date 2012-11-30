@@ -101,13 +101,6 @@ ReportListFragment.Callbacks {
 
 	}
 
-	/* Display the menu */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_report_list, menu);
-		return true;
-	}
-
 	/* If a menu option is selected */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

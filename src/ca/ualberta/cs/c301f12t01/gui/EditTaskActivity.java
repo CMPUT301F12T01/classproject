@@ -15,9 +15,5 @@ public class EditTaskActivity extends Activity {
         setContentView(R.layout.activity_edit_task);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_edit_task, menu);
-        return true;
-    }
+
 }

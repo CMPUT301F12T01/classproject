@@ -74,7 +74,10 @@ public class TextResponseObtainer extends ResponseObtainer {
 
 		TextView textView = (TextView) getView().findViewById(R.id.text_response);
 
+		/* Set these things up to make it look prettier! */
 		textView.setText(response.getResponseData().toString());
+		textView.setPadding(20, 10, 20, 10);
+		textView.setTextSize(18);
 		
 	}
 }

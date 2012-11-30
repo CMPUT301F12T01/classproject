@@ -12,5 +12,10 @@
         android:title="@string/menu_fulfill_task"
         android:titleCondensed="@string/menu_fulfill_task_short">
     </item>
+    <item android:id="@+id/menu_edit_task" 
+        android:showAsAction="never|withText"
+        android:titleCondensed="@string/menu_edit_task_short" 
+        android:title="@string/menu_edit_task" >
+    </item>
 
 </menu>

@@ -31,7 +31,7 @@
     <!-- Task displaying fields -->
     <string name="task_summary">Summary</string>
     <string name="task_description">Description</string>
-    <string name="task_requirements">Requirements</string>
+    <string name="task_requirements">Media Type Requirements</string>
     <string name="view_reports">View Reports</string>
     <string name="fulfill">Fulfill</string>
     <string name="menu_define_task">Add new task</string>
@@ -39,15 +39,17 @@
     <string name="menu_view_reports">View Reports</string>
     <string name="menu_fulfill_task">Fulfill Task</string>
     <string name="menu_fulfill_task_short">Fulfill</string>
+    <string name="menu_edit_task">Edit Task</string>
+    <string name="menu_edit_task_short">Edit</string>
 
     <!-- Defining Tasks -->
     <string name="task_request">Request</string>
     <string name="task_text">Text</string>
     <string name="task_photo">Photo</string>
     <string name="task_audio">Audio</string>
-    <string name="task_sharing">Sharing</string>
-    <string name="task_local">Local</string>
-    <string name="task_global">Global</string>
+    <string name="task_sharing">Sharing Setting</string>
+    <string name="task_local">LOCAL</string>
+    <string name="task_global">GLOBAL</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_define_task">Create a new task</string>
@@ -74,6 +76,8 @@
     <string name="title_activity_report_detail">View Report</string>
     <string name="task_report_header">This Report Contains:</string>
     <string name="text_response_info">Text Response:</string>
+    <string name="photo_response_info">Photo Response:</string>
+    <string name="timestamp">Completed On:</string>
 
     <!-- Testing strings: throw away later? -->
     <string name="TEST_LONG_SUMMARY">THIS IS A VERY LONG SUMMARY THAT 

@@ -49,7 +49,6 @@
         android:scaleType="fitEnd"
         android:src="@android:drawable/title_bar_tall"
         android:visibility="visible"
-        android:alpha="0.65"
-        android:tint="@color/SteelBlue" />
+        android:tint="@color/GREEN" />
 
 </TableRow>
