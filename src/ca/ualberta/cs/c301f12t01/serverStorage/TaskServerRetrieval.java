@@ -19,6 +19,7 @@ package ca.ualberta.cs.c301f12t01.serverStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -33,46 +34,74 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  */
 public class TaskServerRetrieval {
 
-	public static ArrayList<Task> getAllTasks() {
-		ArrayList<Task> tasks = new ArrayList<Task>();
+	/**
+	 * 
+	 * @return
+	 * 			Returns all simple server objects on server
+	 */
+	public static ServerObj[] getAllSO() {
 		// first make the call to the server
 		List<BasicNameValuePair> nvp = new ArrayList<BasicNameValuePair>();
 		nvp.add(new BasicNameValuePair("action", "list"));
 		Server server = new Server();
 		String jsonString = server.post(nvp);
-		System.out.println("Server json is " + jsonString);
 		// Now convert to an array of server objects
 		Gson gson = new Gson();
 		ServerObj[] allSO = gson.fromJson(jsonString, ServerObj[].class);
+		return allSO;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * 			all tasks on the server
+	 */
+	public static ArrayList<Task> getAllTasks() {
+		ServerObj[] allSO = getAllSO();
+		ArrayList<Task> tasks = new ArrayList<Task>();
 		// iterate through and grab task
 		for (ServerObj so : allSO) {
-			Task t = getOneTask(so.getId());
-			tasks.add(t);
-			System.out.println(t.getDescription());
+			if (so.getSummary().equals("task")) {
+				Task t = getContentFromServer(so.getId());
+				tasks.add(t);
+			}
 		}
 		return tasks;
 	}
-	
+
 	/**
+	 * Method works to get reports and tasks
 	 * 
 	 * @param id
-	 * 			Server ID of the task we want to get
-	 * @return
-	 * 			task from server 
+	 *            Server ID of the content we want to get
+	 * @return content from server
 	 */
-	private static Task getOneTask(String id){
-		//create our nvp
-		List <BasicNameValuePair> nvp = new ArrayList <BasicNameValuePair>();
+	public static Task getContentFromServer(String id) {
+		// create our nvp
+		List<BasicNameValuePair> nvp = new ArrayList<BasicNameValuePair>();
 		nvp.add(new BasicNameValuePair("action", "get"));
 		nvp.add(new BasicNameValuePair("id", id));
-		//post
+		// post
 		Server server = new Server();
 		String jsonString = server.post(nvp);
-		//convert to SO
+		// convert to SO
 		Gson gson = new Gson();
 		ServerObj so = gson.fromJson(jsonString, ServerObj.class);
 		return so.getContent();
-		
-		
+	}
+
+	public static ServerObj getTaskSO(UUID id) {
+		// first get all tasks
+		ServerObj[] allSO = getAllSO();
+		for (ServerObj so : allSO) {
+			so.getContentFromServer(); //must call this everytime
+			if (so.getSummary().equals("task")) {
+				if (so.getContent().getId().equals(id)) {
+					return so;
+				}
+			}
+		}
+		System.out.println("Could not find Server Object");
+		return null; // null if we can't find it
 	}
 }
