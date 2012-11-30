@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/task_summary"
             android:imeOptions="actionNext"
-            android:inputType="text" >
+            android:inputType="textCapSentences" >
 
             <requestFocus android:layout_width="wrap_content" />
         </EditText>
@@ -106,13 +106,13 @@
             android:layout_height="wrap_content"
             android:gravity="bottom"
             android:hint="@string/task_description"
-            android:imeOptions="actionDone"
-            android:lines="2"
-            android:maxLines="2"
-            android:minLines="2"
+            android:inputType="textMultiLine|textCapSentences"
+            android:lines="3"
+            android:maxLines="3"
+            android:minLines="3"
             android:scrollHorizontally="false" />
 
-        <!-- Sharing and 'tiny description'. -->
+        <!-- Sharing and description. -->
 
         <TextView
             android:layout_width="wrap_content"

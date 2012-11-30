@@ -67,7 +67,7 @@ public class ReportManager extends Observable{
 		 */
 		setChanged();
 		notifyObservers(newReport);
-		// localStorage.storeReport(report);
+		localStorage.storeReport(newReport);
 	}
 
 	/**

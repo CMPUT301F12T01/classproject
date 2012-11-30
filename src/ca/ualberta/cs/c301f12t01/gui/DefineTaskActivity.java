@@ -172,7 +172,7 @@ public class DefineTaskActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 
 		// Why can't we find this?

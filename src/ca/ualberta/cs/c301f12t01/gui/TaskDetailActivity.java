@@ -184,15 +184,13 @@ public class TaskDetailActivity extends Activity {
 
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
-		
 		case R.id.menu_fulfill_task:
 			onUserSelectFulfill();
 			return true;
 		case R.id.menu_view_reports:
-			//onUserSelectViewReports();
-			Toast.makeText(getBaseContext(), "Turned off for now!", Toast.LENGTH_SHORT).show();
+			onUserSelectViewReports();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

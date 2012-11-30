@@ -23,6 +23,11 @@
     <string name="title_task_list">All Tasks</string>
     <string name="no_task_message">No task to display!</string>
 
+    <!-- Task lists -->
+    <string name="your_tasks">Your Tasks</string>
+    <string name="local_tasks">Stored Tasks</string>
+    <string name="global_tasks">Global Tasks</string>
+
     <!-- Task displaying fields -->
     <string name="task_summary">Summary</string>
     <string name="task_description">Description</string>
@@ -64,9 +69,11 @@
 
     <!-- Report List for a Task -->
     <string name="title_activity_report_list">View Reports</string>
-    
+
     <!-- Viewing a report -->
+    <string name="title_activity_report_detail">View Report</string>
     <string name="task_report_header">This Report Contains:</string>
+    <string name="text_response_info">Text Response:</string>
 
     <!-- Testing strings: throw away later? -->
     <string name="TEST_LONG_SUMMARY">THIS IS A VERY LONG SUMMARY THAT 
@@ -78,7 +85,5 @@
     <string name="TEST_REPORT_TIMESTAMP">March 05, 2011</string>
     <string name="done">Done</string>
     <string name="task_list_status_description">Fulfilled</string>
-    
-
 
 </resources>

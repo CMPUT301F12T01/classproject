@@ -26,6 +26,7 @@ import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
+import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
 import android.app.Activity;
@@ -46,16 +47,16 @@ import android.widget.Toast;
 public class ReportListFragment extends ListFragment implements Observer {
 
 
-    public static final String ARG_TASK_ID = "task_id";
-    
+    public static final String ARG_TASK_ID = "task_id"; 
     private Task task;
-	
     
-    // C&P: A bunch of callback stuff from TaskListFragments 
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
-
 	private Callbacks callbacks = doNothingCallbacks;
 	private int activatedPosition = ListView.INVALID_POSITION;
+	
+	/* A list of all the reports for the task */
+	private List<Report> taskReports = null;
+	
 
 	public interface Callbacks {
 		public void onItemSelected(UUID reportId);
@@ -73,31 +74,23 @@ public class ReportListFragment extends ListFragment implements Observer {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		TaskManager tm = ((TaskSourceApplication) getActivity().getApplication()).getTaskManager();
-		ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
-
 		/*
-		 * C&P from TaskDetailFragment 
-		 * 
-		 * Obtains the task ID that was passed to it
-		 * 
+		 * Obtains the task ID that was passed to it 
 		 */
 		if (getArguments().containsKey(ARG_TASK_ID)) {
 			UUID taskId = (UUID) getArguments()
 					.getSerializable(ARG_TASK_ID);
-			task = tm.get(taskId);
+			task = TaskSourceApplication.getTask(taskId);
 		}
-
-		setListAdapter(new ReportAdapter(getActivity(), rm.getReports(task)));
 		
-		/* Proving Toast statements */
-		Toast.makeText(getActivity(), "TaskID: " + task.getId().toString(), 
-				Toast.LENGTH_SHORT).show();
+		taskReports = TaskSourceApplication.getReports(task); 
 		
-		Toast.makeText(getActivity(), "Number of Reports: " + 
-				rm.getReports(task).size(), 
-				Toast.LENGTH_SHORT).show();
+		setListAdapter( new ReportAdapter(getActivity(), taskReports));
 		
+	    android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onCreated");
+		
+        android.util.Log.d("Act-LIFECYCLE", "Number of reports - " 
+        		+ taskReports.size());
 		
 	}
 
@@ -127,6 +120,8 @@ public class ReportListFragment extends ListFragment implements Observer {
 		}
 
 		callbacks = (Callbacks) activity;
+		
+		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onAttach");
 	}
 
 	/* C&P */
@@ -134,6 +129,7 @@ public class ReportListFragment extends ListFragment implements Observer {
 	public void onDetach() {
 		super.onDetach();
 		callbacks = doNothingCallbacks;
+		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onDetach");
 	}
 
 	/* C&P */
@@ -141,10 +137,11 @@ public class ReportListFragment extends ListFragment implements Observer {
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 		super.onListItemClick(listView, view, position, id);
 
-		/* Need to swap to getting reports */
-		ReportManager rm = ((TaskSourceApplication) getActivity().getApplication()).getReportManager();
-		List<Report> list = rm.getReports(task);
-		callbacks.onItemSelected(list.get(position).getId());
+		/* Get report position */
+		callbacks.onItemSelected(taskReports.get(position).getId());
+		
+		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onListItemClick");
+		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - position: " + taskReports.get(position).getId());
 
 	}
 

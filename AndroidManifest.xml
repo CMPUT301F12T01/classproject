@@ -14,11 +14,12 @@
         android:name=".gui.TaskSourceApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/TaskSourceTheme"  >
         <activity
             android:name=".gui.TaskListActivity"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,6 +55,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
+        </activity>
+        <activity
+            android:name=".gui.ReportDetailActivity"
+            android:label="@string/title_activity_report_detail" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.ReportDetailActivity" />
         </activity>
     </application>
 

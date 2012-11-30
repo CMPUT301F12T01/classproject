@@ -20,8 +20,10 @@ package ca.ualberta.cs.c301f12t01.gui;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.common.Task;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
@@ -34,56 +36,82 @@ import android.support.v4.app.NavUtils;
 public class ReportListActivity extends Activity implements
 ReportListFragment.Callbacks {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.activity_report_list);
-        
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        if (savedInstanceState == null) {
-            /* Taken from TaskDetailActivity */
-            Bundle arguments = new Bundle();
-            
-            /* Pass along the Task ID to the fragment */
-            arguments.putSerializable(ReportListFragment.ARG_TASK_ID,
-                    getIntent().getSerializableExtra(ReportListFragment.ARG_TASK_ID));
- 
-            ReportListFragment fragment = new ReportListFragment();
-            
-            fragment.setArguments(arguments);
-            
-            getFragmentManager().beginTransaction()
-                    .add(R.id.report_list, fragment)
-                    .commit();
-        }
-    }
+	private static final String ARG_REPORT_ID = "report_id";
+	private static final String ARG_TASK_ID = "task_id";
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_report_list, menu);
-        return true;
-    }
+	private UUID taskId;
 
-    
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_report_list);
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+		Bundle taskBundle = getIntent().getExtras();		
+		if (taskBundle != null) {
+
+			taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
+
+		}
+
+		if (savedInstanceState == null) {
+			/* Taken from TaskDetailActivity */
+			Bundle arguments = new Bundle();
+
+			/* Pass along the Task ID to the fragment */
+			arguments.putSerializable(ReportListFragment.ARG_TASK_ID,
+					getIntent().getSerializableExtra(ReportListFragment.ARG_TASK_ID));
+
+			ReportListFragment fragment = new ReportListFragment();
+
+			fragment.setArguments(arguments);
+
+			getFragmentManager().beginTransaction()
+			.add(R.id.report_list, fragment)
+			.commit();
+		}
+	}
+
+
 
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.gui.ReportListFragment.Callbacks#onItemSelected(java.util.UUID)
 	 */
 	public void onItemSelected(UUID reportId) {
 		// TODO Auto-generated method stub
-		
+
+		Intent intent = new Intent(getApplicationContext(), ReportDetailActivity.class);
+		intent.putExtra(ARG_REPORT_ID, reportId);
+
+		/* We really shouldn't have to pass this: there should be a way to get a report
+		 * by its ID, right? Or pass the report?
+		 */
+		intent.putExtra(ARG_TASK_ID, taskId);
+
+		android.util.Log.d("Act-LIFECYCLE", "ReportListAcivity - onItemSelected reportId " +
+				reportId);
+
+		startActivity(intent);
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_report_list, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

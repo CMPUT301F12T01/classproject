@@ -19,7 +19,11 @@ package ca.ualberta.cs.c301f12t01.gui.helper;
 
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Response;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.TextView;
 
@@ -37,11 +41,44 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 		super(view);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	// TODO implement get photo response
 	public Response getResponse() {
-
 		return null;
+
+	}
+
+	/* We need to be able to click on a button to take a photo */
+	public void setButton() {
+
+		TextView button = (TextView) getView().findViewById(R.id.button_take_photo);		
+
+		button.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View arg0) {
+				
+				Log.d("Act-lifecycle", "Clicked Photo Button");
+			}
+		});  
+
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupFulfillRequest()
+	 */
+	@Override
+	public void setupFulfillRequest() {
+		// TODO Auto-generated method stub
+		setButton();
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupDisplayResponse(ca.ualberta.cs.c301f12t01.common.Response)
+	 */
+	@Override
+	public void setupDisplayResponse(Response response) {
+		// TODO Auto-generated method stub
 		
 	}
 

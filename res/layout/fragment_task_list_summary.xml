@@ -48,6 +48,8 @@
         android:contentDescription="@string/task_list_status_description"
         android:scaleType="fitEnd"
         android:src="@android:drawable/title_bar_tall"
-        android:visibility="invisible" />
+        android:visibility="visible"
+        android:alpha="0.65"
+        android:tint="@color/SteelBlue" />
 
 </TableRow>
