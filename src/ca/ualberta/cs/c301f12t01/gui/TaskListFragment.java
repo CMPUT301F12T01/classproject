@@ -54,8 +54,6 @@ public class TaskListFragment extends ListFragment implements Observer {
 	private Callbacks callbacks = doNothingCallbacks;
 	private int activatedPosition = ListView.INVALID_POSITION;
 
-	
-
 	/**
 	 * Callbacks that should be handled by the activity that spawns this
 	 * fragment.
@@ -81,23 +79,21 @@ public class TaskListFragment extends ListFragment implements Observer {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		/*
+		 * This fragment gets sent in its fragment transaction
+		 * the name of the TaskCollection to go manage.
+		 * 
+		 * Right now, we don't have a 'your own tasks' thing (I think) 
+		 * so I'm setting it to local
+		 * 
+		 */
+		
 		if (getArguments().containsKey(ARG_NAME)) {
 			
 			name = (String) getArguments().getSerializable(ARG_NAME);
 			android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate - collection name: " +
 					name);
 		}
-		
-		/*
-		 * TODO:
-		 * 
-		 * What's supposed to happen is that this fragment gets sent in its
-		 * fragment transaction the name of the TaskCollection to go manage.
-		 * 
-		 * Right now, we don't have a 'your own tasks' thing (I think) 
-		 * so I'm setting it to local
-		 * 
-		 */
 
 		if (name.equals("user")) {
 			trackedCollection = TaskSourceApplication.getLocalTaskCollection();

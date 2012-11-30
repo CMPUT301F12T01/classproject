@@ -19,21 +19,15 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.UUID;
-
-import org.apache.http.client.UserTokenHandler;
-
 import ca.ualberta.cs.c301f12t01.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 
 /**
