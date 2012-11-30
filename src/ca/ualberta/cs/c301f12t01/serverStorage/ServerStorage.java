@@ -112,18 +112,15 @@ public class ServerStorage implements StorageInterface, Observer {
 	}
 
 	public HashMap<UUID, Task> getOwnTasks(UUID userid) {
-		// TODO Auto-generated method stub
-		return null;
+		return TaskServerRetrieval.getUserTasks(userid);
 	}
 
 	public HashMap<UUID, Task> getLocalTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		return TaskServerRetrieval.getLocalTasks();
 	}
 
 	public HashMap<UUID, Task> getGlobalTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		return TaskServerRetrieval.getGlobalTasks();
 	}
 
 	public void storeReport(Report reportToStore) {

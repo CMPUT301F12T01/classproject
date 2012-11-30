@@ -18,6 +18,7 @@
 package ca.ualberta.cs.c301f12t01.serverStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,6 +68,39 @@ public class TaskServerRetrieval {
 			}
 		}
 		return tasks;
+	}
+	
+	public static HashMap<UUID, Task> getUserTasks(UUID userid){
+		ArrayList<Task> al = getAllTasks();
+		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
+		for (Task t : al){
+			if (t.getUser().equals(userid)){
+				own.put(t.getId(), t);
+			}
+		}
+		return own;
+	}
+	
+	public static HashMap<UUID, Task> getGlobalTasks(){
+		ArrayList<Task> al = getAllTasks();
+		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
+		for (Task t : al){
+			if (t.isGlobal()){
+				own.put(t.getId(), t);
+			}
+		}
+		return own;
+	}
+	
+	public static HashMap<UUID, Task> getLocalTasks(){
+		ArrayList<Task> al = getAllTasks();
+		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
+		for (Task t : al){
+			if (t.isLocal()){
+				own.put(t.getId(), t);
+			}
+		}
+		return own;
 	}
 
 	/**
