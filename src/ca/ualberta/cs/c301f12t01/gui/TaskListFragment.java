@@ -25,7 +25,11 @@ import java.util.UUID;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
@@ -74,10 +78,8 @@ public class TaskListFragment extends ListFragment implements Observer {
 	}
 
 	
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		
 		if (getArguments().containsKey(ARG_NAME)) {
 			
@@ -91,26 +93,26 @@ public class TaskListFragment extends ListFragment implements Observer {
 		 * 
 		 * What's supposed to happen is that this fragment gets sent in its
 		 * fragment transaction the name of the TaskCollection to go manage.
-		 * Right now, I'm hard-coding the local collection to see if things work.
+		 * 
+		 * Right now, we don't have a 'your own tasks' thing (I think) 
+		 * so I'm setting it to local
 		 * 
 		 */
-		
-		
+
 		if (name.equals("user")) {
 			trackedCollection = TaskSourceApplication.getLocalTaskCollection();
 		} else {
 			trackedCollection = TaskSourceApplication.getTaskCollectionByName(name);
 		}
 		
-		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate trackedCollection size" +
-				trackedCollection.size());
-		
-		if (!trackedCollection.isEmpty()) {
-			setListAdapter(new TaskAdapter(getActivity(), trackedCollection));
+		// TODO: Use the no task to display screen!
+		if (trackedCollection.isEmpty()) {
+			android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreateView TC is empty!");
+			
 		}
 		
+		setListAdapter(new TaskAdapter(getActivity(), trackedCollection));
 		
-	
 	}
 
 	@Override
@@ -122,7 +124,6 @@ public class TaskListFragment extends ListFragment implements Observer {
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
 		
-
 		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onViewCreate");
 	}
 
@@ -148,7 +149,6 @@ public class TaskListFragment extends ListFragment implements Observer {
 	}
 
 
-
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -157,11 +157,9 @@ public class TaskListFragment extends ListFragment implements Observer {
 			throw new IllegalStateException(
 					"Activity must implement fragment's callbacks.");
 		}
-
 		callbacks = (Callbacks) activity;
-
-		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onAttach");
 	}
+	
 
 	@Override
 	public void onDetach() {
