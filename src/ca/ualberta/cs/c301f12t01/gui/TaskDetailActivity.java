@@ -27,12 +27,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
@@ -42,7 +40,8 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  * 
  * Displays the layout for activity_task_detail.
  * 
- * @author Eddie Antonio Santos <easantos@ualberta.ca>, Bronte Lee <bronte@ualberta.ca>
+ * @author Eddie Antonio Santos <easantos@ualberta.ca>
+ * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
 public class TaskDetailActivity extends Activity {
@@ -52,16 +51,15 @@ public class TaskDetailActivity extends Activity {
 
 	private Task task;
 
+	/** onCreate - show layout, set home button, get information 
+	 * from TaskListActivity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_detail);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		// uhhh....
-		if (savedInstanceState == null) {
-		}
 
 		
 		/* The list of tasks Activity passed us a taskID, so we should get it*/
@@ -81,10 +79,9 @@ public class TaskDetailActivity extends Activity {
 		/* Now display the task information! */
 		displayTaskInformation();
 
-
 	}
 
-	/* I wanted to make this another function */
+	/* Displays the task's information */
 	protected void displayTaskInformation() {
 		TextView descriptionView = (TextView) findViewById(R.id.task_description);
 		TextView summaryView = (TextView) findViewById(R.id.task_summary);
@@ -92,7 +89,6 @@ public class TaskDetailActivity extends Activity {
 		TextView sharingView = (TextView) findViewById(R.id.task_sharing_setting);
 
 		/* Collect strings and stuff from the Task instance. */
-
 		String descriptionText = task.getDescription();
 		String summaryText = task.getSummary();
 
@@ -138,13 +134,11 @@ public class TaskDetailActivity extends Activity {
 		requirementView.setText(requirementText);
 
 		/* Get the sharing option */
-
 		if (task.isGlobal()) {
 			sharingView.setText(getString(R.string.task_global));
 		} else {
 			sharingView.setText(getString(R.string.task_local));
 		}
-
 	}
 
 	
@@ -172,13 +166,14 @@ public class TaskDetailActivity extends Activity {
         startActivity(intent);
     }
 
-    
+    /* Display menu */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_task_detail, menu);
 		return true;
 	}
 
+	/* When a menu item is selected */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 

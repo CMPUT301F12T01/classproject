@@ -53,7 +53,6 @@ import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerObtainer;
 
 public class FulfillTaskActivity extends Activity {
 
-	
 	/* TODO: Get some more global place to store the following string. */
 	public static final String ARG_TASK_ID = "task_id";
 
@@ -61,12 +60,13 @@ public class FulfillTaskActivity extends Activity {
 	
 	ArrayList<ResponseObtainer> obtainers = new ArrayList<ResponseObtainer>();
 	
+	/** onCreate - get taskId from the TaskDetailActivity and display fulfill fields
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fulfill_task);
 
-        
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
         /* The list of tasks Activity passed us a taskID, so we should get it*/
@@ -86,6 +86,10 @@ public class FulfillTaskActivity extends Activity {
 
     }
     
+    /** displayFulfillTaskInformation - Display the proper fulfill fields 
+     * 	based on the requests of the task.
+     * 
+     */
     protected void displayFulfillTaskInformation() {
     	
     	/* Sets the simple text views. */
@@ -118,7 +122,7 @@ public class FulfillTaskActivity extends Activity {
     
     
     /**
-     * Called when the user decides they are done fulfilling the task.
+     * onFormCompletion - Called when the user decides they are done fulfilling the task.
      * 
      * @returns false is the form was completed incorrectly, else true.
      */
@@ -186,14 +190,14 @@ public class FulfillTaskActivity extends Activity {
         }
     }
     
-    
+    /* Display menu */
     public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_fulfill_task, menu);
 		return true;
 	}
-    
-    
+     
+    /* When a menu option is selected */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

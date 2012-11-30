@@ -189,7 +189,6 @@ TaskListFragment.Callbacks, TabListener {
 				taskId);
 	
 		startActivity(intent);
-	
 	}
 
 	@Override

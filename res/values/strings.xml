@@ -85,5 +85,6 @@
     <string name="TEST_REPORT_TIMESTAMP">March 05, 2011</string>
     <string name="done">Done</string>
     <string name="task_list_status_description">Fulfilled</string>
+    <string name="title_activity_edit_task">EditTaskActivity</string>
 
 </resources>

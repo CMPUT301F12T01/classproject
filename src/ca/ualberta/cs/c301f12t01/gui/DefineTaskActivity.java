@@ -39,17 +39,17 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 /**
  * DefineTaskActivity -- Displays the user interface for defining a task.
  * 
- * Displays the layout for activiy_define_task. Which displays a fragment of DefineTaskFragment 
- * {@link DefineTaskFragment} that handles defining a task.
+ * Displays the layout for activiy_define_task and handles defining a task.
  * 
- * @author Eddie Antonio Santos <easantos@ualberta.ca>, Bronte Lee <bronte@ualberta.ca>
+ * @author Eddie Antonio Santos <easantos@ualberta.ca> 
+ * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
 public class DefineTaskActivity extends Activity {
 
 
 	/**
-	 * Configures the home button and adds a button for the User o click when completing a Task
+	 * Configures the home button and adds a button for the User to click when completing a Task
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,33 +58,21 @@ public class DefineTaskActivity extends Activity {
 		setContentView(R.layout.activity_define_task);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		/*  Do we need anything if null? */
-		if (savedInstanceState == null) {
-
-		}
-		
-		 // DONE Add Log button
-        Button button_add_done = (Button) findViewById(R.id.button_done_task);
-        button_add_done.setOnClickListener(new OnClickListener() {
-        	
-            public void onClick(View arg0) {
-            	
-    			if (onTaskCreated()) {
-    				// Go back to Main when done
-    				finish();
-    			}
-            }
-        });  
-
+        
 		android.util.Log.d("Act-LIFECYCLE", "DefineTaskActivity-onCreate");
 
 	}
 
 	
-	// Returning boolean to indicated whether we return back or not	
-	protected boolean onTaskCreated() {
-
+	/** onTaskCreated - checks to see if the minimum fields 
+	 * have been filled in and then get's the task's 
+	 * information 
+	 * 
+	 * @return True if the minimum fields have been filled out.
+	 * 			False if the minimum fields have not been filled out.
+	 */
+	  	protected boolean onTaskCreated() {
+	
 		/* Get the views. Blame Java for the ugly, unreadable mess. */
 		RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_sharing);
 		EditText descriptionView = (EditText) findViewById(R.id.edit_description);
@@ -92,7 +80,6 @@ public class DefineTaskActivity extends Activity {
 		ToggleButton text_toggle = (ToggleButton) findViewById(R.id.toggle_text);
 		ToggleButton photo_toggle = (ToggleButton) findViewById(R.id.toggle_photo);
 		ToggleButton audio_toggle = (ToggleButton) findViewById(R.id.toggle_audio);
-
 
 		/* Extract the text fields. */
 		String descriptionText = descriptionView.getText().toString();
@@ -107,7 +94,6 @@ public class DefineTaskActivity extends Activity {
 
 		/* Now set up the new task with the extracted data. */
 		Task newTask = TaskSourceApplication.newTaskForCurrentUser();
-
 
 		newTask.setDescription(descriptionText);
 		newTask.setSummary(summaryText);
@@ -155,35 +141,29 @@ public class DefineTaskActivity extends Activity {
 		return true;
 
 	}
-
-	/* May remove add button and re-add this later */
-	/*
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_define_task, menu);
 		return true;
 	}
-	*/
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-
 		case android.R.id.home:
 			finish();
 			return true;
-
-		// Why can't we find this?
-		/*
-		case android.R.id.menu_done_define:
-			onTaskCreated();
+		case R.id.menu_done:
+			if (onTaskCreated()) {
+				Toast.makeText(getBaseContext(), "Task Saved", Toast.LENGTH_SHORT).show();
+				finish();
+			}
 			return true;
-		*/
-			
 		}
-		
 		return super.onOptionsItemSelected(item);
 	}
 }

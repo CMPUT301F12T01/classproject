@@ -25,18 +25,15 @@ import java.util.UUID;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 
 /**
  * Android view that displays a list of the Tasks that belong to a
- * TaskCollection.
+ * TaskCollection. It requires the name of the TaskCollection to display
+ * the proper list (user's tasks, local (stored) tasks, global tasks)
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * @author Bronte Lee <bronte@ualbert.ca>
@@ -75,7 +72,10 @@ public class TaskListFragment extends ListFragment implements Observer {
 	public TaskListFragment() {
 	}
 
-	
+	/** onCreate - depending on the name received from the TaskListActivity,
+	 * we display the proper list of tasks
+	 * 
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		

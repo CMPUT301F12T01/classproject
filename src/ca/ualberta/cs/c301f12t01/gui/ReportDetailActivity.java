@@ -34,13 +34,16 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerDisplayer;
 
-/**
+/** ReportDetailActivity - Displays the responses of the report
  * 
  * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
 public class ReportDetailActivity extends Activity {
 
+	/* We need the taskId to get the reports and the reportId
+	 * to get the get report...we shouldn't have to do this.
+	 */
 	public static final String ARG_REPORT_ID = "report_id";
 	public static final String ARG_TASK_ID = "task_id";
 
@@ -48,16 +51,15 @@ public class ReportDetailActivity extends Activity {
 
 	ArrayList<ResponseObtainer> obtainers = new ArrayList<ResponseObtainer>();
 
+	/** onCreate - obtains information from the ReportListActivity and 
+	 * displays the report's responses. 
+	 * 
+	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_report_detail);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		// uhhh....
-		if (savedInstanceState == null) {
-		}
-
 
 		/* The list of tasks Activity passed us a taskID, so we should get it*/
 		Bundle taskBundle = getIntent().getExtras();		
@@ -90,11 +92,14 @@ public class ReportDetailActivity extends Activity {
 
 	}
 
+	/** Display the content of the report. Time stamp, responses
+	 * 
+	 */
 	protected void displayReportInformation() {
 
 		android.util.Log.d("Act-LIFECYCLE", "TaskDetailAcivity - displayReportInformation");
 
-		/* Set the timestamp. */
+		/* Set the time stamp. */
 		((TextView) findViewById(R.id.text_timestamp_response)).setText( 
 				report.getTimestamp().toString());
 
@@ -102,15 +107,14 @@ public class ReportDetailActivity extends Activity {
 		ViewGroup responseContainer = (ViewGroup) findViewById(R.id.report_responses);
 		LayoutInflater inflater = getLayoutInflater();
 
-		/* Show the responses of the report...first, inflate the proper fragment
-		 */
+		/* Show the responses of the report...first, inflate the proper fragment */
 		for (Response response : report) {
 			obtainers.add(ResponseObtainerDisplayer.showResponseDisplayer(
 							response, inflater, responseContainer));
 		}
 	}
 
-
+	/* If a menu option is selected */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
