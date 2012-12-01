@@ -21,7 +21,7 @@
     android:id="@+id/tablerow_task_list_fragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/task_listitem_view_bg"
+    android:background="@drawable/task_listitem_bg"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".gui.TaskListFragment" >
