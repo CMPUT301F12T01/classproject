@@ -76,10 +76,6 @@ public class TaskDetailActivity extends Activity {
 			
 			task = TaskSourceApplication.getTask(taskId);
 			
-		    android.util.Log.d("Act-LIFECYCLE", "TaskDetailAcivity - onCreated taskId " +
-					ARG_TASK_ID);
-		    android.util.Log.d("Act-LIFECYCLE", "TaskDetailAcivity - onCreated taskId " +
-					taskId);
 		}
 
 		/* Now display the task information! */
@@ -164,12 +160,8 @@ public class TaskDetailActivity extends Activity {
     }
     
     private void onUserSelectEdit(){
-		if (true) {
-			startActivityWithTask(EditTaskActivity.class);
-		} else {
-			Toast.makeText(getBaseContext(), "This is not your task.", 
-					Toast.LENGTH_SHORT).show();
-		}
+    	/* Replace with a better test later */
+		startActivityWithTask(EditTaskActivity.class);
     }
 
     /* TODO: This should really not be in *this* class. */
@@ -185,6 +177,11 @@ public class TaskDetailActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_task_detail, menu);
+		
+		/* If you are NOT the user that created this task, you can't edit or delete it */
+		if (!TaskSourceApplication.getUserID().equals(task.getUser())) {
+			menu.findItem(R.id.menu_edit_task).setEnabled(false);
+		}
 		
 		return true;
 	}

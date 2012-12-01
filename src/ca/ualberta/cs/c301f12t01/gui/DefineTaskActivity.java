@@ -49,7 +49,7 @@ public class DefineTaskActivity extends Activity {
 
 
 	/**
-	 * Configures the home button and adds a button for the User to click when completing a Task
+	 * Configures the home button and adds a button for the User to click when finished
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -136,7 +136,7 @@ public class DefineTaskActivity extends Activity {
 		
 		TaskSourceApplication.addTask(newTask);
 
-		Toast.makeText(getBaseContext(), "Task created.", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getBaseContext(), "Task Created", Toast.LENGTH_SHORT).show();
 		
 		return true;
 
@@ -159,7 +159,6 @@ public class DefineTaskActivity extends Activity {
 			return true;
 		case R.id.menu_done:
 			if (onTaskCreated()) {
-				Toast.makeText(getBaseContext(), "Task Saved", Toast.LENGTH_SHORT).show();
 				finish();
 			}
 			return true;
