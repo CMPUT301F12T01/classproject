@@ -1,69 +1,104 @@
-/**
- * Copyright 2012 Neil Borle, Mitchell Home, Bronte Lee, Aaron
- * Padlesky, Eddie Santos
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- */
 package ca.ualberta.cs.c301f12t01.gui;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-import android.widget.ToggleButton;
+import java.util.UUID;
+
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
+public class EditTaskActivity extends Activity {
 
-/**
- * DefineTaskActivity -- Displays the user interface for defining a task.
- * 
- * Displays the layout for activiy_define_task and handles defining a task.
- * 
- * @author Eddie Antonio Santos <easantos@ualberta.ca> 
- * @author Bronte Lee <bronte@ualberta.ca>
- *
- */
-public class DefineTaskActivity extends Activity {
+	public static final String ARG_TASK_ID = "task_id";
 
+	private Task task;
+	
 
-	/**
-	 * Configures the home button and adds a button for the User to click when finished
-	 */
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		/* We can use the same activity layout */
 		setContentView(R.layout.activity_define_task);
-
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-        
-		android.util.Log.d("Act-LIFECYCLE", "DefineTaskActivity-onCreate");
-
+		
+		/* The list of tasks Activity passed us a taskID, so we should get it*/
+		Bundle taskBundle = getIntent().getExtras();		
+		if (taskBundle != null) {
+			
+			UUID taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
+			
+			task = TaskSourceApplication.getTask(taskId);
+			
+			android.util.Log.d("Act-lc", "EditTaskActivity - TaskId: " + taskId);
+			
+		}
+		
+		displayOldTaskInformation();
+		
 	}
 
-	
+	/** Displays the old task's information
+	 * 
+	 */
+	private void displayOldTaskInformation() {
+		// TODO Auto-generated method stub
+		/* Collect strings and stuff from the Task instance. */
+		
+		/* Get the views */
+		RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_sharing);
+		EditText descriptionView = (EditText) findViewById(R.id.edit_description);
+		EditText summaryView = (EditText) findViewById(R.id.edit_summary);
+		ToggleButton text_toggle = (ToggleButton) findViewById(R.id.toggle_text);
+		ToggleButton photo_toggle = (ToggleButton) findViewById(R.id.toggle_photo);
+		ToggleButton audio_toggle = (ToggleButton) findViewById(R.id.toggle_audio);
+		
+		
+		/* Set summary and description */
+		String descriptionText = task.getDescription();
+		String summaryText = task.getSummary();
+		
+		summaryView.setText(summaryText);
+		descriptionView.setText(descriptionText);
+		
+		/* Show previous requirements */
+		for (Request request : task) {
+			MediaType media = request.getType();
+			switch(media) {
+				case TEXT:
+					text_toggle.setChecked(true);
+					break;
+				case PHOTO:
+					photo_toggle.setChecked(true);
+					break;
+				case AUDIO:
+					audio_toggle.setChecked(true);
+					break;
+			}
+					
+		}
+		
+		/* Display previous sharing settings. By default it's local (by layout) */
+		
+		if ( task.isGlobal() ) {
+			RadioButton globalRadioButton = (RadioButton) findViewById(R.id.radio_global);
+			globalRadioButton.setChecked(true);
+		}
+		
+		
+	}
+
 	/** onTaskCreated - checks to see if the minimum fields 
 	 * have been filled in and then get's the task's 
 	 * information 
@@ -71,17 +106,17 @@ public class DefineTaskActivity extends Activity {
 	 * @return True if the minimum fields have been filled out.
 	 * 			False if the minimum fields have not been filled out.
 	 */
-	  	protected boolean onTaskCreated() {
-	
-		/* Get the views. Blame Java for the ugly, unreadable mess. */
+	protected boolean onTaskUpdated() {
+		/* Extract the text fields. */
+		
+		/* Get the views */
 		RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_sharing);
 		EditText descriptionView = (EditText) findViewById(R.id.edit_description);
 		EditText summaryView = (EditText) findViewById(R.id.edit_summary);
 		ToggleButton text_toggle = (ToggleButton) findViewById(R.id.toggle_text);
 		ToggleButton photo_toggle = (ToggleButton) findViewById(R.id.toggle_photo);
 		ToggleButton audio_toggle = (ToggleButton) findViewById(R.id.toggle_audio);
-
-		/* Extract the text fields. */
+		
 		String descriptionText = descriptionView.getText().toString();
 		String summaryText = summaryView.getText().toString();
 
@@ -131,25 +166,23 @@ public class DefineTaskActivity extends Activity {
 			Toast.makeText(getBaseContext(), "Please add a request.", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		
-		android.util.Log.d("Act-LIFECYCLE", "DefineTaskActivity-onTaskCreated");
-		
-		TaskSourceApplication.addTask(newTask);
 
-		Toast.makeText(getBaseContext(), "Task Created", Toast.LENGTH_SHORT).show();
-		
+		android.util.Log.d("Act-LIFECYCLE", "DefineTaskActivity-onTaskCreated");
+
+		//TaskSourceApplication.addTask(newTask);
+
+		Toast.makeText(getBaseContext(), "Task updated?", Toast.LENGTH_SHORT).show();
+
 		return true;
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.activity_define_task, menu);
+		getMenuInflater().inflate(R.menu.activity_edit_task, menu);
 		return true;
 	}
 	
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -158,7 +191,7 @@ public class DefineTaskActivity extends Activity {
 			finish();
 			return true;
 		case R.id.menu_done:
-			if (onTaskCreated()) {
+			if (onTaskUpdated()) {
 				finish();
 			}
 			return true;

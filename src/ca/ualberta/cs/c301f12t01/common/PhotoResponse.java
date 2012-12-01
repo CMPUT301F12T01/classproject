@@ -28,13 +28,11 @@ import java.io.Serializable;
 public class PhotoResponse implements Response {
 
 	private String photoData64;
-	private String contentType;
     /**
      * 
      */
-    public PhotoResponse(String photoData64, Object format) {
+    public PhotoResponse(String photoData64) {
     	setPhoto(photoData64);
-    	setFormatEnum(format);
     }
     
     public void setPhoto (String photoData64) {
@@ -43,28 +41,6 @@ public class PhotoResponse implements Response {
     
     public String getPhoto () {
     	return photoData64;
-    }
-    
-    public void setFormatEnum(Object format) {
-    	this.contentType = format.toString().toLowerCase();
-    }
-    
-    public void setFormatString(String format) {
-    	this.contentType = format;
-    }
-    
-    public String getFormat() {
-    	return contentType;
-    }
-
-    private class PhotoBundle {
-    	public String photoData64;
-    	public String contentType;
-    	
-    	public void setPhotoBundle (String photo, String format) {
-    		this.photoData64 = photo;
-    		this.contentType = format;
-    	}
     }
     
     /* (non-Javadoc)
@@ -78,22 +54,13 @@ public class PhotoResponse implements Response {
      * @see ca.ualberta.cs.c301f12t01.common.Response#getResponseData()
      */
     public Serializable getResponseData() {
-    	if(this.photoData64 != "") {
-    		PhotoBundle photoBundle = new PhotoBundle();
-    		photoBundle.setPhotoBundle(this.photoData64, this.contentType);
-    		return (Serializable) photoBundle;
-    	} else {
-    		return null;
-    	}
+    	return getPhoto();
     }
 
     /* (non-Javadoc)
      * @see ca.ualberta.cs.c301f12t01.common.Response#setResponseData(java.io.Serializable)
      */
     public void setResponseData(Serializable newData) {
-        PhotoBundle photoBundle = (PhotoBundle) newData;
-        this.photoData64 = photoBundle.photoData64;
-        this.contentType = photoBundle.contentType;
+    	setPhoto((String) newData);
     }
-
 }

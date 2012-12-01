@@ -37,37 +37,26 @@ import android.app.FragmentTransaction;
  * @author Bronte Lee <bronte@ualberta.ca>
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
+/* TODO: move the tab stuff into another class.
+ * 
+ */
 public class TaskListActivity extends Activity implements
 TaskListFragment.Callbacks, TabListener {
 
-	public static final String ARG_TASK_ID = "task_id";
-	
-	/* Tab labels. Will remove if ActionBar Tab XML file gets created */
-	public static final String USER_TASKS = "Your Tasks";
-	public static final String LOCAL_TASKS = "Stored Tasks";
-	public static final String GLOBAL_TASKS = "Global Tasks";
-	
-	/* Add some default Tags..though I might have missed a global declaration somewhere */
-	public static final String USER = "user";
-	public static final String LOCAL = "local";
-	public static final String GLOBAL = "global";
-	
-	public static String ARG_NAME = "name";
+	/* I apologize for all of these ugly globals. Give me some time to remove them*/
+	private static final String ARG_TASK_ID = "task_id";
+
+	private static final String CURRENT_TAB_INDEX = "current tab index";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_task_list);
 
 		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onCreate ");
 
-		actionBarTabSetup();
-
-		if (savedInstanceState == null) {
-
-			// by default, show stuff from user
-			showListFrom(USER);
-		}	
+		setupActionBarTab();	
 	}
 
 	/** Sets up the ActionBar with tabs
@@ -76,22 +65,23 @@ TaskListFragment.Callbacks, TabListener {
 	/*
 	 * TODO: Make this cleaner by setting up an XML file instead!
 	 */
-	public void actionBarTabSetup() {
+	public void setupActionBarTab() {
 		// Use the action bar for tabs
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// Set the text of the tab
-		ActionBar.Tab userTasksTab = actionBar.newTab().setText(USER_TASKS);
-		ActionBar.Tab localTasksTab = actionBar.newTab().setText(LOCAL_TASKS);
-		ActionBar.Tab globalTasksTab = actionBar.newTab().setText(GLOBAL_TASKS);
+		ActionBar.Tab userTasksTab = actionBar.newTab().setText("Your Tasks");
+		ActionBar.Tab localTasksTab = actionBar.newTab().setText("Stored Tasks");
+		ActionBar.Tab globalTasksTab = actionBar.newTab().setText("Global Tasks");
 		
 		/* set the tag of each tab. This will be used to figure out which
 		 * TaskCollection to use when displaying the list of tasks
+		 * This needs to match with TaskCollection's names!
 		 */
-		userTasksTab.setTag(USER);
-		localTasksTab.setTag(LOCAL);
-		globalTasksTab.setTag(GLOBAL);
+		userTasksTab.setTag("user");
+		localTasksTab.setTag("local");
+		globalTasksTab.setTag("global");
 
 		// Set the tabs to listen for any changes
 		userTasksTab.setTabListener(this);
@@ -102,8 +92,104 @@ TaskListFragment.Callbacks, TabListener {
 		actionBar.addTab(userTasksTab);
 		actionBar.addTab(localTasksTab);
 		actionBar.addTab(globalTasksTab);
+		
 	}
 
+
+	/* This will keep track of which tab we were on */
+	@Override
+	public void onSaveInstanceState(Bundle outBundle) {
+		android.util.Log.d("Act-LIFECYCLE", "TaskListActivity-onSaveInstanceState");
+		
+		outBundle.putInt(CURRENT_TAB_INDEX, getActionBar().getSelectedNavigationIndex());
+		
+	}
+
+	/* This will display the last viewed tab (if you like changing the orientation...) */
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		
+		android.util.Log.d("Act-LIFECYCLE", "TaskListActivity-onRestoreInstanceState");
+		
+		if (savedInstanceState.containsKey(CURRENT_TAB_INDEX)) {
+			getActionBar().setSelectedNavigationItem(savedInstanceState.getInt(CURRENT_TAB_INDEX));
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.ActionBar.TabListener#onTabReselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
+	 */
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		/* If the user selects the same tab, do nothing */
+	
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.ActionBar.TabListener#onTabSelected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
+	 */
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+	
+		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onTabSelected tag: " +
+				tab.getTag());		
+	
+		showListFrom( (String)tab.getTag());
+	
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.ActionBar.TabListener#onTabUnselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
+	 */
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onTabUNSelected tag: " +
+				tab.getTag());	
+		
+	}
+
+	/**Pass it the name of the task collection to display the tasks for the ListFragment
+	 * 
+	 * @param Fragment fragment, Sting name
+	 */
+	public void showListFrom(String name){			
+		
+		Bundle arguments = new Bundle();
+		arguments.putSerializable(TaskListFragment.ARG_NAME, name);
+		
+		TaskListFragment fragment = new TaskListFragment();
+		
+		fragment.setArguments(arguments);
+		
+		getFragmentManager().beginTransaction()
+			.replace(R.id.task_list, fragment)
+			.commit();
+	}
+
+	/** Starts the "define new task" screen. */
+	public void onClickDefineTask(MenuItem item) {
+	
+		android.util.Log.d("Act-LIFECYCLE", "TaskListActivity-onClickDefineTask");
+	
+		Intent intent = new Intent(getBaseContext(), DefineTaskActivity.class);
+		startActivity(intent);
+	
+	}
+
+	/**
+	 * The list fragment calls this when an item in the list is selected
+	 * (therefore spawning the task detail activity.
+	 */
+	public void onItemSelected(UUID taskId) {
+	
+		Intent intent = new Intent(getApplicationContext(), TaskDetailActivity.class);
+		intent.putExtra(ARG_TASK_ID, taskId);
+	
+		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onItemSelected taskId " +
+				taskId);
+	
+		startActivity(intent);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,85 +212,6 @@ TaskListFragment.Callbacks, TabListener {
 			return super.onOptionsItemSelected(item);
 		}
 
-	}
-
-	/**
-	 * The list fragment calls this when an item in the list is selected
-	 * (therefore spawning the task detail activity.
-	 */
-	public void onItemSelected(UUID taskId) {
-
-		Intent intent = new Intent(getApplicationContext(), TaskDetailActivity.class);
-		intent.putExtra(ARG_TASK_ID, taskId);
-
-		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onItemSelected taskId " +
-				taskId);
-
-		startActivity(intent);
-
-	}
-
-	/** Starts the "define new task" screen. */
-	public void onClickDefineTask(MenuItem item) {
-
-		android.util.Log.d("Act-LIFECYCLE", "TaskListActivity-onClickDefineTask");
-
-		Intent intent = new Intent(getBaseContext(), DefineTaskActivity.class);
-		startActivity(intent);
-
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.ActionBar.TabListener#onTabReselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
-	 */
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.ActionBar.TabListener#onTabSelected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
-	 */
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
-		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onTabSelected tag: " +
-				tab.getTag());		
-
-		showListFrom((String)tab.getTag());
-		
-
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.ActionBar.TabListener#onTabUnselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
-	 */
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
-	}
-	
-	/**Pass it the name of the task collection to display the tasks for the ListFragment
-	 * 
-	 * @param name
-	 */
-	public void showListFrom(String name){
-		/* Tag contains the name of the TaskCollection we need */
-		
-		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - showListFrom: " +
-				ARG_NAME);	
-		
-		Bundle arguments = new Bundle();
-
-		arguments.putSerializable(TaskListFragment.ARG_NAME, name);
-		
-		TaskListFragment fragment = new TaskListFragment();
-		
-		fragment.setArguments(arguments);
-		
-		getFragmentManager().beginTransaction()
-			.add(R.id.task_list, fragment)
-			.commit();
 	}
 
 }

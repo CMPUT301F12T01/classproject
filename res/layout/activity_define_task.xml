@@ -23,7 +23,7 @@
     android:id="@+id/activity_define_task"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="10dp"
     tools:context=".gui.DefineTaskActivity" >
 
     <LinearLayout
@@ -85,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textOff="@string/task_audio"
-                android:textOn="@string/task_audio" />
+                android:textOn="@string/task_audio"
+                android:visibility="gone" />
         </TableRow>
 
         <!--
@@ -107,9 +108,8 @@
             android:gravity="bottom"
             android:hint="@string/task_description"
             android:inputType="textMultiLine|textCapSentences"
-            android:lines="3"
-            android:maxLines="3"
-            android:minLines="3"
+            android:maxLines="5"
+            android:minLines="2"
             android:scrollHorizontally="false" />
 
         <!-- Sharing and description. -->
@@ -151,14 +151,6 @@
                 android:text="@string/task_global" />
         </RadioGroup>
 
-        <!-- Temporary button? -->
-
-        <Button
-            android:id="@+id/button_done_task"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/done" />
     </LinearLayout>
 
 </ScrollView>

@@ -33,6 +33,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,10 +50,9 @@ import android.widget.TextView;
  */
 public class PhotoResponseObtainer extends ResponseObtainer {
 
-	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+	private static final String ENCODED_IMAGE = "encoded image";
 	private String encodedImage;
-	private Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	private byte[] byteArray;
+	
 	/**
 	 * @param view
 	 */
@@ -62,68 +63,40 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 
 	// TODO implement get photo response
 	public Response getResponse() {
-		return new PhotoResponse(encodedImage, CompressFormat.PNG);
+		encodedImage = TakePhotoActivity.encodedImage;
+		//Log.d("Act-lifecycle", encodedImage);
+		return new PhotoResponse(encodedImage);
 	}
 
 	/* We need to be able to click on a button to take a photo */
 	public void setButton() {
 
-		TextView button = (TextView) getView().findViewById(R.id.button_take_photo);		
+		final TextView button = (TextView) getView().findViewById(R.id.button_take_photo);		
 
 		button.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View arg0) {
 				
-				//Hope hope = new Hope();
-				startPhoto();
-				encodedImage = getPhoto();
-
-				Log.d("Act-lifecycle", "Clicked Photo Button");
+				Intent intent = new Intent (button.getContext(), TakePhotoActivity.class);
+				((Activity) button.getContext()).startActivityForResult(intent, 1);
 			}
 		});  
 
-	}
-
-	//private class Hope extends Activity {
-		
-		//create new Intent
-		//Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		
 //		@Override
-//		public void onCreate(Bundle savedInstanceState) {
-//			super.onCreate(savedInstanceState);
-//			startPhoto(getApplicationContext());
+//		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//			super.onActivityResult(requestCode, resultCode, data);
+//			switch(requestCode) {
+//				case (1) : {
+//					if (resultCode == Activity.RESULT_OK) {
+//						encodedImage = data.getStringExtra(ENCODED_IMAGE);
+//					}
+//					break;
+//				}
+//			}
 //		}
-//		//Hope's String
-		//byte[] byteArray;
-		public void startPhoto() {
-			// start the video Capture Intent
-			//intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File("/sdcard/mp/")));
-			//((Activity) this.getApplicationContext()).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-			//((Activity) this.getApplicationContext()).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-		}
-
-		public void onActivityResult(int requestCode, int resultCode, Intent data) {        
-		    if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-		        if (resultCode == Activity.RESULT_OK) {
-		            Bitmap bmp = (Bitmap) data.getExtras().get("data");
-		            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-		            byteArray = stream.toByteArray();
-
-		        } else if (resultCode == Activity.RESULT_CANCELED) {
-		            // User cancelled the image capture
-		        } else {
-		            // Image capture failed, advise user
-		        }
-		    }               
-		}
 		
-		public String getPhoto() {
-			String encodeImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-			return encodeImage;
-		}
-	//}
+	}
+	
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupFulfillRequest()
 	 */
@@ -140,8 +113,12 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 	@Override
 	public void setupDisplayResponse(Response response) {
 		// TODO Auto-generated method stub
+		Log.d("Act-lifecycle", "did i make it here?");
+		PhotoResponse photoResponse = (PhotoResponse) response;
+		String encodeImage = photoResponse.getPhoto();
+		//Log.d("Act-lifecycle", encodeImage);
 		ImageView imageView = (ImageView) getView().findViewById(R.id.image_response);
-		byte[] decoded = Base64.decode(encodedImage, Base64.DEFAULT);  
+		byte[] decoded = Base64.decode(encodeImage, Base64.DEFAULT);  
 		Bitmap bitMap = BitmapFactory.decodeByteArray(decoded , 0, decoded.length);
 		imageView.setImageBitmap(bitMap);
 	}

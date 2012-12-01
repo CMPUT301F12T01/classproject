@@ -39,9 +39,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-/**
+/** ReportListFragment - in charge of displaying the list of reports
  * 
- * @author Bronte Lee
+ * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
 public class ReportListFragment extends ListFragment implements Observer {
@@ -70,13 +70,13 @@ public class ReportListFragment extends ListFragment implements Observer {
 	public ReportListFragment() {
 	}
 
-	/* More C&P: this time from TaskLikstFrag AND TaskDetailFrag */
+	/** onCreate - obtain information from its activity and setListAdapter
+	 * 
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		/*
-		 * Obtains the task ID that was passed to it 
-		 */
+		/* Obtain the task ID that was passed to it */
 		if (getArguments().containsKey(ARG_TASK_ID)) {
 			UUID taskId = (UUID) getArguments()
 					.getSerializable(ARG_TASK_ID);
@@ -84,18 +84,9 @@ public class ReportListFragment extends ListFragment implements Observer {
 		}
 		
 		taskReports = TaskSourceApplication.getReports(task); 
-		
 		setListAdapter( new ReportAdapter(getActivity(), taskReports));
-		
-	    android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onCreated");
-		
-        android.util.Log.d("Act-LIFECYCLE", "Number of reports - " 
-        		+ taskReports.size());
-		
 	}
 
-
-	/* C&P */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
@@ -105,13 +96,6 @@ public class ReportListFragment extends ListFragment implements Observer {
 		}
 	}
 
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.activity_report_list , menu);
-	}
-
-	/* More C&P related to callbacks */
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -120,11 +104,9 @@ public class ReportListFragment extends ListFragment implements Observer {
 		}
 
 		callbacks = (Callbacks) activity;
-		
 		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onAttach");
 	}
 
-	/* C&P */
 	@Override
 	public void onDetach() {
 		super.onDetach();
@@ -132,7 +114,7 @@ public class ReportListFragment extends ListFragment implements Observer {
 		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onDetach");
 	}
 
-	/* C&P */
+	/* If a report is selected, display its responses */
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 		super.onListItemClick(listView, view, position, id);
@@ -140,12 +122,8 @@ public class ReportListFragment extends ListFragment implements Observer {
 		/* Get report position */
 		callbacks.onItemSelected(taskReports.get(position).getId());
 		
-		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - onListItemClick");
-		android.util.Log.d("Act-LIFECYCLE", "ReportListFragment - position: " + taskReports.get(position).getId());
-
 	}
 
-	/* C&P */
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -154,28 +132,24 @@ public class ReportListFragment extends ListFragment implements Observer {
 		}
 	}
 
-	/* C&P */
 	public void setActivateOnItemClick(boolean activateOnItemClick) {
 		getListView().setChoiceMode(activateOnItemClick
 				? ListView.CHOICE_MODE_SINGLE
 						: ListView.CHOICE_MODE_NONE);
 	}
 
-	/* C&P */
 	public void setActivatedPosition(int position) {
 		if (position == ListView.INVALID_POSITION) {
 			getListView().setItemChecked(activatedPosition, false);
 		} else {
 			getListView().setItemChecked(position, true);
 		}
-
 		activatedPosition = position;
 	}
 
 	/* C&P */
 	public void update(Observable observable, Object ignored) {
-
 		((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 	}
-
+	
 }

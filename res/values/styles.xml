@@ -1,9 +1,26 @@
-<resources>
-    <style name="AppTheme" parent="android:Theme.Holo" />
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="MyActionBarTabTextStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
-    <item name="android:textSize">14sp</item>
-    <item name="android:padding">0dip</item>s
-</style>
+    <!--  main theme -->
+    <style name="TaskSourceTheme" parent="android:Theme.Holo.Light.DarkActionBar" >
+        
+    
+        <item name="android:scrollbarStyle">insideInset</item>
+        <item name="android:scrollbarThumbVertical">@drawable/vertical_scroll_bar</item>
+        
+    </style>
+    
+    <!-- COLOURS -->
+    <color name="SteelBlue">#4286B4</color>
+    <color name="LightSteelBlue">#b0c4de</color>
+    <color name="LightSteelBlueTransparent">#CCb0c4de</color>
+    <color name="RED">#ff0000</color>
+    <color name="DARKERRED">#cc0000</color>
+    <color name="GREEN">#006600</color>
+    
+    <!-- Action bar stuff! ONE DAY -->
+     <style name="MyActionBarTabTextStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">0dip</item>
+    </style>
+
 </resources>
-

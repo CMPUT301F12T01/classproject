@@ -45,16 +45,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:paddingTop="10dp"
             android:textStyle="italic" />
 
+         <!-- Display the media requests as a list of text, not as buttons (as originally designed)? -->
+        
         <TextView
             android:id="@+id/task_requires"
             style="?android:attr/textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="20dp"
             android:text="@string/task_requirements" />
 
-        <!-- Display the media requests as a list of text, not as buttons (as originally designed)? -->
 
         <TextView
             android:id="@+id/task_requests"
@@ -70,14 +73,17 @@
             style="?android:attr/textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingTop="20dp"
             android:text="@string/task_sharing" />
 
         <TextView
             android:id="@+id/task_sharing_setting"
-            style="?android:attr/textAppearanceLarge"
+            style="?android:attr/textAppearanceMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp" />
+            android:paddingTop="10dp"
+            android:padding="5dp"
+            android:textStyle="italic" />
+        
     </LinearLayout>
 </ScrollView>

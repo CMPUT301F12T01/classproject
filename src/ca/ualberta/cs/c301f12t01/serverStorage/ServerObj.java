@@ -49,7 +49,10 @@ public class ServerObj {
 	public void setContent(Task content) {
 		this.content = content;
 	}
-
+	public void getContentFromServer(){
+		Task t = TaskServerRetrieval.getContentFromServer(this.id);
+		setContent(t);
+	}
 	public String getId() {
 		return id;
 	}

@@ -28,9 +28,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-/**
+/** ReportListActivty - displays all the reports of a task
  * 
- * @author Bronte Lee
+ * @author Bronte Lee <bronte@ualberta.ca>
  *
  */
 public class ReportListActivity extends Activity implements
@@ -41,6 +41,10 @@ ReportListFragment.Callbacks {
 
 	private UUID taskId;
 
+	/** onCreate - displays home/back button, displays the layout, 
+	 * get information from the TaskDetailActivity
+	 * 
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,16 +53,15 @@ ReportListFragment.Callbacks {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+		/* Get taskId from bundle */
 		Bundle taskBundle = getIntent().getExtras();		
 		if (taskBundle != null) {
-
 			taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
-
 		}
 
 		if (savedInstanceState == null) {
-			/* Taken from TaskDetailActivity */
+		
+			/* Pass information to the ReportListFragment */
 			Bundle arguments = new Bundle();
 
 			/* Pass along the Task ID to the fragment */
@@ -76,13 +79,13 @@ ReportListFragment.Callbacks {
 	}
 
 
-
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.gui.ReportListFragment.Callbacks#onItemSelected(java.util.UUID)
 	 */
 	public void onItemSelected(UUID reportId) {
 		// TODO Auto-generated method stub
 
+		/* A report has been selected, so it's time to display the report's responses */
 		Intent intent = new Intent(getApplicationContext(), ReportDetailActivity.class);
 		intent.putExtra(ARG_REPORT_ID, reportId);
 
@@ -98,12 +101,7 @@ ReportListFragment.Callbacks {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_report_list, menu);
-		return true;
-	}
-
+	/* If a menu option is selected */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

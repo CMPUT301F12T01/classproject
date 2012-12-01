@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_done"
-        android:title="@android:string/ok"
+        android:title="@string/edit_task_done"
         android:orderInCategory="100"
         android:showAsAction="always|withText" />
 </menu>

@@ -124,7 +124,7 @@ public class ReportLocalRetrieval {
 				else if (MediaType.valueOf(reportResponses.getString(
 						reportResponses.getColumnIndex(responseSelectCollumns[1]))) == MediaType.PHOTO) {
 					
-					newResponse = new PhotoResponse(null, null);
+					newResponse = new PhotoResponse(null);
 				
 				}
 				else {
