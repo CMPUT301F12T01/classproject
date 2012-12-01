@@ -17,25 +17,43 @@
  */
 package ca.ualberta.cs.c301f12t01.gui.helper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Response;
+import ca.ualberta.cs.c301f12t01.common.PhotoResponse;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
  * 
  * @author Bronte Lee
+ * @author padlesky
  *
  */
 public class PhotoResponseObtainer extends ResponseObtainer {
 
+	private static final String ENCODED_IMAGE = "encoded image";
+	private String encodedImage;
+	private String photoType;
+	
 	/**
 	 * @param view
 	 */
@@ -46,8 +64,10 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 
 	// TODO implement get photo response
 	public Response getResponse() {
-		return null;
-
+		encodedImage = TakePhotoActivity.encodedImage;
+		photoType = TakePhotoActivity.photoType;
+		//Log.d("Act-lifecycle", encodedImage);
+		return new PhotoResponse(encodedImage, photoType);
 	}
 
 	/* We need to be able to click on a button to take a photo */
@@ -61,14 +81,24 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 				
 				Intent intent = new Intent (button.getContext(), TakePhotoActivity.class);
 				((Activity) button.getContext()).startActivityForResult(intent, 1);
-				
-				
-				Log.d("Act-lifecycle", "Clicked Photo Button");
 			}
 		});  
 
+//		@Override
+//		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//			super.onActivityResult(requestCode, resultCode, data);
+//			switch(requestCode) {
+//				case (1) : {
+//					if (resultCode == Activity.RESULT_OK) {
+//						encodedImage = data.getStringExtra(ENCODED_IMAGE);
+//					}
+//					break;
+//				}
+//			}
+//		}
+		
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupFulfillRequest()
 	 */
@@ -85,7 +115,14 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 	@Override
 	public void setupDisplayResponse(Response response) {
 		// TODO Auto-generated method stub
-		
+		Log.d("Act-lifecycle", "did i make it here?");
+		PhotoResponse photoResponse = (PhotoResponse) response;
+		String encodeImage = photoResponse.getPhoto();
+		//Log.d("Act-lifecycle", encodeImage);
+		ImageView imageView = (ImageView) getView().findViewById(R.id.image_response);
+		byte[] decoded = Base64.decode(encodeImage, Base64.DEFAULT);  
+		Bitmap bitMap = BitmapFactory.decodeByteArray(decoded , 0, decoded.length);
+		imageView.setImageBitmap(bitMap);
 	}
 
 }

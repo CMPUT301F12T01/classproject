@@ -194,7 +194,7 @@ public class TaskDetailActivity extends Activity {
     	            TaskDetailActivity.this.finish();
     	            // TODO: need something like this!
     	            TaskSourceApplication.removeTask(task);
-    	            Toast.makeText(getBaseContext(), "Task Deleted?", Toast.LENGTH_SHORT).show();
+    	            Toast.makeText(getBaseContext(), "Task Deleted", Toast.LENGTH_SHORT).show();
     	            finish();
     	       }
     	   })

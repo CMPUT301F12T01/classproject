@@ -25,48 +25,42 @@ import java.io.Serializable;
  * @author padlesky
  */
 
-public class PhotoResponse implements Response {
+public class PhotoResponse implements Response, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1658994885795864110L;
+	
+	private String type;
 	private String photoData64;
-	private String contentType;
     /**
      * 
      */
-    public PhotoResponse(String photoData64, Object format) {
+    public PhotoResponse(String photoData64, String photoType) {
     	setPhoto(photoData64);
-    	setFormatEnum(format);
+    	setTypeS(photoType);
     }
     
     public void setPhoto (String photoData64) {
     	this.photoData64 = photoData64;
     }
     
+    public void setTypeS (String photoType) {
+    	this.type = photoType;
+    }
+    
+    public void setType (Object obj) {
+    	this.type = obj.toString().toLowerCase();
+    }
+    
     public String getPhoto () {
     	return photoData64;
     }
     
-    public void setFormatEnum(Object format) {
-    	this.contentType = format.toString().toLowerCase();
+    public String getType() {
+    	return type;
     }
-    
-    public void setFormatString(String format) {
-    	this.contentType = format;
-    }
-    
-    public String getFormat() {
-    	return contentType;
-    }
-
-    private class PhotoBundle {
-    	public String photoData64;
-    	public String contentType;
-    	
-    	public void setPhotoBundle (String photo, String format) {
-    		this.photoData64 = photo;
-    		this.contentType = format;
-    	}
-    }
-    
     /* (non-Javadoc)
      * @see ca.ualberta.cs.c301f12t01.common.Response#getMediaType()
      */
@@ -78,22 +72,14 @@ public class PhotoResponse implements Response {
      * @see ca.ualberta.cs.c301f12t01.common.Response#getResponseData()
      */
     public Serializable getResponseData() {
-    	if(this.photoData64 != "") {
-    		PhotoBundle photoBundle = new PhotoBundle();
-    		photoBundle.setPhotoBundle(this.photoData64, this.contentType);
-    		return (Serializable) photoBundle;
-    	} else {
-    		return null;
-    	}
+    	return this;
     }
 
     /* (non-Javadoc)
      * @see ca.ualberta.cs.c301f12t01.common.Response#setResponseData(java.io.Serializable)
      */
     public void setResponseData(Serializable newData) {
-        PhotoBundle photoBundle = (PhotoBundle) newData;
-        this.photoData64 = photoBundle.photoData64;
-        this.contentType = photoBundle.contentType;
+    	setTypeS(((PhotoResponse) newData).getType());
+    	setPhoto(((PhotoResponse) newData).getPhoto());
     }
-
 }

@@ -71,6 +71,9 @@ public class TaskSourceApplication extends Application {
 		app.addTaskFromInstance(newTask);
 	}
 
+	public static void modifyTask(Task oldTask, Task newTask) {
+		app.modifyTaskFromInstance(oldTask, newTask);
+	}
 	/** Gets the task with the give task ID from the TaskManager. */
 	public static Task getTask(UUID taskId) {
 		return app.getTaskFromInstance(taskId);
@@ -152,7 +155,10 @@ public class TaskSourceApplication extends Application {
 		setupTaskManager();
 		taskManager.addTask(newTask);
 	}
-	
+	public void modifyTaskFromInstance(Task oldTask, Task newTask) {
+		setupTaskManager();
+		taskManager.modifyTask(oldTask, newTask);
+	}
 	public void removeTaskFromInstance(Task task) {
 		setupTaskManager();
 		taskManager.removeTask(task);
