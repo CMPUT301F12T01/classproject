@@ -50,7 +50,6 @@ import android.widget.TextView;
  */
 public class PhotoResponseObtainer extends ResponseObtainer {
 
-	private static final String ENCODED_IMAGE = "encoded image";
 	private String encodedImage;
 	private String photoType;
 	
@@ -66,7 +65,7 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 	public Response getResponse() {
 		encodedImage = TakePhotoActivity.encodedImage;
 		photoType = TakePhotoActivity.photoType;
-		//Log.d("Act-lifecycle", encodedImage);
+		
 		return new PhotoResponse(encodedImage, photoType);
 	}
 
@@ -83,20 +82,6 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 				((Activity) button.getContext()).startActivityForResult(intent, 1);
 			}
 		});  
-
-//		@Override
-//		public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//			super.onActivityResult(requestCode, resultCode, data);
-//			switch(requestCode) {
-//				case (1) : {
-//					if (resultCode == Activity.RESULT_OK) {
-//						encodedImage = data.getStringExtra(ENCODED_IMAGE);
-//					}
-//					break;
-//				}
-//			}
-//		}
-		
 	}
 	
 	/* (non-Javadoc)
@@ -118,7 +103,6 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 		Log.d("Act-lifecycle", "did i make it here?");
 		PhotoResponse photoResponse = (PhotoResponse) response;
 		String encodeImage = photoResponse.getPhoto();
-		//Log.d("Act-lifecycle", encodeImage);
 		ImageView imageView = (ImageView) getView().findViewById(R.id.image_response);
 		byte[] decoded = Base64.decode(encodeImage, Base64.DEFAULT);  
 		Bitmap bitMap = BitmapFactory.decodeByteArray(decoded , 0, decoded.length);

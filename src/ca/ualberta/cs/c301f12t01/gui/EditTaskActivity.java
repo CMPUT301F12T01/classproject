@@ -128,7 +128,7 @@ public class EditTaskActivity extends Activity {
 		}
 
 		/* Now set up the new task with the extracted data. */
-		Task newTask = TaskSourceApplication.newTaskForCurrentUser();
+		Task newTask = new Task(task);
 
 		newTask.setDescription(descriptionText);
 		newTask.setSummary(summaryText);
@@ -173,7 +173,6 @@ public class EditTaskActivity extends Activity {
 		Toast.makeText(getBaseContext(), "Task updated?", Toast.LENGTH_SHORT).show();
 
 		return true;
-
 	}
 
 	@Override
