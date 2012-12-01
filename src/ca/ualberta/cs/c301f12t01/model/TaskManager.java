@@ -73,6 +73,15 @@ public class TaskManager {
 
 		appropriateCollection.add(newTask);
 	}
+	
+	public void modifyTask(Task oldTask, Task newTask) {
+		TaskCollection appropriateCollection;
+		
+		appropriateCollection = getCollectionForTask(oldTask);
+		
+		appropriateCollection.modify(oldTask, newTask);
+	}
+	
 	/**
 	 * removes a task from its appropriate collection
 	 * 

@@ -68,6 +68,9 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
         return super.add(task);
     }
 
+    public boolean modify(Task oldTask, Task newTask) {
+    	return super.replace(oldTask, newTask);
+    }
     /**
      * Does the same as {@link removeKey}.
      */
@@ -79,7 +82,7 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
      * Does the same thing as {@link removeKey}(task.getId()).
      */
     public boolean remove(Task task) {
-        return removeElement(task);
+        return super.removeElement(task);
     }
 
     /*
