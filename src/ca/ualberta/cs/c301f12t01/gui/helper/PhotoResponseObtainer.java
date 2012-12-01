@@ -19,6 +19,8 @@ package ca.ualberta.cs.c301f12t01.gui.helper;
 
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Response;
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +53,15 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 	/* We need to be able to click on a button to take a photo */
 	public void setButton() {
 
-		TextView button = (TextView) getView().findViewById(R.id.button_take_photo);		
+		final TextView button = (TextView) getView().findViewById(R.id.button_take_photo);		
 
 		button.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View arg0) {
+				
+				Intent intent = new Intent (button.getContext(), TakePhotoActivity.class);
+				((Activity) button.getContext()).startActivityForResult(intent, 1);
+				
 				
 				Log.d("Act-lifecycle", "Clicked Photo Button");
 			}

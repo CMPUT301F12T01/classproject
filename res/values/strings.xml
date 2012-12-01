@@ -22,7 +22,7 @@
     <string name="title_task_detail">Task Detail</string>
     <string name="title_task_list">All Tasks</string>
     <string name="no_task_message">No task to display!</string>
-    
+
     <!-- Task lists -->
     <string name="your_tasks">Your Tasks</string>
     <string name="local_tasks">Stored Tasks</string>
@@ -41,6 +41,8 @@
     <string name="menu_fulfill_task_short">Fulfill</string>
     <string name="menu_edit_task">Edit Task</string>
     <string name="menu_edit_task_short">Edit</string>
+    <string name="menu_delete_task">Delete Task</string>
+    <string name="menu_delete_task_short">Delete</string>
 
     <!-- Defining Tasks -->
     <string name="task_request">Request</string>
@@ -62,7 +64,7 @@
     <!-- Edit Task -->
     <string name="title_activity_edit_task">Edit Task</string>
     <string name="edit_task_done">Update</string>
-    
+
     <!-- Fulfilling a task -->
     <string name="title_activity_fulfill_task">Fulfill Task</string>
     <string name="task_take_photo">Take A Photo</string>
@@ -93,6 +95,6 @@
     <string name="TEST_REPORT_TIMESTAMP">March 05, 2011</string>
     <string name="done">Done</string>
     <string name="task_list_status_description">Fulfilled</string>
-    
+    <string name="title_activity_take_photo">TakePhotoActivity</string>
 
 </resources>

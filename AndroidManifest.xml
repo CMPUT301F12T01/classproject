@@ -75,15 +75,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.c301f12t01.gui.ReportDetailActivity" />
         </activity>
-        
+
         <!-- Edit Task -->
         <activity
             android:name=".gui.EditTaskActivity"
             android:label="@string/title_activity_edit_task"
             android:uiOptions="splitActionBarWhenNarrow" >
-             <meta-data
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.c301f12t01.gui.EditTaskActivity" />
+        </activity>
+        
+        <!-- Take Photo (Fulfilling a task) -->
+        <activity
+            android:name=".gui.helper.TakePhotoActivity"
+            android:label="@string/title_activity_take_photo" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
         </activity>
     </application>
 

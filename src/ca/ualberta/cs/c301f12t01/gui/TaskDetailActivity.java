@@ -181,6 +181,7 @@ public class TaskDetailActivity extends Activity {
 		/* If you are NOT the user that created this task, you can't edit or delete it */
 		if (!TaskSourceApplication.getUserID().equals(task.getUser())) {
 			menu.findItem(R.id.menu_edit_task).setEnabled(false);
+			menu.findItem(R.id.menu_delete_task).setEnabled(false);
 		}
 		
 		return true;
@@ -204,6 +205,9 @@ public class TaskDetailActivity extends Activity {
 			return true;
 		case R.id.menu_edit_task:
 			onUserSelectEdit();
+			return true;
+		case R.id.menu_delete_task:
+			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

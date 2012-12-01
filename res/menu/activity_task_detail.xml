@@ -17,5 +17,10 @@
         android:titleCondensed="@string/menu_edit_task_short" 
         android:title="@string/menu_edit_task" >
     </item>
+    <item android:id="@+id/menu_delete_task" 
+        android:showAsAction="never|withText"
+        android:titleCondensed="@string/menu_delete_task_short" 
+        android:title="@string/menu_delete_task" >
+    </item>
 
 </menu>
