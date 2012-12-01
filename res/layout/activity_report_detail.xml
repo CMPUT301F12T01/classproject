@@ -24,7 +24,8 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".gui.ReportDetailActivity" >
+    tools:context=".gui.ReportDetailActivity"
+    android:background="@drawable/report_background" >
 
     <LinearLayout
         android:id="@+id/report_detail_linearlayout"

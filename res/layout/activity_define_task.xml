@@ -24,7 +24,8 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".gui.DefineTaskActivity" >
+    tools:context=".gui.DefineTaskActivity"
+    android:background="@drawable/task_background">
 
     <LinearLayout
         android:layout_width="fill_parent"

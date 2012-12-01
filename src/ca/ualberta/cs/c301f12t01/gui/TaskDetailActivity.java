@@ -186,6 +186,7 @@ public class TaskDetailActivity extends Activity {
     private void showDeleteTaskDialog() {
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	
+    	
     	builder.setMessage("Are you sure you want to delete this task?")
     	   .setCancelable(false)
     	   .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
