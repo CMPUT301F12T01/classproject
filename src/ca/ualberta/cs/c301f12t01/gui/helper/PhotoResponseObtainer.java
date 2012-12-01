@@ -52,6 +52,7 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 
 	private static final String ENCODED_IMAGE = "encoded image";
 	private String encodedImage;
+	private String photoType;
 	
 	/**
 	 * @param view
@@ -64,8 +65,9 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 	// TODO implement get photo response
 	public Response getResponse() {
 		encodedImage = TakePhotoActivity.encodedImage;
+		photoType = TakePhotoActivity.photoType;
 		//Log.d("Act-lifecycle", encodedImage);
-		return new PhotoResponse(encodedImage);
+		return new PhotoResponse(encodedImage, photoType);
 	}
 
 	/* We need to be able to click on a button to take a photo */

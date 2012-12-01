@@ -169,6 +169,7 @@ public class EditTaskActivity extends Activity {
 
 		android.util.Log.d("Act-LIFECYCLE", "DefineTaskActivity-onTaskCreated");
 
+		TaskSourceApplication.modifyTask(task, newTask);
 		Toast.makeText(getBaseContext(), "Task updated?", Toast.LENGTH_SHORT).show();
 
 		return true;
