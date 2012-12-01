@@ -61,6 +61,7 @@ public class TaskDetailActivity extends Activity {
 	/* TODO: Get some more global place to store the following string. */
 	public static final String ARG_TASK_ID = "task_id";
 
+	private UUID taskId;
 	private Task task;
 
 	/** onCreate - show layout, set home button, get information 
@@ -81,7 +82,7 @@ public class TaskDetailActivity extends Activity {
 		Bundle taskBundle = getIntent().getExtras();		
 		if (taskBundle != null) {
 			
-			UUID taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
+			taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
 			
 			task = TaskSourceApplication.getTask(taskId);
 			
@@ -89,7 +90,15 @@ public class TaskDetailActivity extends Activity {
 
 		/* Now display the task information! */
 		displayTaskInformation();
-
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		/* Now display the task information! */
+		task = TaskSourceApplication.getTask(taskId);
+		displayTaskInformation();
 	}
 
 	/* Displays the task's information */

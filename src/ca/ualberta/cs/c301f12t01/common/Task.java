@@ -55,6 +55,16 @@ public class Task implements Iterable<Request> {
         id = UUID.randomUUID();
     }
     
+    /**
+     * Constructs a modified task. This is for when modifying.
+     * It takes in the old task to be modified to keep the same user ID
+     * and same UUID.
+     * @param oldTask
+     */
+    public Task (Task oldTask) {
+    	this(oldTask.getId(), oldTask.getUser());
+    }
+    
     /** 
      * Constructs a new task given a pre-existing task id. 
      * This will be done from storage side of code.
