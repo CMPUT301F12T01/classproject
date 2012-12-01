@@ -73,6 +73,18 @@ public class TaskManager {
 
 		appropriateCollection.add(newTask);
 	}
+	/**
+	 * removes a task from its appropriate collection
+	 * 
+	 * @param task
+	 */
+	public void removeTask(Task task) {
+		TaskCollection appropriateCollection;
+		
+		appropriateCollection = getCollectionForTask(task);
+		
+		appropriateCollection.remove(task);
+	}
 
 	/**
 	 * Gets the appropriate TaskCollection for the sharing specified by the

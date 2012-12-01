@@ -61,9 +61,12 @@
 	    	be able to view them. </string>
     <string name="title_activity_task_define_fragment">Create a new task</string>
 
-    <!-- Edit Task -->
+    <!-- Editing & Deleting a Task -->
     <string name="title_activity_edit_task">Edit Task</string>
     <string name="edit_task_done">Update</string>
+    <string name="delete_task_dialog">Warning! If you delete this task, you can 
+        	not get it back!</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Fulfilling a task -->
     <string name="title_activity_fulfill_task">Fulfill Task</string>
