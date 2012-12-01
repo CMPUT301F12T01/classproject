@@ -75,6 +75,10 @@ public class TaskSourceApplication extends Application {
 	public static Task getTask(UUID taskId) {
 		return app.getTaskFromInstance(taskId);
 	}
+	
+	public static void removeTask(Task task) {
+		app.removeTaskFromInstance(task);
+	}
 
 	/** Gets the named TaskCollection from the singleton TaskManager. */
 	public static TaskCollection getTaskCollectionByName(String name) {
@@ -147,6 +151,11 @@ public class TaskSourceApplication extends Application {
 	public void addTaskFromInstance(Task newTask) {
 		setupTaskManager();
 		taskManager.addTask(newTask);
+	}
+	
+	public void removeTaskFromInstance(Task task) {
+		setupTaskManager();
+		taskManager.removeTask(task);
 	}
 
 	/**
