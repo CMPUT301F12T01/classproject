@@ -96,12 +96,8 @@ public class TaskListFragment extends ListFragment implements Observer {
 		}
 
 		// TODO: UserTaskCollection extends AggregateTaskCollection extends TaskCollection
-		if (name.equals("user")) {
-			// TODO: This is hard-coded and bad and you should feel bad
-			trackedCollection = TaskSourceApplication.getLocalTaskCollection();
-		} else {
-			trackedCollection = TaskSourceApplication.getTaskCollectionByName(name);
-		}
+
+		trackedCollection = TaskSourceApplication.getTaskCollectionByName(name);
 		
 		// TODO: Use the no task to display screen!
 		if (trackedCollection.isEmpty()) {

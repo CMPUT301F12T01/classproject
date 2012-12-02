@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.gui.TaskSourceApplication;
 
 /* TODO: THIS MUST BE SUPER TESTED! */
 
@@ -41,6 +42,7 @@ public class TaskManager {
 	static public final String LOCAL = "local";
 	/** Key for global task collection. */
 	static public final String GLOBAL = "global";
+	static public final String USER = "user";
 
 	// our singleton instance
 	private static TaskManager singleton = null;
@@ -57,6 +59,13 @@ public class TaskManager {
 		/* Always instantiate the list with these collections: */
 		allCollections.put(LOCAL, localTasks);
 		allCollections.put(GLOBAL, globalTasks);
+
+		
+		/* TODO: MAKE THIS NOT HERE. THIS IS REALLY UGLY AND NOT NECESSARY HERE. */
+		/* Additionally, create a user task collection. */
+		TaskCollection userTaskCollection = new UserTaskCollection(
+				TaskSourceApplication.getUserID(), localTasks, globalTasks);
+		allCollections.put(USER, userTaskCollection);
 	}
 
 	/**
@@ -73,16 +82,18 @@ public class TaskManager {
 
 		appropriateCollection.add(newTask);
 	}
-	
+
 	public void modifyTask(Task oldTask, Task newTask) {
-		
+
 		TaskCollection appropriateCollection = getCollectionForTask(newTask);
 		TaskCollection oldCollection = getCollectionForTask(oldTask);
-		
-		
+
 		/* Check if the task has switched collections on us. */
 		if (oldCollection != appropriateCollection) {
-			/* Remove it from the old collection, as it don't exist there no more. */
+			/*
+			 * Remove it from the old collection, as it don't exist there no
+			 * more.
+			 */
 			oldCollection.removeElement(oldTask);
 			appropriateCollection.add(newTask);
 
@@ -91,7 +102,7 @@ public class TaskManager {
 		}
 
 	}
-	
+
 	/**
 	 * removes a task from its appropriate collection
 	 * 
@@ -99,9 +110,9 @@ public class TaskManager {
 	 */
 	public void removeTask(Task task) {
 		TaskCollection appropriateCollection;
-		
+
 		appropriateCollection = getCollectionForTask(task);
-		
+
 		appropriateCollection.remove(task);
 	}
 
