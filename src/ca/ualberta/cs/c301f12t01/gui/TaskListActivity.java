@@ -211,20 +211,21 @@ public class TaskListActivity extends Activity implements
 		startActivity(intent);
 
 	}
-	
+
 	public void onClickRandomTask(MenuItem item) {
 		android.util.Log.d("Act-LIFECYCLE",
 				"TaskListActivity-onClickRandomTask");
-		
+
 		UUID randomTaskID = randomTaskGenerator.getRandomTaskId();
-		
+
 		if (randomTaskID != null) {
 			/* Pretend we selected an item the standard way. */
 			onItemSelected(randomTaskID);
 		} else {
-			Toast.makeText(getBaseContext(), R.string.no_task_message, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(), R.string.no_task_message,
+					Toast.LENGTH_SHORT).show();
 		}
-		
+
 	}
 
 	/**
