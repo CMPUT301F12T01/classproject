@@ -70,7 +70,14 @@ public class ReportManager extends ObservableCollection<UUID, Report> {
 	 * @return The Collection of reports associated with our task
 	 */
 	public List<Report> getAllReportsForTask(UUID taskID) {
+		
+		if (!taskHasReports(taskID)) {
+			/* The task has no reports to display. */
+			return null;
+		}
+		
 		Collection<UUID> reportIDs = taskIdToReportId.get(taskID);
+		
 		int amountOfReports = reportIDs.size();
 
 		ArrayList<Report> reportsForTask = new ArrayList<Report>(

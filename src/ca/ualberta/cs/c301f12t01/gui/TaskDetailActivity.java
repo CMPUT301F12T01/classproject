@@ -20,7 +20,6 @@ package ca.ualberta.cs.c301f12t01.gui;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,7 +48,7 @@ import ca.ualberta.cs.c301f12t01.util.StringUtils;
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * @author Bronte Lee <bronte@ualberta.ca>
- *
+ * 
  */
 public class TaskDetailActivity extends Activity {
 
@@ -59,8 +58,9 @@ public class TaskDetailActivity extends Activity {
 	private UUID taskId;
 	private Task task;
 
-	/** onCreate - show layout, set home button, get information 
-	 * from TaskListActivity
+	/**
+	 * onCreate - show layout, set home button, get information from
+	 * TaskListActivity
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,29 +68,28 @@ public class TaskDetailActivity extends Activity {
 		setContentView(R.layout.activity_task_detail);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		/* This forces overflow to appear on the action bar! */
 		getOverflowMenu();
 
-		
-		/* The list of tasks Activity passed us a taskID, so we should get it*/
-		Bundle taskBundle = getIntent().getExtras();		
+		/* The list of tasks Activity passed us a taskID, so we should get it */
+		Bundle taskBundle = getIntent().getExtras();
 		if (taskBundle != null) {
-			
+
 			taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
-			
+
 			task = TaskSourceApplication.getTask(taskId);
-			
+
 		}
 
 		/* Now display the task information! */
 		displayTaskInformation();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		/* Now display the task information! */
 		task = TaskSourceApplication.getTask(taskId);
 		displayTaskInformation();
@@ -113,7 +112,8 @@ public class TaskDetailActivity extends Activity {
 		for (Request request : task) {
 			requirementSet.add(request.getType());
 		}
-		requirementText = StringUtils.joinToString(requirementSet, getText(R.string.list_seperator));
+		requirementText = StringUtils.joinToString(requirementSet,
+				getText(R.string.list_seperator));
 		/* It's over. The horror is over. There's nothing to see here, kids. */
 
 		/* Set the associated views. */
@@ -142,78 +142,85 @@ public class TaskDetailActivity extends Activity {
 		}
 	}
 
-	
 	/**
-     * When the user wants to view reports, start the report viewing activity.
-     */
-    private void onUserSelectViewReports() {
-        startActivityWithTask(ReportListActivity.class);
-    }
+	 * When the user wants to view reports, start the report viewing activity.
+	 */
+	private void onUserSelectViewReports() {
+		if (!TaskSourceApplication.taskHasReports(task.getId())) {
+			Toast.makeText(getBaseContext(), R.string.task_has_no_reports,
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
 
-    /**
-     * When the user wants to fulfill reports, start the task fulfillment
-     * activity.
-     */
-    private void onUserSelectFulfill() {
-        startActivityWithTask(FulfillTaskActivity.class);
-    }
-    
-    private void onUserSelectEdit(){
-    	/* Replace with a better test later */
+		startActivityWithTask(ReportListActivity.class);
+	}
+
+	/**
+	 * When the user wants to fulfill reports, start the task fulfillment
+	 * activity.
+	 */
+	private void onUserSelectFulfill() {
+		startActivityWithTask(FulfillTaskActivity.class);
+	}
+
+	private void onUserSelectEdit() {
+		/* Replace with a better test later */
 		startActivityWithTask(EditTaskActivity.class);
-    }
+	}
 
-    /* TODO: This should really not be in *this* class. */
-    @SuppressWarnings("rawtypes")
-    private void startActivityWithTask(Class activity) {
-    	
-        Intent intent = new Intent(getApplicationContext(), activity);
-        intent.putExtra(ARG_TASK_ID, task.getId());
-        startActivity(intent);
-    }
-    
-    
-    private void showDeleteTaskDialog() {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	
-    	
-    	builder.setMessage("Are you sure you want to delete this task?")
-    	   .setCancelable(false)
-    	   .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-    	       public void onClick(DialogInterface dialog, int id) {
-    	            TaskDetailActivity.this.finish();
-    	            // TODO: need something like this!
-    	            TaskSourceApplication.removeTask(task);
-    	            Toast.makeText(getBaseContext(), R.string.task_delete_success, Toast.LENGTH_SHORT).show();
-    	            finish();
-    	       }
-    	   })
-    	   .setNegativeButton("No", new DialogInterface.OnClickListener() {
-    	       public void onClick(DialogInterface dialog, int id) {
-    	            dialog.cancel();
-    	       }
-    	   });
-    	AlertDialog alert = builder.create();
-    	alert.show();
+	/* TODO: This should really not be in *this* class. */
+	@SuppressWarnings("rawtypes")
+	private void startActivityWithTask(Class activity) {
 
-    }
+		Intent intent = new Intent(getApplicationContext(), activity);
+		intent.putExtra(ARG_TASK_ID, task.getId());
+		startActivity(intent);
+	}
 
-    /* Display menu */
+	private void showDeleteTaskDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setMessage("Are you sure you want to delete this task?")
+				.setCancelable(false)
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								TaskDetailActivity.this.finish();
+								// TODO: need something like this!
+								TaskSourceApplication.removeTask(task);
+								Toast.makeText(getBaseContext(),
+										R.string.task_delete_success,
+										Toast.LENGTH_SHORT).show();
+								finish();
+							}
+						})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		AlertDialog alert = builder.create();
+		alert.show();
+
+	}
+
+	/* Display menu */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_task_detail, menu);
-		
-		/* If you are NOT the user that created this task, you can't edit or delete it */
+
+		/*
+		 * If you are NOT the user that created this task, you can't edit or
+		 * delete it
+		 */
 		if (!TaskSourceApplication.getUserID().equals(task.getUser())) {
 			menu.findItem(R.id.menu_edit_task).setEnabled(false);
 			menu.findItem(R.id.menu_delete_task).setEnabled(false);
 		}
-		
+
 		return true;
 	}
 
-	 
-	
 	/* When a menu item is selected */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -238,23 +245,27 @@ public class TaskDetailActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	/** Disables hardware menu button for showing overflow. 
-	 * Instead the Action Bar will have vertical ellipsis to show
-	 * the overflow. Call in onCreate.
+
+	/**
+	 * Disables hardware menu button for showing overflow. Instead the Action
+	 * Bar will have vertical ellipsis to show the overflow. Call in onCreate.
+	 * 
+	 * NOTE: this is apparently a bad idea, at least according to:
+	 * http://stackoverflow.com/questions/9286822/how-to-force-use-of-overflow-menu-on-devices-with-menu-button
 	 * 
 	 */
 	private void getOverflowMenu() {
-	     try {
-	        ViewConfiguration config = ViewConfiguration.get(this);
-	        Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-	        if(menuKeyField != null) {
-	            menuKeyField.setAccessible(true);
-	            menuKeyField.setBoolean(config, false);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class
+					.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 }

@@ -20,10 +20,12 @@ package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.gui.helper.RandomTaskGenerator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -46,6 +48,7 @@ public class TaskListActivity extends Activity implements
 	private static final String ARG_TASK_ID = "task_id";
 	private static final String CURRENT_TAB_INDEX = "current tab index";
 
+	private RandomTaskGenerator randomTaskGenerator = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,11 @@ public class TaskListActivity extends Activity implements
 		setContentView(R.layout.activity_task_list);
 
 		android.util.Log.d("Act-LIFECYCLE", "TaskListAcivity - onCreate ");
+
+		/* Initialize the random generator with local and global tasks. */
+		randomTaskGenerator = new RandomTaskGenerator(
+				TaskSourceApplication.getLocalTaskCollection(),
+				TaskSourceApplication.getGlobalTaskCollection());
 
 		setupActionBarTab();
 	}
@@ -72,8 +80,8 @@ public class TaskListActivity extends Activity implements
 
 		// Set the text of the tab
 		ActionBar.Tab userTasksTab = actionBar.newTab().setText(
-				/* I'll teach you not to let me put an apostrophe in an identifier! */
-				getText(R.string.失せるのタスクつ));
+		/* I'll teach you not to let me put an apostrophe in an identifier! */
+		getText(R.string.失せるのタスクつ));
 		ActionBar.Tab localTasksTab = actionBar.newTab().setText(
 				getText(R.string.local_tasks));
 		ActionBar.Tab globalTasksTab = actionBar.newTab().setText(
@@ -135,7 +143,7 @@ public class TaskListActivity extends Activity implements
 	 * .Tab, android.app.FragmentTransaction)
 	 */
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		
+
 		/* If the user selects the same tab, do nothing */
 
 	}
@@ -181,8 +189,9 @@ public class TaskListActivity extends Activity implements
 		Bundle arguments = new Bundle();
 		arguments.putSerializable(TaskListFragment.ARG_NAME, name);
 
-		/* Wait... we create a new TaskListFragment each time we click a different tab? 
-		 * This is not an issue now, but it seems... troublesome.
+		/*
+		 * Wait... we create a new TaskListFragment each time we click a
+		 * different tab? This is not an issue now, but it seems... troublesome.
 		 */
 		TaskListFragment fragment = new TaskListFragment();
 
@@ -200,6 +209,22 @@ public class TaskListActivity extends Activity implements
 
 		Intent intent = new Intent(getBaseContext(), DefineTaskActivity.class);
 		startActivity(intent);
+
+	}
+
+	public void onClickRandomTask(MenuItem item) {
+		android.util.Log.d("Act-LIFECYCLE",
+				"TaskListActivity-onClickRandomTask");
+
+		UUID randomTaskID = randomTaskGenerator.getRandomTaskId();
+
+		if (randomTaskID != null) {
+			/* Pretend we selected an item the standard way. */
+			onItemSelected(randomTaskID);
+		} else {
+			Toast.makeText(getBaseContext(), R.string.no_task_message,
+					Toast.LENGTH_SHORT).show();
+		}
 
 	}
 
@@ -236,6 +261,9 @@ public class TaskListActivity extends Activity implements
 		/* Check if we're defining a task. */
 		case R.id.menu_define_task:
 			onClickDefineTask(item);
+			return true;
+		case R.id.menu_random_task:
+			onClickRandomTask(item);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
