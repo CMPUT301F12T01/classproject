@@ -70,8 +70,8 @@ public class ReportLocalRetrieval {
 		 */
 		String reportTable = "Reports";
 		String responseTable = "Responses";
-		String []reportSelectCollumns = {"task_id", "id", "scope", "timestamp"};
-		String []responseSelectCollumns = {"report_id", "mediatype", "media"};
+		String []reportSelectColumns = {"task_id", "id", "scope", "timestamp"};
+		String []responseSelectColumns = {"report_id", "mediatype", "media"};
 		ArrayList<Report> reportList = new ArrayList<Report>();
 
 		Cursor scopedReports;
@@ -79,35 +79,41 @@ public class ReportLocalRetrieval {
 		if (state != null){
 			// Get all Reports in a given scope {LOCAL, GLOBAL or TASK_CREATOR}
 			scopedReports = db.query(reportTable, 
-				reportSelectCollumns, reportSelectCollumns[2] + " = '" + state.toString() + "' "
-				+ "AND " + reportSelectCollumns[0] + " = '" + matchingTask.getId().toString() + "'", 
+				reportSelectColumns, reportSelectColumns[2] + " = '" + state.toString() + "' "
+				+ "AND " + reportSelectColumns[0] + " = '" + matchingTask.getId().toString() + "'", 
 				null, null, null, null);
-		}
-		else {
+
+		} else if (matchingTask == null) {
+			// Get ALL reports.
+			scopedReports = db.query(reportTable, reportSelectColumns, null, null, null, null, null);
+			
+		} else {
+			// wtf neil -- Sincerely, Eddie
 			// Get all Reports given the task they belong to
 			scopedReports = db.query(reportTable, 
-				reportSelectCollumns, reportSelectCollumns[0] + " = '" + 
+				reportSelectColumns, reportSelectColumns[0] + " = '" + 
 				matchingTask.getId().toString() + "'", null, null, null, null);
 			
 		}
+
 		
 		// Create a new report with a all the fields set
 		for (scopedReports.moveToFirst(); !scopedReports.isAfterLast(); scopedReports.moveToNext()) {
 			Report newReport = new Report(
 					UUID.fromString(scopedReports.getString(
-							scopedReports.getColumnIndex(reportSelectCollumns[0]))),
+							scopedReports.getColumnIndex(reportSelectColumns[0]))),
 					UUID.fromString(scopedReports.getString(
-							scopedReports.getColumnIndex(reportSelectCollumns[1]))),
+							scopedReports.getColumnIndex(reportSelectColumns[1]))),
 					Timestamp.valueOf(scopedReports.getString(
-							scopedReports.getColumnIndex(reportSelectCollumns[3]))));
+							scopedReports.getColumnIndex(reportSelectColumns[3]))));
 
 			newReport.setSharing(state);
 
 
 			// GET ALL RESPONSES RELATED TO A REPORT
-			Cursor reportResponses = db.query(responseTable, responseSelectCollumns, 
-					responseSelectCollumns[0] + " = '" + scopedReports.getString(
-							scopedReports.getColumnIndex(reportSelectCollumns[1])) + "'", 
+			Cursor reportResponses = db.query(responseTable, responseSelectColumns, 
+					responseSelectColumns[0] + " = '" + scopedReports.getString(
+							scopedReports.getColumnIndex(reportSelectColumns[1])) + "'", 
 					null, null, null, null);
 
 			for (reportResponses.moveToFirst(); !reportResponses.isAfterLast(); reportResponses.moveToNext()) {
@@ -116,13 +122,13 @@ public class ReportLocalRetrieval {
 
 				// Figure out what type of response it is, instantiate it and append it to the report's list
 				if (MediaType.valueOf(reportResponses.getString(
-						reportResponses.getColumnIndex(responseSelectCollumns[1]))) == MediaType.AUDIO) {
+						reportResponses.getColumnIndex(responseSelectColumns[1]))) == MediaType.AUDIO) {
 					
 					newResponse = new AudioResponse();
 				
 				}
 				else if (MediaType.valueOf(reportResponses.getString(
-						reportResponses.getColumnIndex(responseSelectCollumns[1]))) == MediaType.PHOTO) {
+						reportResponses.getColumnIndex(responseSelectColumns[1]))) == MediaType.PHOTO) {
 					
 					newResponse = new PhotoResponse(null, null);
 				
@@ -133,7 +139,7 @@ public class ReportLocalRetrieval {
 
 				// Create streams to pull out the response blob
 				ByteArrayInputStream bis = new ByteArrayInputStream(reportResponses.getBlob(
-						reportResponses.getColumnIndex(responseSelectCollumns[2])));
+						reportResponses.getColumnIndex(responseSelectColumns[2])));
 				
 				ObjectInput in = null;
 				try {

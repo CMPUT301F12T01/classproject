@@ -82,7 +82,7 @@
     <string name="task_record_audio">Record An Audio Clip</string>
     <string name="task_report_to">Send Report To</string>
     <string name="send_to_owner">Owner</string>
-    <string name="send_to_server">Server</string>
+    <string name="send_to_server">World</string>
     <string name="do_not_send">Don\'t Send</string>
     <string name="fulfill_success">Report saved</string>
 

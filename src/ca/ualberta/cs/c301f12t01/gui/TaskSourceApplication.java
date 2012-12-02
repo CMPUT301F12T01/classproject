@@ -17,7 +17,6 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +30,7 @@ import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
+import ca.ualberta.cs.c301f12t01.serverStorage.ServerStorage;
 
 /**
  * Singleton app class that manages all global services.
@@ -44,6 +44,13 @@ public class TaskSourceApplication extends Application {
 	private TaskManager taskManager = null;
 	private ReportManager reportManager = null;
 	private String user = null;
+	private DeviceStorage localStorage;
+	
+	/** TODO: Fix NetworkOnMainThreadException!
+	 *  Then we can uncomment some lines near the bottom of this file.
+	 * */
+	
+	private ServerStorage serverStorage;
 
 	private static TaskSourceApplication app = null;
 
@@ -135,6 +142,9 @@ public class TaskSourceApplication extends Application {
 		super.onCreate();
 		app = this;
         android.util.Log.d("App-LIFECYCLE", "TaskListApplication - onCreate ");
+        
+        localStorage = new DeviceStorage(getApplicationContext());
+        serverStorage = new ServerStorage();
 
 		/* I LIED! Let's eagerly set everything up. */
 		// setupReportManager();
@@ -272,11 +282,6 @@ public class TaskSourceApplication extends Application {
 			return taskManager;
 		}
 
-		DeviceStorage localStorage = new DeviceStorage(getApplicationContext());
-
-		/* TODO: Get the server interface working! */
-		// StorageInterface serverStorage = null;
-
 		/* Initialize TaskManager with stuff loaded from local storage. */
 		Collection<Task> localTaskList = localStorage.getLocalTasks().values();
 		Collection<Task> globalTaskList = localStorage.getGlobalTasks()
@@ -291,7 +296,8 @@ public class TaskSourceApplication extends Application {
 		 */
 		taskManager.getLocalTaskCollection().addObserver(localStorage);
 		taskManager.getGlobalTaskCollection().addObserver(localStorage);
-		// taskManager.getGlobalTaskCollection().addObserver(serverStorage);
+		//TODO: fix server, then uncomment this:
+		//taskManager.getGlobalTaskCollection().addObserver(serverStorage);
 
 		return taskManager;
 	}
@@ -301,14 +307,14 @@ public class TaskSourceApplication extends Application {
 		if (reportManager != null) {
 			return reportManager;
 		}
-		
-		/* TODO: TEMPORARY: */
-		Collection<Report> hack__emptyReportsforTesting = new ArrayList<Report>();
 
-		/* TODO: Get the server interface working! */
-		/* TODO: FIX REPORT MANAGER OMG!!!! */
-		reportManager = new ReportManager(hack__emptyReportsforTesting);
-		// Rmanager.addObserver(localStorage);
+        android.util.Log.d("Lifefcycle", "setting up report manager.");
+	
+		reportManager = new ReportManager(localStorage.getAllReports());
+
+		reportManager.addObserver(localStorage);
+		//TODO: fix server, then uncomment this:
+		//reportManager.addObserver(serverStorage);
 
 		return reportManager;
 

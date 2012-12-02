@@ -227,6 +227,19 @@ public class DeviceStorage implements StorageInterface, Observer {
 	public void removeReport(Report reportToRemove) {
 		ReportLocalModify.removeReport(database, reportToRemove);
 	}
+	
+	/**
+	 * Get all local Reports associated with a specific Task
+	 * 
+	 * @param Task
+	 */
+	public ArrayList<Report> getAllReports() {
+		// Delegate Report retrieval to ReportLocalStorage class
+		ArrayList<Report> reportList;
+		reportList = ReportLocalRetrieval.getReports(database, null, null);
+		
+		return reportList;
+	}
 
 	/**
 	 * Get all local Reports associated with a specific Task
