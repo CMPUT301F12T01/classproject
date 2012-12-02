@@ -24,7 +24,7 @@
     <string name="no_task_message">No task to display!</string>
 
     <!-- Task lists -->
-    <string name="失せるのタスクつ">Your Tasks</string>
+    <string name="user_no_tasks">Your Tasks</string>
     <string name="local_tasks">Local Tasks</string>
     <string name="global_tasks">Global Tasks</string>
 

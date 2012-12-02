@@ -81,7 +81,7 @@ public class TaskListActivity extends Activity implements
 		// Set the text of the tab
 		ActionBar.Tab userTasksTab = actionBar.newTab().setText(
 		/* I'll teach you not to let me put an apostrophe in an identifier! */
-		getText(R.string.失せるのタスクつ));
+		getText(R.string.user_no_tasks));
 		ActionBar.Tab localTasksTab = actionBar.newTab().setText(
 				getText(R.string.local_tasks));
 		ActionBar.Tab globalTasksTab = actionBar.newTab().setText(
