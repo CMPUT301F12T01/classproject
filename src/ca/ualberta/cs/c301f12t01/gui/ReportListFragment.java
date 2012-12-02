@@ -29,7 +29,6 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.c301f12t01.common.Report;
-import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
  * ReportListFragment - in charge of displaying the list of reports
@@ -41,7 +40,6 @@ public class ReportListFragment extends ListFragment implements Observer {
 
 
     public static final String ARG_TASK_ID = "task_id"; 
-    private Task task;
     
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 	private Callbacks callbacks = doNothingCallbacks;
@@ -69,14 +67,15 @@ public class ReportListFragment extends ListFragment implements Observer {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		UUID taskId = null;
+		
 		/* Obtain the task ID that was passed to it */
 		if (getArguments().containsKey(ARG_TASK_ID)) {
-			UUID taskId = (UUID) getArguments()
+			taskId = (UUID) getArguments()
 					.getSerializable(ARG_TASK_ID);
-			task = TaskSourceApplication.getTask(taskId);
 		}
 		
-		taskReports = TaskSourceApplication.getReports(task); 
+		taskReports = TaskSourceApplication.getReportsForTask(taskId); 
 		setListAdapter( new ReportAdapter(getActivity(), taskReports));
 	}
 

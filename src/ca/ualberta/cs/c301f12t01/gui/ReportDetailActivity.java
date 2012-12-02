@@ -18,7 +18,6 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -30,7 +29,6 @@ import android.widget.TextView;
 import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Response;
-import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer;
 import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerDisplayer;
 
@@ -66,21 +64,8 @@ public class ReportDetailActivity extends Activity {
 		if (taskBundle != null) {
 
 			UUID reportId = (UUID) taskBundle.getSerializable(ARG_REPORT_ID);
-			UUID taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
 
-			Task task = TaskSourceApplication.getTask(taskId);
-
-			TaskSourceApplication.getReports(task);
-
-			List<Report> reports = TaskSourceApplication.getReports(task);
-
-			// find the right report...shouldn't be here
-			for (Report r : reports) {
-				if (r.getId().equals(reportId)) {
-					report = r;
-				}
-			}
-
+			report = TaskSourceApplication.getReport(reportId);
 
 			android.util.Log.d("Act-LIFECYCLE", "TaskDetailAcivity - onCreated reportId " +
 					reportId);
@@ -109,6 +94,7 @@ public class ReportDetailActivity extends Activity {
 
 		/* Show the responses of the report...first, inflate the proper fragment */
 		for (Response response : report) {
+			// Uh wtf are these class names -- Love, Eddie.
 			obtainers.add(ResponseObtainerDisplayer.showResponseDisplayer(
 							response, inflater, responseContainer));
 		}

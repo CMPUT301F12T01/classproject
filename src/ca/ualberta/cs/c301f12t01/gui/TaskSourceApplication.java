@@ -17,6 +17,7 @@
  */
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -69,7 +70,7 @@ public class TaskSourceApplication extends Application {
 	public static void addTask(Task newTask) {
 		app.addTaskFromInstance(newTask);
 	}
-
+	/** Modifies the given task. */
 	public static void modifyTask(Task oldTask, Task newTask) {
 		app.modifyTaskFromInstance(oldTask, newTask);
 	}
@@ -77,7 +78,7 @@ public class TaskSourceApplication extends Application {
 	public static Task getTask(UUID taskId) {
 		return app.getTaskFromInstance(taskId);
 	}
-	
+	/** Removes the task, from where ever it may exist. */
 	public static void removeTask(Task task) {
 		app.removeTaskFromInstance(task);
 	}
@@ -101,10 +102,15 @@ public class TaskSourceApplication extends Application {
 	public static void addReport(Report newReport) {
 		 app.addReportFromInstance(newReport);
 	}
+	
+	/** Gets reports for the given Task from the singleton ReportManager. */
+	public static Report getReport(UUID reportId) {
+		return app.getReportFromInstance(reportId);
+	}
 
 	/** Gets reports for the given Task from the singleton ReportManager. */
 	public static List<Report> getReportsForTask(UUID taskId) {
-		return app.getReportsFromInstance(taskId);
+		return app.getReportsForTaskFromInstance(taskId);
 	}
 
 	/**
@@ -196,9 +202,18 @@ public class TaskSourceApplication extends Application {
 	}
 
 	/**
+	 * @param reportId
+	 * @return
+	 */
+	public Report getReportFromInstance(UUID reportId) {
+		setupReportManager();
+		return reportManager.get(reportId);
+	}
+
+	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.ReportManager#getReports(ca.ualberta.cs.c301f12t01.common.Task)
 	 */
-	public List<Report> getReportsFromInstance(UUID taskId) {
+	public List<Report> getReportsForTaskFromInstance(UUID taskId) {
 		setupReportManager();
 		return reportManager.getAllReportsForTask(taskId);
 	}
@@ -286,10 +301,13 @@ public class TaskSourceApplication extends Application {
 		if (reportManager != null) {
 			return reportManager;
 		}
+		
+		/* TODO: TEMPORARY: */
+		Collection<Report> hack__emptyReportsforTesting = new ArrayList<Report>();
 
 		/* TODO: Get the server interface working! */
 		/* TODO: FIX REPORT MANAGER OMG!!!! */
-		reportManager = ReportManager.getInstance();
+		reportManager = new ReportManager(hack__emptyReportsforTesting);
 		// Rmanager.addObserver(localStorage);
 
 		return reportManager;

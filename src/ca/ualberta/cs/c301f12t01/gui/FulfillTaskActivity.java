@@ -147,7 +147,7 @@ public class FulfillTaskActivity extends Activity {
 
 		android.util.Log.d("Act-LIFECYCLE",
 				"New number of reports for the task - "
-						+ TaskSourceApplication.getReports(task).size());
+						+ TaskSourceApplication.getReportsForTask(task.getId()).size());
 
 		return true;
 	}

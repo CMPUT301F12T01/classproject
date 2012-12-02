@@ -42,15 +42,15 @@ public class ReportManager extends ObservableCollection<UUID, Report> {
 	 * This HashMap actually stores our reports, and allows us to access reports
 	 * by ID.
 	 */
-	private HashMap<UUID, Report> reports;
+	private HashMap<UUID, Report> reports = new HashMap<UUID, Report>();
 	/* This is a secondary index that maps task IDs to report collections. */
-	private HashMap<UUID, Collection<UUID>> taskIdToReportId;
+	private HashMap<UUID, Collection<UUID>> taskIdToReportId = new HashMap<UUID, Collection<UUID>>();
 	
 	
 	/**
 	 * Creates a new ReportManager
 	 */
-	private ReportManager(Collection<Report> initialReports) {
+	public ReportManager(Collection<Report> initialReports) {
 		// nothing to do really
 
 		/* Add all of the reports to these indices. */
@@ -95,7 +95,7 @@ public class ReportManager extends ObservableCollection<UUID, Report> {
 	/** Returns true if the given task has reports. */
 	public boolean taskHasReports(UUID taskId) {
 		/*
-		 * The Task ID -> Report ID index only contains the key if and only if
+		 * The Task ID -> Report ID index should only contain the key if and only if
 		 * the Task has reports. Just in case, check if the size is greater than
 		 * zero. Better not make any assumptions that could break in the future.
 		 */
