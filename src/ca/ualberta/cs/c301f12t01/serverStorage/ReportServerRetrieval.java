@@ -26,6 +26,8 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
 
+import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
@@ -33,14 +35,14 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  * @author home
  * 
  */
-public class TaskServerRetrieval {
+public class ReportServerRetrieval {
 
 	/**
 	 * 
 	 * @return
 	 * 			Returns all simple server objects on server
 	 */
-	public static TaskServerObj[] getAllSO() {
+	public static ReportServerObj[] getAllSO() {
 		// first make the call to the server
 		List<BasicNameValuePair> nvp = new ArrayList<BasicNameValuePair>();
 		nvp.add(new BasicNameValuePair("action", "list"));
@@ -48,7 +50,7 @@ public class TaskServerRetrieval {
 		String jsonString = server.post(nvp);
 		// Now convert to an array of server objects
 		Gson gson = new Gson();
-		TaskServerObj[] allSO = gson.fromJson(jsonString, TaskServerObj[].class);
+		ReportServerObj[] allSO = gson.fromJson(jsonString, ReportServerObj[].class);
 		return allSO;
 	}
 
@@ -57,50 +59,51 @@ public class TaskServerRetrieval {
 	 * @return
 	 * 			all tasks on the server
 	 */
-	public static ArrayList<Task> getAllTasks() {
-		TaskServerObj[] allSO = getAllSO();
-		ArrayList<Task> tasks = new ArrayList<Task>();
+	public static ArrayList<Report> getAllReports() {
+		ReportServerObj[] allSO = getAllSO();
+		ArrayList<Report> reports = new ArrayList<Report>();
 		// iterate through and grab task
-		for (TaskServerObj so : allSO) {
-			if (so.getSummary().equals("task")) {
-				Task t = getContentFromServer(so.getId());
-				tasks.add(t);
+		for (ReportServerObj so : allSO) {
+			if (so.getSummary().equals("report")) {
+				Report r = getContentFromServer(so.getId());
+				reports.add(r);
 			}
 		}
-		return tasks;
+		return reports;
 	}
 	
-	public static HashMap<UUID, Task> getUserTasks(UUID userid){
-		ArrayList<Task> al = getAllTasks();
-		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
-		for (Task t : al){
-			if (t.getUser().equals(userid)){
-				own.put(t.getId(), t);
+	public static ArrayList<Report> getTaskReports(UUID taskID){
+		ArrayList<Report> al = getAllReports();
+		ArrayList<Report> task = new ArrayList<Report>();
+		for (Report r : al){
+			//System.out.println("looping through. taskid is" + taskID.toString() + " and report id is: " + r.getTaskID().toString());
+			if (r.getTaskID().equals(taskID)){
+				task.add(r);
 			}
 		}
-		return own;
+		return task;
 	}
 	
-	public static HashMap<UUID, Task> getGlobalTasks(){
-		ArrayList<Task> al = getAllTasks();
-		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
-		for (Task t : al){
-			if (t.isGlobal()){
-				own.put(t.getId(), t);
+	public static ArrayList<Report> getGlobalReports(Task matchingTask){
+		ArrayList<Report> al = getAllReports();
+		ArrayList<Report> toReturn = new ArrayList<Report>();
+		for (Report r : al){
+			if (r.getSharing().equals(Sharing.GLOBAL) && r.getTaskID().equals(matchingTask.getId())){
+				toReturn.add(r);
 			}
 		}
-		return own;
+		return toReturn;
 	}
 	
-	public static HashMap<UUID, Task> getLocalTasks(){
-		ArrayList<Task> al = getAllTasks();
-		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
-		for (Task t : al){
-			if (t.isLocal()){
-				own.put(t.getId(), t);
+	public static ArrayList<Report> getLocalReports(Task matchingTask){
+		ArrayList<Report> al = getAllReports();
+		ArrayList<Report> toReturn = new ArrayList<Report>();
+		for (Report r : al){
+			if (r.getSharing().equals(Sharing.LOCAL) && r.getTaskID().equals(matchingTask.getId())){
+				toReturn.add(r);
 			}
 		}
-		return own;
+		return toReturn;
 	}
 
 	/**
@@ -110,7 +113,7 @@ public class TaskServerRetrieval {
 	 *            Server ID of the content we want to get
 	 * @return content from server
 	 */
-	public static Task getContentFromServer(String id) {
+	public static Report getContentFromServer(String id) {
 		// create our nvp
 		List<BasicNameValuePair> nvp = new ArrayList<BasicNameValuePair>();
 		nvp.add(new BasicNameValuePair("action", "get"));
@@ -120,22 +123,22 @@ public class TaskServerRetrieval {
 		String jsonString = server.post(nvp);
 		// convert to SO
 		Gson gson = new Gson();
-		TaskServerObj so = gson.fromJson(jsonString, TaskServerObj.class);
+		ReportServerObj so = gson.fromJson(jsonString, ReportServerObj.class);
 		return so.getContent();
 	}
 
-	public static TaskServerObj getTaskSO(UUID id) {
+	public static ArrayList<ReportServerObj> getReportSO(UUID id) {
 		// first get all tasks
-		TaskServerObj[] allSO = getAllSO();
-		for (TaskServerObj so : allSO) {
+		ArrayList<ReportServerObj> toReturn = new ArrayList<ReportServerObj>();
+		ReportServerObj[] allSO = getAllSO();
+		for (ReportServerObj so : allSO) {
 			so.getContentFromServer(); //must call this everytime
-			if (so.getSummary().equals("task")) {
+			if (so.getSummary().equals("report")) {
 				if (so.getContent().getId().equals(id)) {
-					return so;
+					toReturn.add(so);
 				}
 			}
 		}
-		System.out.println("Could not find Server Object");
-		return null; // null if we can't find it
+		return toReturn;
 	}
 }
