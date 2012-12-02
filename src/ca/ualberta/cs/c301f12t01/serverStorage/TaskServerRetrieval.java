@@ -37,8 +37,7 @@ public class TaskServerRetrieval {
 
 	/**
 	 * 
-	 * @return
-	 * 			Returns all simple server objects on server
+	 * @return Returns all simple server objects on server
 	 */
 	public static TaskServerObj[] getAllSO() {
 		// first make the call to the server
@@ -48,14 +47,14 @@ public class TaskServerRetrieval {
 		String jsonString = server.post(nvp);
 		// Now convert to an array of server objects
 		Gson gson = new Gson();
-		TaskServerObj[] allSO = gson.fromJson(jsonString, TaskServerObj[].class);
+		TaskServerObj[] allSO = gson
+				.fromJson(jsonString, TaskServerObj[].class);
 		return allSO;
 	}
 
 	/**
 	 * 
-	 * @return
-	 * 			all tasks on the server
+	 * @return all tasks on the server
 	 */
 	public static ArrayList<Task> getAllTasks() {
 		TaskServerObj[] allSO = getAllSO();
@@ -69,34 +68,47 @@ public class TaskServerRetrieval {
 		}
 		return tasks;
 	}
-	
-	public static HashMap<UUID, Task> getUserTasks(UUID userid){
+
+	/**
+	 * 
+	 * @param userid
+	 *            User id that tasks need to match
+	 * @return HashMap of tasks matching userid
+	 */
+	public static HashMap<UUID, Task> getUserTasks(UUID userid) {
 		ArrayList<Task> al = getAllTasks();
 		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
-		for (Task t : al){
-			if (t.getUser().equals(userid)){
+		for (Task t : al) {
+			if (t.getUser().equals(userid)) {
 				own.put(t.getId(), t);
 			}
 		}
 		return own;
 	}
-	
-	public static HashMap<UUID, Task> getGlobalTasks(){
+
+	/**
+	 * 
+	 * @return HashMap of all global tasks
+	 */
+	public static HashMap<UUID, Task> getGlobalTasks() {
 		ArrayList<Task> al = getAllTasks();
 		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
-		for (Task t : al){
-			if (t.isGlobal()){
+		for (Task t : al) {
+			if (t.isGlobal()) {
 				own.put(t.getId(), t);
 			}
 		}
 		return own;
 	}
-	
-	public static HashMap<UUID, Task> getLocalTasks(){
+
+	/**
+	 * @return HashMap of all local tasks
+	 */
+	public static HashMap<UUID, Task> getLocalTasks() {
 		ArrayList<Task> al = getAllTasks();
 		HashMap<UUID, Task> own = new HashMap<UUID, Task>();
-		for (Task t : al){
-			if (t.isLocal()){
+		for (Task t : al) {
+			if (t.isLocal()) {
 				own.put(t.getId(), t);
 			}
 		}
@@ -128,7 +140,7 @@ public class TaskServerRetrieval {
 		// first get all tasks
 		TaskServerObj[] allSO = getAllSO();
 		for (TaskServerObj so : allSO) {
-			so.getContentFromServer(); //must call this everytime
+			so.getContentFromServer(); // must call this everytime
 			if (so.getSummary().equals("task")) {
 				if (so.getContent().getId().equals(id)) {
 					return so;

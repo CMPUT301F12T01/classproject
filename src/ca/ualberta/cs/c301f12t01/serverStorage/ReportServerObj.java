@@ -21,8 +21,8 @@ import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
- * Object that is stored on the server Used for converting server json to Task
- * Note that Task can be retrieved with getContent
+ * Object that is stored on the server Used for converting server json to Report
+ * Note that Report can be retrieved with getContent
  * 
  * @author home
  * 
@@ -50,6 +50,10 @@ public class ReportServerObj {
 	public void setContent(Report content) {
 		this.content = content;
 	}
+	/**
+	 * This needs to be called to get the actual content
+	 * with a get action
+	 */
 	public void getContentFromServer(){
 		Report r = ReportServerRetrieval.getContentFromServer(this.id);
 		setContent(r);

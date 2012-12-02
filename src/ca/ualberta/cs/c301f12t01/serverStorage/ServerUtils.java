@@ -23,8 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * 
- * @author home
+ * This is not my code
  * 
  */
 public class ServerUtils {

@@ -109,8 +109,9 @@ public class ServerStorage implements StorageInterface, Observer {
 
 	/**
 	 * Removes a task from the server
+	 * 
 	 * @param taskToRemove
-	 * 			The task to remove
+	 *            The task to remove
 	 */
 	public void removeTask(Task taskToRemove) {
 		TaskServerRemove.remove(taskToRemove);
@@ -118,19 +119,19 @@ public class ServerStorage implements StorageInterface, Observer {
 
 	/**
 	 * Gets all of the user's own tasks
+	 * 
 	 * @param userid
-	 * 			ID of the user
-	 * @return
-	 * 			Hashmap of tasks belonging to the user
+	 *            ID of the user
+	 * @return Hashmap of tasks belonging to the user
 	 */
 	public HashMap<UUID, Task> getOwnTasks(UUID userid) {
 		return TaskServerRetrieval.getUserTasks(userid);
 	}
-	
+
 	/**
 	 * Gets all local tasks
-	 * @return
-	 * 			Hashmap of tasks where isLocal() is true
+	 * 
+	 * @return Hashmap of tasks where isLocal() is true
 	 */
 	public HashMap<UUID, Task> getLocalTasks() {
 		return TaskServerRetrieval.getLocalTasks();
@@ -138,8 +139,8 @@ public class ServerStorage implements StorageInterface, Observer {
 
 	/**
 	 * Gets all local tasks
-	 * @return
-	 * 			Hashmap of tasks where isGlobal() is true
+	 * 
+	 * @return Hashmap of tasks where isGlobal() is true
 	 */
 	public HashMap<UUID, Task> getGlobalTasks() {
 		return TaskServerRetrieval.getGlobalTasks();
@@ -147,8 +148,9 @@ public class ServerStorage implements StorageInterface, Observer {
 
 	/**
 	 * Stores a report on the server
+	 * 
 	 * @param reportToStore
-	 * 			Report to store on the server
+	 *            Report to store on the server
 	 */
 	public void storeReport(Report reportToStore) {
 		ReportServerStorage.storeReport(reportToStore);
@@ -156,38 +158,46 @@ public class ServerStorage implements StorageInterface, Observer {
 
 	public void updateReport(Report reportToUpdate) {
 		// Not Implemented
-
 	}
 
 	public void removeReport(Report reportToRemove) {
 		// Not implemented
-
 	}
 
 	/**
 	 * Get all reports that belong to a task
+	 * 
 	 * @param matchingTask
-	 * 			task
+	 *            task who's reports we want to get
 	 */
 	public ArrayList<Report> getReports(Task matchingTask) {
+		return ReportServerRetrieval.getAllReports(matchingTask);
+	}
+
+	/**
+	 * Get every report
+	 * @return
+	 * 			List of all reports on the server
+	 */
+	public ArrayList<Report> getAllReports() {
 		return ReportServerRetrieval.getAllReports();
 	}
 
+	/**
+	 * @return local reports belonging to a task
+	 */
 	public ArrayList<Report> getLocalReports(Task matchingTask) {
 		return ReportServerRetrieval.getLocalReports(matchingTask);
 	}
 	
-	public ArrayList<Report> getAllReports(){
-		return ReportServerRetrieval.getAllReports();
-	}
-	
-	
-
 	public ArrayList<Report> getTaskCreatorReports(Task matchingTask) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * @return global reports belonging to a task
+	 */
 	public ArrayList<Report> getGlobalReports(Task matchingTask) {
 		return ReportServerRetrieval.getGlobalReports(matchingTask);
 	}

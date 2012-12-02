@@ -39,20 +39,7 @@ import org.apache.http.util.EntityUtils;
 public class Server {
 
 	private static final String serverName = "http://crowdsourcer.softwareprocess.es/F12/CMPUT301F12T01/?";
-
-	public void get(String args) {
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(serverName + args);
-		try {
-			HttpResponse response1 = httpclient.execute(httpGet);
-			// System.out.println(response1.getStatusLine());
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	/**
 	 * 
 	 * @param nvp
