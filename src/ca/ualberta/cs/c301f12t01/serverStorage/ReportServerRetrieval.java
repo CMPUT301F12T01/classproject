@@ -71,7 +71,27 @@ public class ReportServerRetrieval {
 		}
 		return reports;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 * 			all tasks on the server
+	 */
+	public static ArrayList<Report> getAllReports(Task matchingTask) {
+		ReportServerObj[] allSO = getAllSO();
+		ArrayList<Report> reports = new ArrayList<Report>();
+		// iterate through and grab task
+		for (ReportServerObj so : allSO) {
+			if (so.getSummary().equals("report")) {
+				Report r = getContentFromServer(so.getId());
+				if(r.getTaskID().equals(matchingTask.getId())){
+					reports.add(r);
+				}
+			}
+		}
+		return reports;
+	}
+
 	public static ArrayList<Report> getTaskReports(UUID taskID){
 		ArrayList<Report> al = getAllReports();
 		ArrayList<Report> task = new ArrayList<Report>();
@@ -83,7 +103,7 @@ public class ReportServerRetrieval {
 		}
 		return task;
 	}
-	
+
 	public static ArrayList<Report> getGlobalReports(Task matchingTask){
 		ArrayList<Report> al = getAllReports();
 		ArrayList<Report> toReturn = new ArrayList<Report>();
@@ -94,7 +114,7 @@ public class ReportServerRetrieval {
 		}
 		return toReturn;
 	}
-	
+
 	public static ArrayList<Report> getLocalReports(Task matchingTask){
 		ArrayList<Report> al = getAllReports();
 		ArrayList<Report> toReturn = new ArrayList<Report>();
