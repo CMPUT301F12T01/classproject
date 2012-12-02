@@ -22,7 +22,8 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".gui.TaskFulfillActivity" >
+    tools:context=".gui.TaskFulfillActivity"
+    android:background="@drawable/report_background" >
 
     <LinearLayout
         android:layout_width="fill_parent"

@@ -18,6 +18,7 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.R.color;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 
@@ -99,6 +101,7 @@ public class TaskAdapter extends BaseAdapter {
         // Grabs all of the fields of the template.
         TextView summary = (TextView) constructedView
                 .findViewById(R.id.text_task_summary);
+       
         ImageView responseIndicator = (ImageView) constructedView
                 .findViewById(R.id.image_status_indicator);
 
@@ -108,8 +111,8 @@ public class TaskAdapter extends BaseAdapter {
 
         boolean hasReports = TaskSourceApplication.taskHasReports(task);
         // Hides the marker if no reports have been made.
-        if (!hasReports) {
-            responseIndicator.setVisibility(View.INVISIBLE);
+        if (hasReports) {
+            responseIndicator.setVisibility(View.VISIBLE);        	
         }
 
         return constructedView;
