@@ -39,7 +39,7 @@ public class TaskServerRemove {
 	 */
 	public static void remove(Task task) {
 		// get SO based off of taskID
-		ServerObj so = TaskServerRetrieval.getTaskSO(task.getId());
+		TaskServerObj so = TaskServerRetrieval.getTaskSO(task.getId());
 		String soid = so.getId();
 		// Build our get args
 		List<BasicNameValuePair> nvp = new ArrayList<BasicNameValuePair>();

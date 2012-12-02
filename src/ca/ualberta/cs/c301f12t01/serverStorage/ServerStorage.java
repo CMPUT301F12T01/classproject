@@ -128,24 +128,24 @@ public class ServerStorage implements StorageInterface, Observer {
 	}
 
 	public void updateReport(Report reportToUpdate) {
-		// TODO Auto-generated method stub
+		// Not Implemented
 
 	}
 
 	public void removeReport(Report reportToRemove) {
-		// TODO Auto-generated method stub
+		// Not implemented
 
 	}
 
 	public ArrayList<Report> getReports(Task matchingTask) {
-		// TODO Auto-generated method stub
-		return null;
+		return ReportServerRetrieval.getAllReports();
 	}
 
 	public ArrayList<Report> getLocalReports(Task matchingTask) {
-		// TODO Auto-generated method stub
-		return null;
+		return ReportServerRetrieval.getLocalReports(matchingTask);
 	}
+	
+	
 
 	public ArrayList<Report> getTaskCreatorReports(Task matchingTask) {
 		// TODO Auto-generated method stub
@@ -153,8 +153,7 @@ public class ServerStorage implements StorageInterface, Observer {
 	}
 
 	public ArrayList<Report> getGlobalReports(Task matchingTask) {
-		// TODO Auto-generated method stub
-		return null;
+		return ReportServerRetrieval.getGlobalReports(matchingTask);
 	}
 
 }
