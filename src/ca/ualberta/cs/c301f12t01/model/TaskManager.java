@@ -75,25 +75,21 @@ public class TaskManager {
 	}
 	
 	public void modifyTask(Task oldTask, Task newTask) {
-		TaskCollection appropriateCollection;
 		
-		/* TODO: fix this faulty logic. */
+		TaskCollection appropriateCollection = getCollectionForTask(newTask);
+		TaskCollection oldCollection = getCollectionForTask(oldTask);
 		
-		/* Figure out if the task collections get changed and, remove if they have. */
-		if (oldTask.isGlobal().equals(newTask.isGlobal())) {
-			appropriateCollection = getCollectionForTask(oldTask);
-			
-			appropriateCollection.modify(oldTask, newTask);
-		} else if (oldTask.isLocal().equals(newTask.isLocal())) {
-			appropriateCollection = getCollectionForTask(oldTask);
-			
-			appropriateCollection.modify(oldTask, newTask);
+		
+		/* Check if the task has switched collections on us. */
+		if (oldCollection != appropriateCollection) {
+			/* Remove it from the old collection, as it don't exist there no more. */
+			oldCollection.removeElement(oldTask);
+			appropriateCollection.add(newTask);
+
 		} else {
-			TaskCollection appropriateOldCollection = getCollectionForTask(oldTask);
-			TaskCollection appropriateNewCollection = getCollectionForTask(newTask);
-			appropriateOldCollection.removeElement(oldTask);
-			appropriateNewCollection.add(newTask);
+			appropriateCollection.modify(oldTask, newTask);
 		}
+
 	}
 	
 	/**
