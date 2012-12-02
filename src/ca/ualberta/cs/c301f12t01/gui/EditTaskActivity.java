@@ -21,41 +21,41 @@ public class EditTaskActivity extends Activity {
 	public static final String ARG_TASK_ID = "task_id";
 
 	private Task task;
-	
 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		/* We can use the same activity layout */
 		setContentView(R.layout.activity_define_task);
-		
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		/* The list of tasks Activity passed us a taskID, so we should get it*/
-		Bundle taskBundle = getIntent().getExtras();		
+
+		/* The list of tasks Activity passed us a taskID, so we should get it */
+		Bundle taskBundle = getIntent().getExtras();
 		if (taskBundle != null) {
-			
+
 			UUID taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
-			
+
 			task = TaskSourceApplication.getTask(taskId);
-			
-			android.util.Log.d("Act-lc", "EditTaskActivity - TaskId: " + taskId);
-			
+
+			android.util.Log
+					.d("Act-lc", "EditTaskActivity - TaskId: " + taskId);
+
 		}
-		
+
 		displayOldTaskInformation();
-		
+
 	}
 
-	/** Displays the old task's information
+	/**
+	 * Displays the old task's information
 	 * 
 	 */
 	private void displayOldTaskInformation() {
 		// TODO Auto-generated method stub
 		/* Collect strings and stuff from the Task instance. */
-		
+
 		/* Get the views */
 		RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_sharing);
 		EditText descriptionView = (EditText) findViewById(R.id.edit_description);
@@ -63,52 +63,50 @@ public class EditTaskActivity extends Activity {
 		ToggleButton text_toggle = (ToggleButton) findViewById(R.id.toggle_text);
 		ToggleButton photo_toggle = (ToggleButton) findViewById(R.id.toggle_photo);
 		ToggleButton audio_toggle = (ToggleButton) findViewById(R.id.toggle_audio);
-		
-		
+
 		/* Set summary and description */
 		String descriptionText = task.getDescription();
 		String summaryText = task.getSummary();
-		
+
 		summaryView.setText(summaryText);
 		descriptionView.setText(descriptionText);
-		
+
 		/* Show previous requirements */
 		for (Request request : task) {
 			MediaType media = request.getType();
-			switch(media) {
-				case TEXT:
-					text_toggle.setChecked(true);
-					break;
-				case PHOTO:
-					photo_toggle.setChecked(true);
-					break;
-				case AUDIO:
-					audio_toggle.setChecked(true);
-					break;
+			switch (media) {
+			case TEXT:
+				text_toggle.setChecked(true);
+				break;
+			case PHOTO:
+				photo_toggle.setChecked(true);
+				break;
+			case AUDIO:
+				audio_toggle.setChecked(true);
+				break;
 			}
-					
+
 		}
-		
+
 		/* Display previous sharing settings. By default it's local (by layout) */
-		
-		if ( task.isGlobal() ) {
+
+		if (task.isGlobal()) {
 			RadioButton globalRadioButton = (RadioButton) findViewById(R.id.radio_global);
 			globalRadioButton.setChecked(true);
 		}
-		
-		
+
 	}
 
-	/** onTaskCreated - checks to see if the minimum fields 
-	 * have been filled in and then get's the task's 
-	 * information 
+	/**
+	 * onTaskCreated - checks to see if the minimum fields have been filled in
+	 * and then get's the task's information
 	 * 
-	 * @return True if the minimum fields have been filled out.
-	 * 			False if the minimum fields have not been filled out.
+	 * @return True if the minimum fields have been filled out. False if the
+	 *         minimum fields have not been filled out.
 	 */
 	protected boolean onTaskUpdated() {
 		/* Extract the text fields. */
-		
+
 		/* Get the views */
 		RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_sharing);
 		EditText descriptionView = (EditText) findViewById(R.id.edit_description);
@@ -116,14 +114,15 @@ public class EditTaskActivity extends Activity {
 		ToggleButton text_toggle = (ToggleButton) findViewById(R.id.toggle_text);
 		ToggleButton photo_toggle = (ToggleButton) findViewById(R.id.toggle_photo);
 		ToggleButton audio_toggle = (ToggleButton) findViewById(R.id.toggle_audio);
-		
+
 		String descriptionText = descriptionView.getText().toString();
 		String summaryText = summaryView.getText().toString();
 
 		/* We need to have a summary filled out! */
-		if ( summaryText.equals("") ) {
+		if (summaryText.equals("")) {
 			/* Dialog or Toast? */
-			Toast.makeText(getBaseContext(), "Please fill out a summary", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(), R.string.error_missing_summary,
+					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
@@ -163,14 +162,16 @@ public class EditTaskActivity extends Activity {
 		/* So if we didn't add a request... */
 		if (!addARequest) {
 			/* Toast or Dialog? */
-			Toast.makeText(getBaseContext(), "Please add a request.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(), R.string.error_zero_requests,
+					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
 		android.util.Log.d("Act-LIFECYCLE", "DefineTaskActivity-onTaskCreated");
 
 		TaskSourceApplication.modifyTask(task, newTask);
-		Toast.makeText(getBaseContext(), "Task updated?", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getBaseContext(), R.string.task_update_success,
+				Toast.LENGTH_SHORT).show();
 
 		return true;
 	}
@@ -180,7 +181,7 @@ public class EditTaskActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_edit_task, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 

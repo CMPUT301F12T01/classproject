@@ -24,8 +24,8 @@
     <string name="no_task_message">No task to display!</string>
 
     <!-- Task lists -->
-    <string name="your_tasks">Your Tasks</string>
-    <string name="local_tasks">Stored Tasks</string>
+    <string name="失せるのタスクつ">Your Tasks</string>
+    <string name="local_tasks">Local Tasks</string>
     <string name="global_tasks">Global Tasks</string>
 
     <!-- Task displaying fields -->
@@ -55,18 +55,25 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_define_task">Create a new task</string>
-    <string name="task_sharing_description">Please select your visibility of 
-	    	your task. If your task is global other people can view your tasks
+    <string name="task_sharing_description">Please select the visibility of 
+	    	your task. If your task is global, other people can view your tasks
 	    	and can help you fulfill them. If your task is local, only you will
-	    	be able to view them. </string>
+	    	be able to view and fulfill it. </string>
     <string name="title_activity_task_define_fragment">Create a new task</string>
-
+    <string name="error_missing_summary">Please fill out a summary</string>
+    <string name="error_zero_requests">Please add a request</string>
+    <string name="task_create_success">Task Created</string>
+    
     <!-- Editing & Deleting a Task -->
     <string name="title_activity_edit_task">Edit Task</string>
     <string name="edit_task_done">Update</string>
     <string name="delete_task_dialog">Warning! If you delete this task, you can 
         	not get it back!</string>
+    <string name="task_update_success">Task updated</string>
     <string name="cancel">Cancel</string>
+    <string name="task_delete_success">Task Deleted</string>
+
+    
 
     <!-- Fulfilling a task -->
     <string name="title_activity_fulfill_task">Fulfill Task</string>
@@ -77,6 +84,8 @@
     <string name="send_to_owner">Owner</string>
     <string name="send_to_server">Server</string>
     <string name="do_not_send">Don\'t Send</string>
+    <string name="fulfill_success">Report saved</string>
+
 
     <!-- Report List for a Task -->
     <string name="title_activity_report_list">View Reports</string>

@@ -19,14 +19,11 @@ package ca.ualberta.cs.c301f12t01.gui;
 
 import java.util.UUID;
 
-import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.common.Task;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import ca.ualberta.cs.c301f12t01.R;
 
 /** ReportListActivty - displays all the reports of a task
  * 

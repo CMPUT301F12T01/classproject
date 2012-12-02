@@ -1,16 +1,13 @@
 package ca.ualberta.cs.c301f12t01.gui.helper;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
-import ca.ualberta.cs.c301f12t01.R;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;

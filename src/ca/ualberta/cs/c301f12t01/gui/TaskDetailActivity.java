@@ -26,21 +26,14 @@ import java.util.UUID;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
@@ -203,7 +196,7 @@ public class TaskDetailActivity extends Activity {
     	            TaskDetailActivity.this.finish();
     	            // TODO: need something like this!
     	            TaskSourceApplication.removeTask(task);
-    	            Toast.makeText(getBaseContext(), "Task Deleted", Toast.LENGTH_SHORT).show();
+    	            Toast.makeText(getBaseContext(), R.string.task_delete_success, Toast.LENGTH_SHORT).show();
     	            finish();
     	       }
     	   })

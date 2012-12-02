@@ -18,7 +18,6 @@
 package ca.ualberta.cs.c301f12t01.gui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.R.color;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 

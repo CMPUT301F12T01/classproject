@@ -23,7 +23,6 @@ import java.util.UUID;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,7 +47,7 @@ import ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainerObtainer;
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  * @author Bronte Lee <bronte@ualberta.ca>
- *
+ * 
  */
 
 public class FulfillTaskActivity extends Activity {
@@ -57,161 +56,169 @@ public class FulfillTaskActivity extends Activity {
 	public static final String ARG_TASK_ID = "task_id";
 
 	private Task task;
-	
-	ArrayList<ResponseObtainer> obtainers = new ArrayList<ResponseObtainer>();
-	
-	/** onCreate - get taskId from the TaskDetailActivity and display fulfill fields
-	 */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fulfill_task);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        /* The list of tasks Activity passed us a taskID, so we should get it*/
-		Bundle taskBundle = getIntent().getExtras();		
+	ArrayList<ResponseObtainer> obtainers = new ArrayList<ResponseObtainer>();
+
+	/**
+	 * onCreate - get taskId from the TaskDetailActivity and display fulfill
+	 * fields
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_fulfill_task);
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		/* The list of tasks Activity passed us a taskID, so we should get it */
+		Bundle taskBundle = getIntent().getExtras();
 		if (taskBundle != null) {
-			
+
 			UUID taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
 
 			task = TaskSourceApplication.getTask(taskId);
-			
+
 		}
 
 		/* Display Fulfilling Task information */
 		displayFulfillTaskInformation();
-		
+
 		android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - onCreate");
 
-    }
-    
-    /** displayFulfillTaskInformation - Display the proper fulfill fields 
-     * 	based on the requests of the task.
-     * 
-     */
-    protected void displayFulfillTaskInformation() {
-    	
-    	/* Sets the simple text views. */
-        ((TextView) findViewById(R.id.task_summary)).setText(task
-                .getSummary());
-        String descriptionText = task.getDescription();
-        
-        TextView descripionView = (TextView) findViewById(R.id.task_description);
-        
-        if (descriptionText.equals("")) {
-            /* No description? Don't show the text widget at all! */
-            descripionView.setVisibility(View.GONE);
-        } else {
-            descripionView.setText(descriptionText);
-        }
-    
-        /* Get the container for the responses. */
-        ViewGroup responseContainer = (ViewGroup) findViewById(R.id.task_responses);
-        LayoutInflater inflater = getLayoutInflater();
-        
-        /* Creates a response field for each respective request, and remember them. */
-        for (Request request : task) {
-            obtainers.add(
-                ResponseObtainerObtainer.getResponseObtainer(
-                    request.getType(), inflater, responseContainer));
-               
-        }    	
-    }
+	}
 
-    
-    
-    /**
-     * onFormCompletion - Called when the user decides they are done fulfilling the task.
-     * 
-     * @returns false is the form was completed incorrectly, else true.
-     */
-    protected Boolean onFormCompletion() {
-        
-        Report report = new Report(task);
-        
-        attachReportSharingMode(report);
-        attachResponsesToReport(report);
+	/**
+	 * displayFulfillTaskInformation - Display the proper fulfill fields based
+	 * on the requests of the task.
+	 * 
+	 */
+	protected void displayFulfillTaskInformation() {
 
-        TaskSourceApplication.addReport(report);
+		/* Sets the simple text views. */
+		((TextView) findViewById(R.id.task_summary)).setText(task.getSummary());
+		String descriptionText = task.getDescription();
 
-        android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - onFormCompletion");
+		TextView descripionView = (TextView) findViewById(R.id.task_description);
 
-        android.util.Log.d("Act-LIFECYCLE", "Response TYPE - " + report.responseTypes());
-        android.util.Log.d("Act-LIFECYCLE", "Response COUNT - " + report.responseCount());
-        
-        android.util.Log.d("Act-LIFECYCLE", "New number of reports for the task - " 
-        		+ TaskSourceApplication.getReports(task).size());
-        
-        return true;
-    }
-    
-    /**
-     * Attaches the sharing mode on the current activity
-     * to the given Report.
-     * 
-     * @param report
-     */
-    private void attachReportSharingMode(Report report) {
-    	
-    	android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - attachReportSharingMode");
+		if (descriptionText.equals("")) {
+			/* No description? Don't show the text widget at all! */
+			descripionView.setVisibility(View.GONE);
+		} else {
+			descripionView.setText(descriptionText);
+		}
 
-        RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_send_options);
+		/* Get the container for the responses. */
+		ViewGroup responseContainer = (ViewGroup) findViewById(R.id.task_responses);
+		LayoutInflater inflater = getLayoutInflater();
 
-        Sharing selectedSharing = Sharing.TASK_CREATOR;
+		/*
+		 * Creates a response field for each respective request, and remember
+		 * them.
+		 */
+		for (Request request : task) {
+			obtainers.add(ResponseObtainerObtainer.getResponseObtainer(
+					request.getType(), inflater, responseContainer));
 
-        switch (sharingButtons.getCheckedRadioButtonId()) {
-        case R.id.radio_send_to_owner:
-            selectedSharing = Sharing.TASK_CREATOR;
-            break;
-        case R.id.radio_send_to_server:
-            selectedSharing = Sharing.GLOBAL;
-            break;
-        case R.id.radio_do_not_send:
-            selectedSharing = Sharing.LOCAL;
-            break;
-        }
+		}
+	}
 
-        report.setSharing(selectedSharing);
-        
-    }
-    
-    /**
-     * Attaches every Response on the current activity
-     * to the given Report.
-     * 
-     * @param report
-     */
-    private void attachResponsesToReport(Report report) {
-    	android.util.Log.d("Act-LIFECYCLE", "FulfillTaskActivity - attachResponsesToReport");
-    	
-        for (ResponseObtainer obtainer : obtainers) {
-            report.addResponse(obtainer.getResponse());
-        }
-    }
-    
-    /* Display menu */
-    public boolean onCreateOptionsMenu(Menu menu) {
+	/**
+	 * onFormCompletion - Called when the user decides they are done fulfilling
+	 * the task.
+	 * 
+	 * @returns false is the form was completed incorrectly, else true.
+	 */
+	protected Boolean onFormCompletion() {
+
+		Report report = new Report(task);
+
+		attachReportSharingMode(report);
+		attachResponsesToReport(report);
+
+		TaskSourceApplication.addReport(report);
+
+		android.util.Log.d("Act-LIFECYCLE",
+				"FulfillTaskActivity - onFormCompletion");
+
+		android.util.Log.d("Act-LIFECYCLE",
+				"Response TYPE - " + report.responseTypes());
+		android.util.Log.d("Act-LIFECYCLE",
+				"Response COUNT - " + report.responseCount());
+
+		android.util.Log.d("Act-LIFECYCLE",
+				"New number of reports for the task - "
+						+ TaskSourceApplication.getReports(task).size());
+
+		return true;
+	}
+
+	/**
+	 * Attaches the sharing mode on the current activity to the given Report.
+	 * 
+	 * @param report
+	 */
+	private void attachReportSharingMode(Report report) {
+
+		android.util.Log.d("Act-LIFECYCLE",
+				"FulfillTaskActivity - attachReportSharingMode");
+
+		RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_send_options);
+
+		Sharing selectedSharing = Sharing.TASK_CREATOR;
+
+		switch (sharingButtons.getCheckedRadioButtonId()) {
+		case R.id.radio_send_to_owner:
+			selectedSharing = Sharing.TASK_CREATOR;
+			break;
+		case R.id.radio_send_to_server:
+			selectedSharing = Sharing.GLOBAL;
+			break;
+		case R.id.radio_do_not_send:
+			selectedSharing = Sharing.LOCAL;
+			break;
+		}
+
+		report.setSharing(selectedSharing);
+
+	}
+
+	/**
+	 * Attaches every Response on the current activity to the given Report.
+	 * 
+	 * @param report
+	 */
+	private void attachResponsesToReport(Report report) {
+		android.util.Log.d("Act-LIFECYCLE",
+				"FulfillTaskActivity - attachResponsesToReport");
+
+		for (ResponseObtainer obtainer : obtainers) {
+			report.addResponse(obtainer.getResponse());
+		}
+	}
+
+	/* Display menu */
+	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_fulfill_task, menu);
 		return true;
 	}
-     
-    /* When a menu option is selected */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-        	finish();
-            return true;
-        case R.id.menu_done:
-        	if (onFormCompletion()) {
-        		Toast.makeText(getBaseContext(), "Report Saved", Toast.LENGTH_SHORT).show();
-        		finish();
-        	}
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
+	/* When a menu option is selected */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		case R.id.menu_done:
+			if (onFormCompletion()) {
+				Toast.makeText(getBaseContext(), R.string.fulfill_success,
+						Toast.LENGTH_SHORT).show();
+				finish();
+			}
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 }

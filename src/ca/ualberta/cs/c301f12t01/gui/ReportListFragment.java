@@ -22,24 +22,17 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
-import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.common.Report;
-import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.model.ReportManager;
-import ca.ualberta.cs.c301f12t01.model.TaskCollection;
-import ca.ualberta.cs.c301f12t01.model.TaskManager;
-
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Task;
 
-/** ReportListFragment - in charge of displaying the list of reports
+/**
+ * ReportListFragment - in charge of displaying the list of reports
  * 
  * @author Bronte Lee <bronte@ualberta.ca>
  *
