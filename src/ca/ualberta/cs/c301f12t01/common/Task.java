@@ -215,7 +215,6 @@ public class Task implements Iterable<Request> {
     /**
      * Will create a new string of id concatenated with the summary.
      * @return Returns the UUID and the summary of the task as a string.
-     * @deprecated For debug use only!
      */
     @Override
     public String toString() {

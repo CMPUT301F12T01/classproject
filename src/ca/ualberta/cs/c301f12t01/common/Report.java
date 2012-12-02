@@ -203,7 +203,7 @@ public class Report implements Iterable<Response> {
 		this.timestamp = timestamp;
 	}
 	
-	/** @deprecated when desperation calls, toString()! */
+	/**  when desperation calls, toString()! */
 	public String toString() {
 	    String s = "Report with {";
 	    for (Response r : this) {
