@@ -77,7 +77,9 @@ public class TaskManager {
 	public void modifyTask(Task oldTask, Task newTask) {
 		TaskCollection appropriateCollection;
 		
-		/* TODO: figure out if the task collections get changed and, remove if they have. */
+		/* TODO: fix this faulty logic. */
+		
+		/* Figure out if the task collections get changed and, remove if they have. */
 		if (oldTask.isGlobal().equals(newTask.isGlobal())) {
 			appropriateCollection = getCollectionForTask(oldTask);
 			

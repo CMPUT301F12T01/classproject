@@ -43,6 +43,7 @@
     <string name="menu_edit_task_short">Edit</string>
     <string name="menu_delete_task">Delete Task</string>
     <string name="menu_delete_task_short">Delete</string>
+    <string name="task_no_description">No description</string>
 
     <!-- Defining Tasks -->
     <string name="task_request">Request</string>
@@ -96,7 +97,11 @@
     <string name="text_response_info">Text Response:</string>
     <string name="photo_response_info">Photo Response:</string>
     <string name="timestamp">Completed On:</string>
-
+    
+    <!-- Misc -->
+    
+    <string name="list_seperator">,\u0020</string>
+    
     <!-- Testing strings: throw away later? -->
     <string name="TEST_LONG_SUMMARY">THIS IS A VERY LONG SUMMARY THAT 
         	SHOULD HOPEFULLY GET CUT OFF OR SOMETHING LIKE THAT. 

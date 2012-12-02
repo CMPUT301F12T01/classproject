@@ -43,13 +43,9 @@ import android.app.FragmentTransaction;
 public class TaskListActivity extends Activity implements
 		TaskListFragment.Callbacks, TabListener {
 
-	/*
-	 * I apologize for all of these ugly globals. Give me some time to remove
-	 * them
-	 */
 	private static final String ARG_TASK_ID = "task_id";
-
 	private static final String CURRENT_TAB_INDEX = "current tab index";
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -104,7 +100,7 @@ public class TaskListActivity extends Activity implements
 
 	}
 
-	/* This will keep track of which tab we were on */
+	/** This will keep track of which tab we were on */
 	@Override
 	public void onSaveInstanceState(Bundle outBundle) {
 		android.util.Log.d("Act-LIFECYCLE",
@@ -115,7 +111,7 @@ public class TaskListActivity extends Activity implements
 
 	}
 
-	/*
+	/**
 	 * This will display the last viewed tab (if you like changing the
 	 * orientation...)
 	 */
@@ -139,7 +135,7 @@ public class TaskListActivity extends Activity implements
 	 * .Tab, android.app.FragmentTransaction)
 	 */
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
+		
 		/* If the user selects the same tab, do nothing */
 
 	}
@@ -152,7 +148,6 @@ public class TaskListActivity extends Activity implements
 	 * .Tab, android.app.FragmentTransaction)
 	 */
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
 
 		android.util.Log.d("Act-LIFECYCLE",
 				"TaskListAcivity - onTabSelected tag: " + tab.getTag());
@@ -169,7 +164,6 @@ public class TaskListActivity extends Activity implements
 	 * .Tab, android.app.FragmentTransaction)
 	 */
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
 		android.util.Log.d("Act-LIFECYCLE",
 				"TaskListAcivity - onTabUNSelected tag: " + tab.getTag());
 
@@ -187,6 +181,9 @@ public class TaskListActivity extends Activity implements
 		Bundle arguments = new Bundle();
 		arguments.putSerializable(TaskListFragment.ARG_NAME, name);
 
+		/* Wait... we create a new TaskListFragment each time we click a different tab? 
+		 * This is not an issue now, but it seems... troublesome.
+		 */
 		TaskListFragment fragment = new TaskListFragment();
 
 		fragment.setArguments(arguments);

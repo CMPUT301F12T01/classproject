@@ -37,8 +37,10 @@ import android.view.ViewConfiguration;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
+import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.Request;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.util.StringUtils;
 
 /**
  * TaskDetailActivity -- Displays the user interface for Task Details.
@@ -105,27 +107,13 @@ public class TaskDetailActivity extends Activity {
 		String descriptionText = task.getDescription();
 		String summaryText = task.getSummary();
 
-		/* TODO: Get rid of this ugly mess! */
 		String requirementText;
-		Set<String> requirementSet = new HashSet<String>();
-
+		Set<MediaType> requirementSet = new HashSet<MediaType>();
 		/* Setup the requirement text. */
 		for (Request request : task) {
-			requirementSet.add(request.getType().toString());
+			requirementSet.add(request.getType());
 		}
-
-		/* LOOK AWAY! LOOK AWAY! */
-		StringBuilder requirementBuilder = new StringBuilder();
-		Iterator<String> iter = requirementSet.iterator();
-		while (iter.hasNext()) {
-			requirementBuilder.append(iter.next());
-			if (!iter.hasNext()) {
-				break;
-			}
-			requirementBuilder.append(" ");
-		}
-		requirementText = requirementBuilder.toString();
-
+		requirementText = StringUtils.joinToString(requirementSet, getText(R.string.list_seperator));
 		/* It's over. The horror is over. There's nothing to see here, kids. */
 
 		/* Set the associated views. */
@@ -137,7 +125,7 @@ public class TaskDetailActivity extends Activity {
 			 * Description is empty. State that there is no description instead
 			 * of giving the user a blank screen.
 			 */
-			descriptionView.setText("No description");
+			descriptionView.setText(getText(R.string.task_no_description));
 			descriptionView.setTypeface(Typeface
 					.defaultFromStyle(Typeface.ITALIC));
 		} else {

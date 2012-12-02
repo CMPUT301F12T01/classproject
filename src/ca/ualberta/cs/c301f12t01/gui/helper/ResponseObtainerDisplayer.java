@@ -25,24 +25,27 @@ import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.MediaType;
 import ca.ualberta.cs.c301f12t01.common.Response;
 
-/** Abstract ResponseDisplayer for displaying the responses, same as the ResponseObtainer
+/**
+ * Abstract ResponseDisplayer for displaying the responses, same as the
+ * ResponseObtainer
  * 
  * @author Bronte Lee <bronte@ualberta.ca>
- *
+ * 
  */
 
-/* TODO: Generalize? The difference between ROO and ROD is the R.layout xml AND
+/*
+ * TODO: Generalize? The difference between ROO and ROD is the R.layout xml AND
  * ROD requires the response to be passed in to get the response information...
  */
 public abstract class ResponseObtainerDisplayer {
 
-	public static ResponseObtainer showResponseDisplayer(
-			Response response, LayoutInflater inflater, ViewGroup root) {
+	public static ResponseObtainer showResponseDisplayer(Response response,
+			LayoutInflater inflater, ViewGroup root) {
 		ResponseObtainer obtainer = null;
 		int layout_id = -1;
 		ViewGroup view = null;
 		Class<? extends ResponseObtainer> obtainerClass = null;
-		
+
 		MediaType media = response.getMediaType();
 
 		switch (media) {
@@ -60,33 +63,29 @@ public abstract class ResponseObtainerDisplayer {
 			break;
 		default:
 			// err....
-			// TODO: Give an error response obtainer? 
+			// TODO: Give an error response obtainer?
 		}
 
 		view = (ViewGroup) inflater.inflate(layout_id, root);
+
 		try {
 			obtainer = obtainerClass.getConstructor(ViewGroup.class)
 					.newInstance(view);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		// show response information
+
+		/* Show response information */
 		obtainer.setupDisplayResponse(response);
-		
+
 		return obtainer;
 	}
 

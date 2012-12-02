@@ -59,21 +59,18 @@ public class ResponseObtainerObtainer {
                 // TODO: Give an error response obtainer? 
         }
         
+		/* This code is so ugly it was used as an example in class of ugly code. */
         view = (ViewGroup) inflater.inflate(layout_id, root);
         try {
             obtainer = obtainerClass.getConstructor(ViewGroup.class)
                     .newInstance(view);
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             // TODO Auto-generated catch block

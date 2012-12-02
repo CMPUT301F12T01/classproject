@@ -43,7 +43,6 @@ public class ReportDetailActivity extends Activity {
 	 * to get the get report...we shouldn't have to do this.
 	 */
 	public static final String ARG_REPORT_ID = "report_id";
-	public static final String ARG_TASK_ID = "task_id";
 
 	private Report report;
 

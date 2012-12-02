@@ -24,24 +24,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/*
- * TODOTODOTODO    TODO     TODOTODO        TODO     
- *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
- *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
- *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
- *     TODO     TODO  TODO  TODO   TODO  TODO  TODO  
- *     TODO        TODO     TODOTODO        TODO     :
- *
- *  - Make this a dual-indexed, observable collection!
- *  - The "concrete" TaskCollection should extend from this class
- *    whilst the view should extend from this class.
- *  - The ReportCollection should extend from ObservableCollection.
- *  - Figure out mutability: the ability to change Tasks (maybe not
- *    Reports).  Perhaps create a new interface and make this class
- *    implement that? Also, I think it should be "replace". Or
- *    something.
- *
- */
 
 /**
  * Implementation of {@link ObservableCollection}, using {@link LinkedHashMap}.
@@ -196,7 +178,6 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
      * @deprecated NOT IMPLEMENTED AND NEVER WILL BE.
      */
     public boolean retainAll(Collection<?> arg0) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -204,7 +185,6 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
      * @deprecated NOT IMPLEMENTED AND NEVER WILL BE.
      */
     public Object[] toArray() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -212,7 +192,6 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
      * @deprecated NOT IMPLEMENTED AND NEVER WILL BE.
      */
     public <T> T[] toArray(T[] array) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -220,7 +199,6 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
      * @deprecated NOT IMPLEMENTED AND NEVER WILL BE.
      */
     public boolean removeAll(Collection<?> arg0) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -229,7 +207,6 @@ public abstract class DualIndexedObservableCollection<Key, Element> extends
      */
     @SuppressWarnings("unchecked")
     public boolean remove(Object object) {
-        // TODO Auto-generated method stub
         return removeElement((Element) object);
     }
 

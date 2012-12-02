@@ -80,16 +80,11 @@ ReportListFragment.Callbacks {
 	 * @see ca.ualberta.cs.c301f12t01.gui.ReportListFragment.Callbacks#onItemSelected(java.util.UUID)
 	 */
 	public void onItemSelected(UUID reportId) {
-		// TODO Auto-generated method stub
 
 		/* A report has been selected, so it's time to display the report's responses */
 		Intent intent = new Intent(getApplicationContext(), ReportDetailActivity.class);
 		intent.putExtra(ARG_REPORT_ID, reportId);
 
-		/* We really shouldn't have to pass this: there should be a way to get a report
-		 * by its ID, right? Or pass the report?
-		 */
-		intent.putExtra(ARG_TASK_ID, taskId);
 
 		android.util.Log.d("Act-LIFECYCLE", "ReportListAcivity - onItemSelected reportId " +
 				reportId);

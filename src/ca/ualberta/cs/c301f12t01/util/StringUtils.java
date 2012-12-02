@@ -23,7 +23,6 @@ import java.lang.StringBuilder;
 /**
  * StringUtils -- utilities for strings, yo!
  *
- * WARNING: I didn't write this in Eclipse.
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
  */
@@ -35,7 +34,7 @@ public class StringUtils {
      * @param <E>
      */
     @SuppressWarnings("rawtypes")
-    public static String joinToString(Iterable items, String separator) {
+    public static String joinToString(Iterable items, CharSequence seperator) {
         StringBuilder builder = new StringBuilder();
 
         /* Done in the old-style because I need to explicitly call
@@ -46,7 +45,7 @@ public class StringUtils {
             builder.append(item_iterator.next().toString());
 
             if (item_iterator.hasNext())
-                builder.append(separator);
+                builder.append(seperator);
         }
 
         return builder.toString();
