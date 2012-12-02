@@ -28,9 +28,9 @@ import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
-import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
+import ca.ualberta.cs.c301f12t01.serverStorage.ServerStorage;
 
 /**
  * Singleton app class that manages all global services.
@@ -44,6 +44,8 @@ public class TaskSourceApplication extends Application {
 	private TaskManager taskManager = null;
 	private ReportManager reportManager = null;
 	private String user = null;
+	private DeviceStorage localStorage;
+	private ServerStorage serverStorage;
 
 	private static TaskSourceApplication app = null;
 
@@ -130,6 +132,9 @@ public class TaskSourceApplication extends Application {
 		super.onCreate();
 		app = this;
         android.util.Log.d("App-LIFECYCLE", "TaskListApplication - onCreate ");
+        
+        localStorage = new DeviceStorage(getApplicationContext());
+        serverStorage = new ServerStorage();
 
 		/* I LIED! Let's eagerly set everything up. */
 		// setupReportManager();
@@ -258,11 +263,6 @@ public class TaskSourceApplication extends Application {
 			return taskManager;
 		}
 
-		DeviceStorage localStorage = new DeviceStorage(getApplicationContext());
-
-		/* TODO: Get the server interface working! */
-		// StorageInterface serverStorage = null;
-
 		/* Initialize TaskManager with stuff loaded from local storage. */
 		Collection<Task> localTaskList = localStorage.getLocalTasks().values();
 		Collection<Task> globalTaskList = localStorage.getGlobalTasks()
@@ -277,7 +277,7 @@ public class TaskSourceApplication extends Application {
 		 */
 		taskManager.getLocalTaskCollection().addObserver(localStorage);
 		taskManager.getGlobalTaskCollection().addObserver(localStorage);
-		// taskManager.getGlobalTaskCollection().addObserver(serverStorage);
+		taskManager.getGlobalTaskCollection().addObserver(serverStorage);
 
 		return taskManager;
 	}
@@ -288,8 +288,6 @@ public class TaskSourceApplication extends Application {
 			return reportManager;
 		}
 
-		StorageInterface localStorage = new DeviceStorage(
-				getApplicationContext());
 		/* TODO: Get the server interface working! */
 		reportManager = ReportManager.getInstance();
 		// Rmanager.addObserver(localStorage);

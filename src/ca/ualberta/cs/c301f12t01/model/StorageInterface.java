@@ -62,6 +62,8 @@ public interface StorageInterface {
 	
 	public void removeReport(Report reportToRemove);
 	
+	public ArrayList<Report> getAllReports();
+	
 	public ArrayList<Report> getReports(Task matchingTask);
 	
 	public ArrayList<Report> getLocalReports(Task matchingTask);

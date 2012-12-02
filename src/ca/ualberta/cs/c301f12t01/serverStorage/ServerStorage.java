@@ -26,7 +26,6 @@ import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
-import ca.ualberta.cs.c301f12t01.util.Message;
 
 /**
  * Over-arching class for all
@@ -35,7 +34,7 @@ import ca.ualberta.cs.c301f12t01.util.Message;
  * 
  */
 public class ServerStorage implements StorageInterface, Observer {
-
+	
 	/**
 	 * The server can be notified when a Task or Report has been
 	 * remove/added/updated so that it can update itself as needed.
@@ -44,39 +43,9 @@ public class ServerStorage implements StorageInterface, Observer {
 	 *            , Object message
 	 */
 	public void update(Observable obsv, Object message) {
-		Message newMessage = (Message) message;
-
-		if (newMessage.getPayload() instanceof Task) {
-
-			Task newTask = (Task) newMessage.getPayload();
-
-			switch (newMessage.getAction()) {
-			case ADDED:
-				storeTask(newTask);
-				break;
-			case REMOVED:
-				removeTask(newTask);
-				break;
-			case MODIFIED:
-				updateTask(newTask);
-				break;
-			}
-		} else if (newMessage.getPayload() instanceof Report) {
-
-			Report newReport = (Report) newMessage.getPayload();
-
-			switch (newMessage.getAction()) {
-			case ADDED:
-				storeReport(newReport);
-				break;
-			case REMOVED:
-				removeReport(newReport);
-				break;
-			case MODIFIED:
-				updateReport(newReport);
-				break;
-			}
-		}
+		
+		new ServerUpdate(this).execute(message);
+		
 	}
 
 	/**
@@ -135,6 +104,11 @@ public class ServerStorage implements StorageInterface, Observer {
 	public void removeReport(Report reportToRemove) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public ArrayList<Report> getAllReports() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public ArrayList<Report> getReports(Task matchingTask) {

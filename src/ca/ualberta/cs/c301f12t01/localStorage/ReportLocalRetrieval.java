@@ -83,6 +83,10 @@ public class ReportLocalRetrieval {
 				+ "AND " + reportSelectCollumns[0] + " = '" + matchingTask.getId().toString() + "'", 
 				null, null, null, null);
 		}
+		else if (matchingTask == null) {
+			// Get all Reports in a given scope {LOCAL, GLOBAL or TASK_CREATOR}
+			scopedReports = db.query(reportTable, reportSelectCollumns, null, null, null, null, null);
+		}
 		else {
 			// Get all Reports given the task they belong to
 			scopedReports = db.query(reportTable, 
