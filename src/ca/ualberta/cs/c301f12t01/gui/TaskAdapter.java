@@ -107,7 +107,7 @@ public class TaskAdapter extends BaseAdapter {
         summary.setText(task.getSummary());
 
 
-        boolean hasReports = TaskSourceApplication.taskHasReports(task);
+        boolean hasReports = TaskSourceApplication.taskHasReports(task.getId());
         // Hides the marker if no reports have been made.
         if (hasReports) {
             responseIndicator.setVisibility(View.VISIBLE);        	

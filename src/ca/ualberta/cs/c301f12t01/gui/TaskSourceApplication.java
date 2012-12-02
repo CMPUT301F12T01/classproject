@@ -28,7 +28,6 @@ import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
 import ca.ualberta.cs.c301f12t01.model.ReportManager;
-import ca.ualberta.cs.c301f12t01.model.StorageInterface;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 import ca.ualberta.cs.c301f12t01.model.TaskManager;
 
@@ -104,16 +103,16 @@ public class TaskSourceApplication extends Application {
 	}
 
 	/** Gets reports for the given Task from the singleton ReportManager. */
-	public static List<Report> getReports(Task task) {
-		return app.getReportsFromInstance(task);
+	public static List<Report> getReportsForTask(UUID taskId) {
+		return app.getReportsFromInstance(taskId);
 	}
 
 	/**
 	 * Returns true if the given Task has at least one Report tracked in the
 	 * singleton ReportManager.
 	 */
-	public static boolean taskHasReports(Task task) {
-		return app.taskHasReportsFromInstance(task);
+	public static boolean taskHasReports(UUID taskId) {
+		return app.taskHasReportsFromInstance(taskId);
 	}
 
 	/*
@@ -193,23 +192,23 @@ public class TaskSourceApplication extends Application {
 	 */
 	public void addReportFromInstance(Report newReport) {
 		setupReportManager();
-		reportManager.addReport(newReport);
+		reportManager.add(newReport);
 	}
 
 	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.ReportManager#getReports(ca.ualberta.cs.c301f12t01.common.Task)
 	 */
-	public List<Report> getReportsFromInstance(Task task) {
+	public List<Report> getReportsFromInstance(UUID taskId) {
 		setupReportManager();
-		return reportManager.getReports(task);
+		return reportManager.getAllReportsForTask(taskId);
 	}
 
 	/**
 	 * @see ca.ualberta.cs.c301f12t01.model.ReportManager#taskHasReports(ca.ualberta.cs.c301f12t01.common.Task)
 	 */
-	public boolean taskHasReportsFromInstance(Task task) {
+	public boolean taskHasReportsFromInstance(UUID taskId) {
 		setupReportManager();
-		return reportManager.taskHasReports(task);
+		return reportManager.taskHasReports(taskId);
 	}
 
 	/*
@@ -288,12 +287,10 @@ public class TaskSourceApplication extends Application {
 			return reportManager;
 		}
 
-		StorageInterface localStorage = new DeviceStorage(
-				getApplicationContext());
 		/* TODO: Get the server interface working! */
+		/* TODO: FIX REPORT MANAGER OMG!!!! */
 		reportManager = ReportManager.getInstance();
 		// Rmanager.addObserver(localStorage);
-		reportManager.setLocalStorage(localStorage);
 
 		return reportManager;
 
