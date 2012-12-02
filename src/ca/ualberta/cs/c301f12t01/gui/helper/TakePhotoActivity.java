@@ -45,13 +45,13 @@ public class TakePhotoActivity extends Activity {
 	            byte[] byteArray = stream.toByteArray();
 	            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 	    		Log.d("Act-lifecycle", encodedImage);
-	    		finish();
 	        } else if (resultCode == Activity.RESULT_CANCELED) {
 	            // User cancelled the image capture
 	        } else {
 	            // Image capture failed, advise user
 	        }
 	    }
+		finish();
 	}
 	
     @Override
