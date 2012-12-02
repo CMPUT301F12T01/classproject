@@ -39,8 +39,7 @@ public class ReportServerRetrieval {
 
 	/**
 	 * 
-	 * @return
-	 * 			Returns all simple server objects on server
+	 * @return all simple server objects on server
 	 */
 	public static ReportServerObj[] getAllSO() {
 		// first make the call to the server
@@ -50,14 +49,14 @@ public class ReportServerRetrieval {
 		String jsonString = server.post(nvp);
 		// Now convert to an array of server objects
 		Gson gson = new Gson();
-		ReportServerObj[] allSO = gson.fromJson(jsonString, ReportServerObj[].class);
+		ReportServerObj[] allSO = gson.fromJson(jsonString,
+				ReportServerObj[].class);
 		return allSO;
 	}
 
 	/**
 	 * 
-	 * @return
-	 * 			all tasks on the server
+	 * @return all reports on the server
 	 */
 	public static ArrayList<Report> getAllReports() {
 		ReportServerObj[] allSO = getAllSO();
@@ -71,35 +70,74 @@ public class ReportServerRetrieval {
 		}
 		return reports;
 	}
-	
-	public static ArrayList<Report> getTaskReports(UUID taskID){
+
+	/**
+	 * @param matchingTask
+	 *            Task that reports should belong to
+	 * @return all reports on the server that match matchingTask
+	 */
+	public static ArrayList<Report> getAllReports(Task matchingTask) {
+		ReportServerObj[] allSO = getAllSO();
+		ArrayList<Report> reports = new ArrayList<Report>();
+		// iterate through and grab task
+		for (ReportServerObj so : allSO) {
+			if (so.getSummary().equals("report")) {
+				Report r = getContentFromServer(so.getId());
+				if (r.getTaskID().equals(matchingTask.getId())) {
+					reports.add(r);
+				}
+			}
+		}
+		return reports;
+	}
+
+	/**
+	 * 
+	 * @param taskID
+	 *            UUID that report's taskID should match
+	 * @return ArrayList of reports that match taskID
+	 */
+	public static ArrayList<Report> getTaskReports(UUID taskID) {
 		ArrayList<Report> al = getAllReports();
 		ArrayList<Report> task = new ArrayList<Report>();
-		for (Report r : al){
-			//System.out.println("looping through. taskid is" + taskID.toString() + " and report id is: " + r.getTaskID().toString());
-			if (r.getTaskID().equals(taskID)){
+		for (Report r : al) {
+			if (r.getTaskID().equals(taskID)) {
 				task.add(r);
 			}
 		}
 		return task;
 	}
-	
-	public static ArrayList<Report> getGlobalReports(Task matchingTask){
+
+	/**
+	 * 
+	 * @param matchingTask
+	 *            Task that reports should belong to
+	 * @return ArrayList of global reports
+	 */
+	public static ArrayList<Report> getGlobalReports(Task matchingTask) {
 		ArrayList<Report> al = getAllReports();
 		ArrayList<Report> toReturn = new ArrayList<Report>();
-		for (Report r : al){
-			if (r.getSharing().equals(Sharing.GLOBAL) && r.getTaskID().equals(matchingTask.getId())){
+		for (Report r : al) {
+			if (r.getSharing().equals(Sharing.GLOBAL)
+					&& r.getTaskID().equals(matchingTask.getId())) {
 				toReturn.add(r);
 			}
 		}
 		return toReturn;
 	}
-	
-	public static ArrayList<Report> getLocalReports(Task matchingTask){
+
+	/**
+	 * 
+	 * @param matchingTask
+	 *            Task that reports should belong to
+	 * @return ArrayList of local reports
+	 */
+	public static ArrayList<Report> getLocalReports(Task matchingTask) {
 		ArrayList<Report> al = getAllReports();
 		ArrayList<Report> toReturn = new ArrayList<Report>();
-		for (Report r : al){
-			if (r.getSharing().equals(Sharing.LOCAL) && r.getTaskID().equals(matchingTask.getId())){
+		for (Report r : al) {
+			if (r.getSharing().equals(Sharing.LOCAL)
+					&& r.getTaskID().equals(matchingTask.getId())) {
 				toReturn.add(r);
 			}
 		}
@@ -127,18 +165,4 @@ public class ReportServerRetrieval {
 		return so.getContent();
 	}
 
-	public static ArrayList<ReportServerObj> getReportSO(UUID id) {
-		// first get all tasks
-		ArrayList<ReportServerObj> toReturn = new ArrayList<ReportServerObj>();
-		ReportServerObj[] allSO = getAllSO();
-		for (ReportServerObj so : allSO) {
-			so.getContentFromServer(); //must call this everytime
-			if (so.getSummary().equals("report")) {
-				if (so.getContent().getId().equals(id)) {
-					toReturn.add(so);
-				}
-			}
-		}
-		return toReturn;
-	}
 }

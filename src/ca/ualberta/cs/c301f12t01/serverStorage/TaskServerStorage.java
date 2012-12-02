@@ -33,6 +33,11 @@ import ca.ualberta.cs.c301f12t01.common.Task;
  */
 public class TaskServerStorage {
 	
+	/**
+	 * 
+	 * @param task
+	 * 			Task to store on the server
+	 */
 	public static void storeTask(Task task){
 		
 		//first make task into json

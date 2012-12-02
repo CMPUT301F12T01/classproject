@@ -33,9 +33,13 @@ import com.google.gson.Gson;
  * 
  */
 public class ReportServerStorage {
-	
-	public static void storeReport(Report report) {
 
+	/**
+	 * 
+	 * @param report
+	 * 			Report to store on the server
+	 */
+	public static void storeReport(Report report) {
 		// first make report into json
 		Gson gson = new Gson();
 		String reportJson = gson.toJson(report);

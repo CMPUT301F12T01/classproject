@@ -49,6 +49,9 @@ public class TaskServerObj {
 	public void setContent(Task content) {
 		this.content = content;
 	}
+	/**This needs to be called to get the actual content
+	 * with a get action
+	 */
 	public void getContentFromServer(){
 		Task t = TaskServerRetrieval.getContentFromServer(this.id);
 		setContent(t);
