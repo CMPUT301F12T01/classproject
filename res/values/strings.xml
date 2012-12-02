@@ -44,6 +44,7 @@
     <string name="menu_delete_task">Delete Task</string>
     <string name="menu_delete_task_short">Delete</string>
     <string name="task_no_description">No description</string>
+    <string name="task_has_no_reports">No reports for this task</string>
 
     <!-- Defining Tasks -->
     <string name="task_request">Request</string>
@@ -113,5 +114,6 @@
     <string name="done">Done</string>
     <string name="task_list_status_description">Fulfilled</string>
     <string name="title_activity_take_photo">TakePhotoActivity</string>
+    <string name="menu_random_task">Random task</string>
 
 </resources>

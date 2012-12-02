@@ -132,6 +132,14 @@ public class TaskSourceApplication extends Application {
 	 * Handles the singleton's instantiation.
 	 */
 
+	/**
+	 * Returns the singleton TaskSourceApplication instance.
+	 * @return
+	 */
+	public static TaskSourceApplication getInstance() {
+		return app;
+	}
+
 	/** Sets the static application to the singleton instance. */
 	public TaskSourceApplication() {
 	}
