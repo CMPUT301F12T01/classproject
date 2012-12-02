@@ -8,6 +8,7 @@
         android:targetSdkVersion="15" />
 
     <!-- For getting device ID -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permision.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA"/>

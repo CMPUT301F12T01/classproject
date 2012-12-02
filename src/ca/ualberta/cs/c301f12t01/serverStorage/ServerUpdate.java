@@ -41,10 +41,10 @@ public class ServerUpdate extends AsyncTask<Object, Void, Void>
 	 * @see android.os.AsyncTask#doInBackground(Params[])
 	 */
 	@Override
-	protected Void doInBackground(Object... message)
+	protected Void doInBackground(Object... OArray)
 	{
 		
-		Message newMessage = (Message) message[0];
+		Message newMessage = (Message) OArray[0];
 
 		if (newMessage.getPayload() instanceof Task) {
 			
