@@ -77,9 +77,21 @@ public class TaskManager {
 	public void modifyTask(Task oldTask, Task newTask) {
 		TaskCollection appropriateCollection;
 		
-		appropriateCollection = getCollectionForTask(oldTask);
-		
-		appropriateCollection.modify(oldTask, newTask);
+		/* TODO: figure out if the task collections get changed and, remove if they have. */
+		if (oldTask.isGlobal().equals(newTask.isGlobal())) {
+			appropriateCollection = getCollectionForTask(oldTask);
+			
+			appropriateCollection.modify(oldTask, newTask);
+		} else if (oldTask.isLocal().equals(newTask.isLocal())) {
+			appropriateCollection = getCollectionForTask(oldTask);
+			
+			appropriateCollection.modify(oldTask, newTask);
+		} else {
+			TaskCollection appropriateOldCollection = getCollectionForTask(oldTask);
+			TaskCollection appropriateNewCollection = getCollectionForTask(newTask);
+			appropriateOldCollection.removeElement(oldTask);
+			appropriateNewCollection.add(newTask);
+		}
 	}
 	
 	/**
