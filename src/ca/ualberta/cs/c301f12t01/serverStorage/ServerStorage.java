@@ -44,7 +44,9 @@ public class ServerStorage implements StorageInterface, Observer {
 	 */
 	public void update(Observable obsv, Object message) {
 		
-		new ServerUpdate(this).execute(message);
+		Object[] OArray = new Object[] {message};
+		
+		new ServerUpdate(this).execute(OArray);
 		
 	}
 

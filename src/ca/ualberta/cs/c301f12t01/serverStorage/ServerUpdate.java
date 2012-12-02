@@ -17,13 +17,19 @@
  */
 package ca.ualberta.cs.c301f12t01.serverStorage;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.gui.TaskSourceApplication;
 import ca.ualberta.cs.c301f12t01.util.Message;
 
 /**
+ * Once a ServerStorage has been notified of a change
+ * this call is instantiated in order to handle this the 
+ * modification of the server in a separate thread
  * 
  * @author Neil Borle
  *
@@ -37,14 +43,18 @@ public class ServerUpdate extends AsyncTask<Object, Void, Void>
 		serverStorageInstance = serverStorage;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.os.AsyncTask#doInBackground(Params[])
+	/** 
+	 * Once update has been called in Server storage
+	 * this method is called to spawn a new thread handling
+	 * updating the server. 
+	 * 
+	 * @param Object... OArray
 	 */
 	@Override
-	protected Void doInBackground(Object... message)
+	protected Void doInBackground(Object... OArray)
 	{
 		
-		Message newMessage = (Message) message[0];
+		Message newMessage = (Message) OArray[0];
 
 		if (newMessage.getPayload() instanceof Task) {
 			
@@ -85,21 +95,19 @@ public class ServerUpdate extends AsyncTask<Object, Void, Void>
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+	/** 
+	 * After finishing the updating of the server notify the
+	 * user in the UI thread
 	 */
 	@Override
 	protected void onPostExecute(Void result)
 	{
 		
-//		Context context = TaskSourceApplication.getApplicationContext();
-//		CharSequence text = "Send to the server!";
-//		int duration = Toast.LENGTH_SHORT;
-//
-//		Toast toast = Toast.makeText(context, text, duration);
-//		toast.show();
+		Context context = TaskSourceApplication.getInstance().getApplicationContext();
 
-		// TODO Auto-generated method stub
+		Toast toast = Toast.makeText(context, "Server updated!", Toast.LENGTH_LONG);
+		toast.show();
+
 		super.onPostExecute(result);
 	}
 
