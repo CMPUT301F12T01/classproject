@@ -297,7 +297,7 @@ public class TaskSourceApplication extends Application {
 		taskManager.getLocalTaskCollection().addObserver(localStorage);
 		taskManager.getGlobalTaskCollection().addObserver(localStorage);
 		//TODO: fix server, then uncomment this:
-		//taskManager.getGlobalTaskCollection().addObserver(serverStorage);
+		taskManager.getGlobalTaskCollection().addObserver(serverStorage);
 
 		return taskManager;
 	}
@@ -314,7 +314,7 @@ public class TaskSourceApplication extends Application {
 
 		reportManager.addObserver(localStorage);
 		//TODO: fix server, then uncomment this:
-		//reportManager.addObserver(serverStorage);
+		reportManager.addObserver(serverStorage);
 
 		return reportManager;
 
