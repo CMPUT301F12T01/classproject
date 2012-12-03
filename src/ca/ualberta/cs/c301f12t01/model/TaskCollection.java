@@ -39,9 +39,13 @@ public class TaskCollection extends DualIndexedObservableCollection<UUID, Task> 
      */
     public TaskCollection(Collection<Task> tasks) {
         super();
+        
+        System.err.println("Populating...");
 
-        for (Task task : tasks)
+        for (Task task : tasks) {
+        	System.err.println(task);
             addNoNotify(task);
+        }
     }
 
     /** Blank constructor. It's recommended that the TaskCollection is constructed using 

@@ -57,7 +57,6 @@ public class EditTaskActivity extends Activity {
 		/* Collect strings and stuff from the Task instance. */
 
 		/* Get the views */
-		RadioGroup sharingButtons = (RadioGroup) findViewById(R.id.radio_group_sharing);
 		EditText descriptionView = (EditText) findViewById(R.id.edit_description);
 		EditText summaryView = (EditText) findViewById(R.id.edit_summary);
 		ToggleButton text_toggle = (ToggleButton) findViewById(R.id.toggle_text);

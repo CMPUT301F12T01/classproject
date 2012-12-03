@@ -17,9 +17,12 @@
  */
 package ca.ualberta.cs.c301f12t01.gui.helper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 
 /**
@@ -47,23 +50,17 @@ public class RandomTaskGenerator {
 
 	/** Returns a random Task ID from the tracked TaskManager. */
 	public UUID getRandomTaskId() {
-
-		/* Not gonna lie: this method is faulty. :/ */
-
-		TaskCollection collectionToPickFrom;
-		/* Pick a random collection. */
-		int collectionIndex = generator.nextInt(collections.length);
-		collectionToPickFrom = collections[collectionIndex];
-
-		if (collectionToPickFrom.isEmpty()) {
-			/* DAMNIT! Just return null in this case. */
-			return null;
+		List<UUID> taskList = new ArrayList<UUID>();
+		
+		for (TaskCollection collection : collections) {
+			for (Task task : collection) {
+				taskList.add(task.getId());
+			}
 		}
-
-		int randomIndex = generator.nextInt(collectionToPickFrom.size());
-
-		return collectionToPickFrom.getAt(randomIndex).getId();
-
+		
+		int index = generator.nextInt(taskList.size());
+		
+		return taskList.get(index);
 	}
 
 }
