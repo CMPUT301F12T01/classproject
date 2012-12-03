@@ -18,7 +18,6 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
-import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -32,7 +31,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewConfiguration;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.R;
@@ -68,9 +66,6 @@ public class TaskDetailActivity extends Activity {
 		setContentView(R.layout.activity_task_detail);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		/* This forces overflow to appear on the action bar! */
-		getOverflowMenu();
 
 		/* The list of tasks Activity passed us a taskID, so we should get it */
 		Bundle taskBundle = getIntent().getExtras();
@@ -245,27 +240,4 @@ public class TaskDetailActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
-	/**
-	 * Disables hardware menu button for showing overflow. Instead the Action
-	 * Bar will have vertical ellipsis to show the overflow. Call in onCreate.
-	 * 
-	 * NOTE: this is apparently a bad idea, at least according to:
-	 * http://stackoverflow.com/questions/9286822/how-to-force-use-of-overflow-menu-on-devices-with-menu-button
-	 * 
-	 */
-	private void getOverflowMenu() {
-		try {
-			ViewConfiguration config = ViewConfiguration.get(this);
-			Field menuKeyField = ViewConfiguration.class
-					.getDeclaredField("sHasPermanentMenuKey");
-			if (menuKeyField != null) {
-				menuKeyField.setAccessible(true);
-				menuKeyField.setBoolean(config, false);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 }
