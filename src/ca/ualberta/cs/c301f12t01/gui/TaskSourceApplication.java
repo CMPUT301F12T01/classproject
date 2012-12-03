@@ -151,7 +151,6 @@ public class TaskSourceApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		app = this;
-		android.util.Log.d("App-LIFECYCLE", "TaskListApplication - onCreate ");
 
 		localStorage = new DeviceStorage(getApplicationContext());
 		serverStorage = new ServerStorage();
@@ -354,8 +353,6 @@ public class TaskSourceApplication extends Application {
 						addTask(task);
 					}
 				}
-				Toast.makeText(getBaseContext(), "Got all tasks",
-						Toast.LENGTH_SHORT).show();
 			}
 
 		}.execute();
@@ -379,8 +376,6 @@ public class TaskSourceApplication extends Application {
 						addReport(report);
 					}
 				}
-				Toast.makeText(getBaseContext(), "Got all reports",
-						Toast.LENGTH_SHORT).show();
 			}
 
 		}.execute();	

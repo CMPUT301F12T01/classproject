@@ -17,13 +17,10 @@
  */
 package ca.ualberta.cs.c301f12t01.serverStorage;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
-import ca.ualberta.cs.c301f12t01.gui.TaskSourceApplication;
 import ca.ualberta.cs.c301f12t01.util.Message;
 
 /**
@@ -100,13 +97,7 @@ public class ServerUpdate extends AsyncTask<Object, Void, Void>
 	 * user in the UI thread
 	 */
 	@Override
-	protected void onPostExecute(Void result)
-	{
-		
-		Context context = TaskSourceApplication.getInstance().getApplicationContext();
-
-		Toast toast = Toast.makeText(context, "Server updated!", Toast.LENGTH_LONG);
-		toast.show();
+	protected void onPostExecute(Void result) {
 
 		super.onPostExecute(result);
 	}

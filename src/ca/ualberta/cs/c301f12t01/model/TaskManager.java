@@ -169,7 +169,6 @@ public class TaskManager {
 		for (TaskCollection collection : allCollections.values()) {
 
 			if (collection == null) {
-				System.err.println("Found a null collection.");
 				continue;
 			}
 

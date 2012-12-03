@@ -60,7 +60,6 @@ public class ReportServerRetrieval {
 			
 			MediaType media = MediaType.valueOf(responseObject.get("mediaType").getAsString());
 
-			System.err.println("got a " + media.toString() + " response");
 			
 			switch (media) {
 			case TEXT:
@@ -71,6 +70,7 @@ public class ReportServerRetrieval {
 				return new PhotoResponse(imageData, imageType);
 			case AUDIO:
 				System.err.println("CANNOT COPE WITH AUDIO TYPE!");
+				assert false;
 				return null;
 			}
 			
