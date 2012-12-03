@@ -18,7 +18,6 @@
 package ca.ualberta.cs.c301f12t01.serverStorage;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
-import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
  * Object that is stored on the server Used for converting server json to Report
