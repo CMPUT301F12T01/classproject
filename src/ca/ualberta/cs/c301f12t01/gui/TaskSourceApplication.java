@@ -324,7 +324,7 @@ public class TaskSourceApplication extends Application {
 
 		
 		fetchOnlineTasks();
-		//fetchOnlineReports();
+		fetchOnlineReports();
 
 		reportManager.addObserver(localStorage);
 		reportManager.addObserver(serverStorage);

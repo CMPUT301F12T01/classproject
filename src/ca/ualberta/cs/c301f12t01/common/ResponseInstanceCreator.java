@@ -19,8 +19,6 @@ package ca.ualberta.cs.c301f12t01.common;
 
 import java.lang.reflect.Type;
 
-import ca.ualberta.cs.c301f12t01.testing.TestUtils;
-
 import com.google.gson.InstanceCreator;
 
 /**
@@ -34,7 +32,7 @@ public class ResponseInstanceCreator implements InstanceCreator<Response>{
 	 * @see com.google.gson.InstanceCreator#createInstance(java.lang.reflect.Type)
 	 */
 	public Response createInstance(Type type) {
-		return TestUtils.makeSimpleTextResponse();
+		return new TextResponse("**GSON**");
 	}
 	
 
