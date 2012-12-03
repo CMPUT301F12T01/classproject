@@ -25,10 +25,14 @@ import java.util.UUID;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
+import ca.ualberta.cs.c301f12t01.common.Response;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
+
+import ca.ualberta.cs.c301f12t01.common.ResponseInstanceCreator;
 
 /**
  * 
@@ -160,7 +164,8 @@ public class ReportServerRetrieval {
 		Server server = new Server();
 		String jsonString = server.post(nvp);
 		// convert to SO
-		Gson gson = new Gson();
+		GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Response.class, new ResponseInstanceCreator());
+		Gson gson = gsonBuilder.create();
 		ReportServerObj so = gson.fromJson(jsonString, ReportServerObj.class);
 		return so.getContent();
 	}
