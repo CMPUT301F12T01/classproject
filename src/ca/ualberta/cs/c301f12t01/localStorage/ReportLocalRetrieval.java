@@ -84,11 +84,10 @@ public class ReportLocalRetrieval {
 				null, null, null, null);
 
 		} else if (matchingTask == null) {
-			// Get ALL reports.
+			// Get ALL reports 
 			scopedReports = db.query(reportTable, reportSelectColumns, null, null, null, null, null);
 			
 		} else {
-			// wtf neil -- Sincerely, Eddie
 			// Get all Reports given the task they belong to
 			scopedReports = db.query(reportTable, 
 				reportSelectColumns, reportSelectColumns[0] + " = '" + 

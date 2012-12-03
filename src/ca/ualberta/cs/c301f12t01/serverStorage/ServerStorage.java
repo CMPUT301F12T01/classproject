@@ -26,7 +26,6 @@ import java.util.UUID;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.model.StorageInterface;
-import ca.ualberta.cs.c301f12t01.util.Message;
 
 /**
  * Over-arching class for all
@@ -44,39 +43,11 @@ public class ServerStorage implements StorageInterface, Observer {
 	 *            , Object message
 	 */
 	public void update(Observable obsv, Object message) {
-		Message newMessage = (Message) message;
-
-		if (newMessage.getPayload() instanceof Task) {
-
-			Task newTask = (Task) newMessage.getPayload();
-
-			switch (newMessage.getAction()) {
-			case ADDED:
-				storeTask(newTask);
-				break;
-			case REMOVED:
-				removeTask(newTask);
-				break;
-			case MODIFIED:
-				updateTask(newTask);
-				break;
-			}
-		} else if (newMessage.getPayload() instanceof Report) {
-
-			Report newReport = (Report) newMessage.getPayload();
-
-			switch (newMessage.getAction()) {
-			case ADDED:
-				storeReport(newReport);
-				break;
-			case REMOVED:
-				removeReport(newReport);
-				break;
-			case MODIFIED:
-				updateReport(newReport);
-				break;
-			}
-		}
+		
+		Object[] OArray = new Object[] {message};
+		
+		new ServerUpdate(this).execute(OArray);
+		
 	}
 
 	/**

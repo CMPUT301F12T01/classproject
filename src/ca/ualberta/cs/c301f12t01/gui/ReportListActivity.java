@@ -34,9 +34,8 @@ public class ReportListActivity extends Activity implements
 ReportListFragment.Callbacks {
 
 	private static final String ARG_REPORT_ID = "report_id";
-	private static final String ARG_TASK_ID = "task_id";
 
-	private UUID taskId;
+	//private UUID taskId;
 
 	/** onCreate - displays home/back button, displays the layout, 
 	 * get information from the TaskDetailActivity
@@ -49,12 +48,6 @@ ReportListFragment.Callbacks {
 		setContentView(R.layout.activity_report_list);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		/* Get taskId from bundle */
-		Bundle taskBundle = getIntent().getExtras();		
-		if (taskBundle != null) {
-			taskId = (UUID) taskBundle.getSerializable(ARG_TASK_ID);
-		}
 
 		if (savedInstanceState == null) {
 		
