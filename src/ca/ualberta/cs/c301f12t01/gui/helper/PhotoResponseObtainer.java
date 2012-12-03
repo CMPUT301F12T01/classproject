@@ -99,4 +99,13 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 		imageView.setImageBitmap(bitMap);
 	}
 
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#hasBeenFulfilled()
+	 */
+	@Override
+	public boolean hasBeenFulfilled() {
+		// TODO Auto-generated method stub
+		return encodedImage != null;
+	}
+
 }

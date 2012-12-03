@@ -40,6 +40,9 @@ public abstract class ResponseObtainer {
 	public abstract void setupFulfillRequest();
 	
 	public abstract void setupDisplayResponse(Response response);
+	
+	/** Returns whether the specified response has been fulfilled by the TaskFulfiller. */
+	public abstract boolean hasBeenFulfilled();
 
 	public ViewGroup getView() {
 		return viewGroup;

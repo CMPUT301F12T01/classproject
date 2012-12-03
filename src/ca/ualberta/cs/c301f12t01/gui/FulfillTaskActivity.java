@@ -130,6 +130,11 @@ public class FulfillTaskActivity extends Activity {
 	 */
 	protected Boolean onFormCompletion() {
 
+		if (hasNoResponse()) {
+			return false;
+		}
+		
+		
 		Report report = new Report(task);
 
 		attachReportSharingMode(report);
@@ -147,8 +152,23 @@ public class FulfillTaskActivity extends Activity {
 
 		android.util.Log.d("Act-LIFECYCLE",
 				"New number of reports for the task - "
-						+ TaskSourceApplication.getReportsForTask(task.getId()).size());
+						+ TaskSourceApplication.getReportsForTask(task.getId())
+								.size());
 
+		return true;
+	}
+
+	/**
+	 * Returns true if the report has no responses (and thus, invalid).
+	 * @return
+	 */
+	private boolean hasNoResponse() {
+		for (ResponseObtainer obtainer : obtainers) {
+			if (obtainer.hasBeenFulfilled()) {
+				return false;
+			}
+		}
+		
 		return true;
 	}
 
@@ -183,7 +203,8 @@ public class FulfillTaskActivity extends Activity {
 	}
 
 	/**
-	 * Attaches every Response on the current activity to the given Report.
+	 * Attaches every Response on the current activity to the given Report and
+	 * returns the amount attached.
 	 * 
 	 * @param report
 	 */
@@ -215,6 +236,9 @@ public class FulfillTaskActivity extends Activity {
 				Toast.makeText(getBaseContext(), R.string.fulfill_success,
 						Toast.LENGTH_SHORT).show();
 				finish();
+			} else {
+				Toast.makeText(getBaseContext(), R.string.error_zero_responses,
+						Toast.LENGTH_SHORT).show();
 			}
 			return true;
 		}
