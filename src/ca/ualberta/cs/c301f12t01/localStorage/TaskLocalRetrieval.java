@@ -80,9 +80,9 @@ public class TaskLocalRetrieval {
 			newTask.setDescription(scopedTasks.getString(
 					scopedTasks.getColumnIndex(taskSelectColumns[4])));
 			if (global) {
-				newTask.isGlobal();
+				newTask.setGlobal();
 			} else {
-				newTask.isLocal();
+				newTask.setLocal();
 			}
 			
 			// GET ALL REQUESTS ASSOCIATED WITH THE TASK
