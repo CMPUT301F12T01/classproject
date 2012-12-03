@@ -17,8 +17,14 @@
  */
 package ca.ualberta.cs.c301f12t01.gui.helper;
 
+import ca.ualberta.cs.c301f12t01.R;
 import ca.ualberta.cs.c301f12t01.common.Response;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 /**
  * 
@@ -40,12 +46,28 @@ public class AudioResponseObtainer extends ResponseObtainer {
 		return null;
 	}
 
+	/* We need to be able to click on a button to take a photo */
+	public void setButton() {
+
+		final TextView button = (TextView) getView().findViewById(R.id.button_attach_audio);
+
+		button.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View arg0) {
+				
+				Intent intent = new Intent (button.getContext(), RecordAudio.class);
+				((Activity) button.getContext()).startActivityForResult(intent, 2);
+			}
+		});  
+	}
+	
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupFulfillRequest()
 	 */
 	@Override
 	public void setupFulfillRequest() {
 		// TODO Auto-generated method stub
+		setButton();
 		
 	}
 

@@ -65,7 +65,7 @@
     <string name="error_missing_summary">Please fill out a summary</string>
     <string name="error_zero_requests">Please add a request</string>
     <string name="task_create_success">Task Created</string>
-    
+
     <!-- Editing & Deleting a Task -->
     <string name="title_activity_edit_task">Edit Task</string>
     <string name="edit_task_done">Update</string>
@@ -74,8 +74,6 @@
     <string name="task_update_success">Task updated</string>
     <string name="cancel">Cancel</string>
     <string name="task_delete_success">Task Deleted</string>
-
-    
 
     <!-- Fulfilling a task -->
     <string name="title_activity_fulfill_task">Fulfill Task</string>
@@ -89,7 +87,6 @@
     <string name="fulfill_success">Report saved</string>
     <string name="error_zero_responses">Must fulfill at least one response</string>
 
-
     <!-- Report List for a Task -->
     <string name="title_activity_report_list">View Reports</string>
 
@@ -99,11 +96,11 @@
     <string name="text_response_info">Text Response:</string>
     <string name="photo_response_info">Photo Response:</string>
     <string name="timestamp">Completed On:</string>
-    
+
     <!-- Misc -->
-    
+
     <string name="list_seperator">,\u0020</string>
-    
+
     <!-- Testing strings: throw away later? -->
     <string name="TEST_LONG_SUMMARY">THIS IS A VERY LONG SUMMARY THAT 
         	SHOULD HOPEFULLY GET CUT OFF OR SOMETHING LIKE THAT. 
@@ -116,5 +113,6 @@
     <string name="task_list_status_description">Fulfilled</string>
     <string name="title_activity_take_photo">TakePhotoActivity</string>
     <string name="menu_random_task">Random task</string>
+    <string name="title_activity_record_audio">RecordAudio</string>
 
 </resources>
