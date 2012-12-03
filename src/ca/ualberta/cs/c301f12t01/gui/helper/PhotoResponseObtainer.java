@@ -104,8 +104,8 @@ public class PhotoResponseObtainer extends ResponseObtainer {
 	 */
 	@Override
 	public boolean hasBeenFulfilled() {
-		// TODO Auto-generated method stub
-		return encodedImage != null;
+		// this is disgusting
+		return (TakePhotoActivity.encodedImage != null);
 	}
 
 }
