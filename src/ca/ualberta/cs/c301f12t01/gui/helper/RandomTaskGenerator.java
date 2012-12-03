@@ -52,7 +52,7 @@ public class RandomTaskGenerator {
 
 		TaskCollection collectionToPickFrom;
 		/* Pick a random collection. */
-		int collectionIndex = generator.nextInt(1);
+		int collectionIndex = generator.nextInt(collections.length);
 		collectionToPickFrom = collections[collectionIndex];
 
 		if (collectionToPickFrom.isEmpty()) {
