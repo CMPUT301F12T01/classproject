@@ -17,22 +17,29 @@
  */
 package ca.ualberta.cs.c301f12t01.serverStorage;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import org.apache.http.message.BasicNameValuePair;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import ca.ualberta.cs.c301f12t01.common.MediaType;
+import ca.ualberta.cs.c301f12t01.common.PhotoResponse;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Response;
 import ca.ualberta.cs.c301f12t01.common.Sharing;
 import ca.ualberta.cs.c301f12t01.common.Task;
+import ca.ualberta.cs.c301f12t01.common.TextResponse;
 
-import ca.ualberta.cs.c301f12t01.common.ResponseInstanceCreator;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 
 /**
  * 
@@ -40,6 +47,39 @@ import ca.ualberta.cs.c301f12t01.common.ResponseInstanceCreator;
  * 
  */
 public class ReportServerRetrieval {
+	
+	
+	public static class ResponseDeserializer implements JsonDeserializer<Response> {
+
+		/* (non-Javadoc)
+		 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+		 */
+		public Response deserialize(JsonElement json, Type type,
+				JsonDeserializationContext context) throws JsonParseException {
+			JsonObject responseObject = json.getAsJsonObject();
+			
+			MediaType media = MediaType.valueOf(responseObject.get("mediaType").getAsString());
+
+			System.err.println("got a " + media.toString() + " response");
+			
+			switch (media) {
+			case TEXT:
+				return new TextResponse(responseObject.get("text").getAsString());
+			case PHOTO:
+				String imageData = responseObject.get("photoData64").getAsString();
+				String imageType = responseObject.get("type").getAsString();
+				return new PhotoResponse(imageData, imageType);
+			case AUDIO:
+				System.err.println("CANNOT COPE WITH AUDIO TYPE!");
+				return null;
+			}
+			
+			return null;
+		}
+		
+		
+	}
+	
 
 	/**
 	 * 
@@ -163,9 +203,12 @@ public class ReportServerRetrieval {
 		// post
 		Server server = new Server();
 		String jsonString = server.post(nvp);
+
 		// convert to SO
-		GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Response.class, new ResponseInstanceCreator());
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Response.class, new ResponseDeserializer());
 		Gson gson = gsonBuilder.create();
+
 		ReportServerObj so = gson.fromJson(jsonString, ReportServerObj.class);
 		return so.getContent();
 	}

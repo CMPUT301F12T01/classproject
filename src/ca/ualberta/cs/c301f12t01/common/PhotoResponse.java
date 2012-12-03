@@ -32,6 +32,8 @@ public class PhotoResponse implements Response, Serializable {
 	 */
 	private static final long serialVersionUID = 1658994885795864110L;
 	
+	public MediaType mediaType = MediaType.PHOTO;
+	
 	private String type;
 	private String photoData64;
     /**
