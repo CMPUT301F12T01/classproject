@@ -35,8 +35,8 @@
 
     <!-- Show photos in the response -->
 
-    <Gallery
-        android:id="@+id/gallery_response"
+    <ImageView
+        android:id="@+id/image_response"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

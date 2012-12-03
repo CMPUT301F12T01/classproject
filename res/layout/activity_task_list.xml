@@ -16,12 +16,14 @@
   limitations under the License. 
 -->
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/task_list"
-    android:name="ca.ualberta.cs.c301f12t01.gui.TaskListFragment"
+    android:name="ca.ualberta.cs.c301f12t01.gui.TaskListActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    tools:context=".gui.TaskListActivity" />
+    tools:context=".gui.TaskListActivity"
+    android:padding="2dp"
+    android:background="@drawable/task_background" >
+
+</LinearLayout>

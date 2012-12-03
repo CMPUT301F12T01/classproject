@@ -7,11 +7,20 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="15" />
 
+    <!-- For getting device ID -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permision.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
+
     <application
         android:name=".gui.TaskSourceApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/TaskSourceTheme" >
+
+        <!-- Main Activity: Lists different groupings of tasks -->
         <activity
             android:name=".gui.TaskListActivity"
             android:label="@string/app_name"
@@ -22,6 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- View the details of a task -->
         <activity
             android:name=".gui.TaskDetailActivity"
             android:label="@string/title_task_detail"
@@ -30,17 +41,59 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".gui.TaskListActivity" />
         </activity>
+
+        <!-- Define a new task -->
         <activity
             android:name=".gui.DefineTaskActivity"
-            android:label="@string/title_activity_define_task" >
+            android:label="@string/title_activity_define_task"
+            android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
         </activity>
+
+        <!-- Fulfill a task -->
         <activity
             android:name=".gui.FulfillTaskActivity"
             android:label="@string/title_activity_fulfill_task"
             android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
+        </activity>
+
+        <!-- View the list of reports for a task -->
+        <activity
+            android:name=".gui.ReportListActivity"
+            android:label="@string/title_activity_report_list" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />
+        </activity>
+
+        <!-- View the responses (contents) of a report -->
+        <activity
+            android:name=".gui.ReportDetailActivity"
+            android:label="@string/title_activity_report_detail" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.ReportDetailActivity" />
+        </activity>
+
+        <!-- Edit Task -->
+        <activity
+            android:name=".gui.EditTaskActivity"
+            android:label="@string/title_activity_edit_task"
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.c301f12t01.gui.EditTaskActivity" />
+        </activity>
+        
+        <!-- Take Photo (Fulfilling a task) -->
+        <activity
+            android:name=".gui.helper.TakePhotoActivity"
+            android:label="@string/title_activity_take_photo" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.c301f12t01.gui.TaskListActivity" />

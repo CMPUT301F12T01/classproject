@@ -26,6 +26,8 @@ import java.io.Serializable;
  */
 public class AudioResponse implements Response {
     
+	public MediaType mediaType = MediaType.AUDIO;
+	
     /**
      * 
      */

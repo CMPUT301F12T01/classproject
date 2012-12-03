@@ -17,7 +17,8 @@
  */
 package ca.ualberta.cs.c301f12t01.model;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 import ca.ualberta.cs.c301f12t01.common.Report;
@@ -25,6 +26,9 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 
 /**
  * Class to interface between the model and the storage
+ *
+ * Refactored to return HashMaps and take Tasks instead
+ * of taking UUIDs
  *
  *@author Mitchell Home
  *@author Neil Borle
@@ -34,22 +38,36 @@ import ca.ualberta.cs.c301f12t01.common.Task;
 
 public interface StorageInterface {
 	
+	// Handle closing the Database
+	public void close();
+	
 	// Storage and retrieval of Tasks
 	public void storeTask(Task taskToStore);
 	
-	public Collection<Task> getOwnTasks(UUID userid);
+	public void updateTask(Task taskToUpdate);
 	
-	public Collection<Task> getLocalTasks();
+	public void removeTask(Task taskToRemove);
 	
-	public Collection<Task> getGlobalTasks();
+	// wtf, neil
+	//public HashMap<UUID, Task> getOwnTasks(String userid);
+	
+	public HashMap<UUID, Task> getLocalTasks();
+	
+	public HashMap<UUID, Task> getGlobalTasks();
 	
 	// Storage and retrieval of reports
 	public void storeReport(Report reportToStore);
 	
-	public Collection<Report> getLocalReports(UUID taskid);
+	public void updateReport(Report reportToUpdate);
 	
-	public Collection<Report> getTaskCreatorReports(UUID taskid);
+	public void removeReport(Report reportToRemove);
 	
-	public Collection<Report> getGlobalReports(UUID taskid);
+	public ArrayList<Report> getReports(Task matchingTask);
+	
+	public ArrayList<Report> getLocalReports(Task matchingTask);
+	
+	public ArrayList<Report> getTaskCreatorReports(Task matchingTask);
+	
+	public ArrayList<Report> getGlobalReports(Task matchingTask);
 
 }

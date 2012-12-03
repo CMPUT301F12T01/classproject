@@ -13,6 +13,10 @@ brought to you by:
 See the [wiki](https://github.com/CMPUT301F12T01/classproject/wiki) for
 exciting things!
 
+We have a 
+[separate repository](https://github.com/CMPUT301F12T01/CMPUT301F12T01-TaskSourceTesting)
+for all of our tests.
+
 This project's source and documentation is licensed under the [Apache
 License, Version 2.0][Apache License]. See `LICENSE` for more details.
 

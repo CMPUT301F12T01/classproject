@@ -21,18 +21,48 @@ import java.io.Serializable;
 
 
 /**
- * NOT IMPLEMENTED
- * TODO IMPLEMENT THIS CLASS
+ * 
+ * @author padlesky
  */
 
-public class PhotoResponse implements Response {
+public class PhotoResponse implements Response, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1658994885795864110L;
+	
+	public MediaType mediaType = MediaType.PHOTO;
+	
+	private String type;
+	private String photoData64;
     /**
      * 
      */
-    public PhotoResponse() {
+    public PhotoResponse(String photoData64, String photoType) {
+    	setPhoto(photoData64);
+    	setTypeS(photoType);
     }
-
+    
+    public void setPhoto (String photoData64) {
+    	this.photoData64 = photoData64;
+    }
+    
+    public void setTypeS (String photoType) {
+    	this.type = photoType;
+    }
+    
+    public void setType (Object obj) {
+    	this.type = obj.toString().toLowerCase();
+    }
+    
+    public String getPhoto () {
+    	return photoData64;
+    }
+    
+    public String getType() {
+    	return type;
+    }
     /* (non-Javadoc)
      * @see ca.ualberta.cs.c301f12t01.common.Response#getMediaType()
      */
@@ -44,16 +74,14 @@ public class PhotoResponse implements Response {
      * @see ca.ualberta.cs.c301f12t01.common.Response#getResponseData()
      */
     public Serializable getResponseData() {
-        // TODO Auto-generated method stub
-        return null;
+    	return this;
     }
 
     /* (non-Javadoc)
      * @see ca.ualberta.cs.c301f12t01.common.Response#setResponseData(java.io.Serializable)
      */
     public void setResponseData(Serializable newData) {
-        // TODO Auto-generated method stub
-        
+    	setTypeS(((PhotoResponse) newData).getType());
+    	setPhoto(((PhotoResponse) newData).getPhoto());
     }
-
 }

@@ -18,119 +18,197 @@
 
 package ca.ualberta.cs.c301f12t01.gui;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.UUID;
+
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
-import ca.ualberta.cs.c301f12t01.gui.TaskAdapter;
-import ca.ualberta.cs.c301f12t01.R;
-import ca.ualberta.cs.c301f12t01.dummy.DummyTasks;
+import ca.ualberta.cs.c301f12t01.model.TaskCollection;
 
 /**
- * 
+ * Android view that displays a list of the Tasks that belong to a
+ * TaskCollection. It requires the name of the TaskCollection to display
+ * the proper list (user's tasks, local (stored) tasks, global tasks)
  * 
  * @author Eddie Antonio Santos <easantos@ualberta.ca>
- *
+ * @author Bronte Lee <bronte@ualbert.ca>
+ * 
  */
-public class TaskListFragment extends ListFragment {
+public class TaskListFragment extends ListFragment implements Observer {
 
-    private static final String STATE_ACTIVATED_POSITION = "activated_position";
+	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-    private Callbacks callbacks = doNothingCallbacks;
-    private int activatedPosition = ListView.INVALID_POSITION;
+	/* Name of the task collection */
+	public static String ARG_NAME = "name";
+	public static String name = "name";
 
-    public interface Callbacks {
+	private TaskCollection trackedCollection = null;
+	private Callbacks callbacks = doNothingCallbacks;
+	private int activatedPosition = ListView.INVALID_POSITION;
 
-        public void onItemSelected(UUID taskId);
-    }
+	/**
+	 * Callbacks that should be handled by the activity that spawns this
+	 * fragment.
+	 */
+	public interface Callbacks {
+		/**
+		 * The list fragment calls this when an item in the list has been
+		 * selected (therefore, the handler should spawn the TaskDetailActivity.
+		 */
+		public void onItemSelected(UUID taskId);
+	}
 
-    private static Callbacks doNothingCallbacks = new Callbacks() {
-        public void onItemSelected(UUID taskId) {
-        }
-    };
+	private static Callbacks doNothingCallbacks = new Callbacks() {
+		public void onItemSelected(UUID taskId) {
+		}
+	};
 
-    public TaskListFragment() {
-    }
+	
+	public TaskListFragment() {
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	/** onCreate - depending on the name received from the TaskListActivity,
+	 * we display the proper list of tasks
+	 * 
+	 */
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		/*
+		 * This fragment gets sent in its fragment transaction
+		 * the name of the TaskCollection to go manage.
+		 * 
+		 * Right now, we don't have a 'your own tasks' thing (I think) 
+		 * so I'm setting it to local
+		 * 
+		 */
+		
+		if (getArguments().containsKey(ARG_NAME)) {
+			
+			name = (String) getArguments().getSerializable(ARG_NAME);
+			android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreate - collection name: " +
+					name);
+		}
 
-        
-        setListAdapter(new TaskAdapter(getActivity(),
-                DummyTasks.ITEMS));
-        
+		// TODO: UserTaskCollection extends AggregateTaskCollection extends TaskCollection
 
-        /* Add action bar options, because they are super cool. */
-        setHasOptionsMenu(true);
+		trackedCollection = TaskSourceApplication.getTaskCollectionByName(name);
+		
+		// TODO: Use the no task to display screen!
+		if (trackedCollection.isEmpty()) {
+			android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onCreateView TC is empty!");
+			
+		}
+		
+		setListAdapter(new TaskAdapter(getActivity(), trackedCollection));
+		
+	}
 
-        /* Action bar config! */
-        //ActionBar menubar = getActivity().getActionBar();
-        //menubar.setDisplayShowTitleEnabled(false);
-    }
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (savedInstanceState != null
+				&& savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+			setActivatedPosition(savedInstanceState
+					.getInt(STATE_ACTIVATED_POSITION));
+		}
+		
+		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onViewCreate");
+	}
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState != null && savedInstanceState
-                .containsKey(STATE_ACTIVATED_POSITION)) {
-            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-        }
-    }
-    
+	/** Re-subscribes to the TaskCollection and refreshes the view. */
+	@Override
+	public void onResume() {
+		super.onResume();
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-       inflater.inflate(R.menu.activity_task_list , menu);
-    }
+		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onResume");
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
+		trackedCollection.addObserver(this);
+		refreshListAdaptor();
+	}
 
-        callbacks = (Callbacks) activity;
-    }
+	/** Unsubscribe from the changes in the TaskCollection. */
+	@Override
+	public void onPause() {
+		super.onPause();
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        callbacks = doNothingCallbacks;
-    }
+		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onPause");
+		
+		trackedCollection.deleteObserver(this);
+	}
 
-    @Override
-    public void onListItemClick(ListView listView, View view, int position, long id) {
-        super.onListItemClick(listView, view, position, id);
-        callbacks.onItemSelected(DummyTasks.ITEMS.get(position).getId());
-    }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (activatedPosition != ListView.INVALID_POSITION) {
-            outState.putInt(STATE_ACTIVATED_POSITION, activatedPosition);
-        }
-    }
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		
+		if (!(activity instanceof Callbacks)) {
+			throw new IllegalStateException(
+					"Activity must implement fragment's callbacks.");
+		}
+		callbacks = (Callbacks) activity;
+	}
+	
 
-    public void setActivateOnItemClick(boolean activateOnItemClick) {
-        getListView().setChoiceMode(activateOnItemClick
-                ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
-    }
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		
+		callbacks = doNothingCallbacks;
+		android.util.Log.d("Frag-LIFECYCLE", "TaskListFragment-onDetach");
+	}
 
-    public void setActivatedPosition(int position) {
-        if (position == ListView.INVALID_POSITION) {
-            getListView().setItemChecked(activatedPosition, false);
-        } else {
-            getListView().setItemChecked(position, true);
-        }
+	@Override
+	public void onListItemClick(ListView listView, View view, int position,
+			long id) {
+		
+		super.onListItemClick(listView, view, position, id);
 
-        activatedPosition = position;
-    }
+		callbacks.onItemSelected(trackedCollection.getAt(position).getId());
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		if (activatedPosition != ListView.INVALID_POSITION) {
+			outState.putInt(STATE_ACTIVATED_POSITION, activatedPosition);
+		}
+		
+	}
+
+	public void setActivateOnItemClick(boolean activateOnItemClick) {
+		getListView().setChoiceMode(
+				activateOnItemClick ? ListView.CHOICE_MODE_SINGLE
+						: ListView.CHOICE_MODE_NONE);
+	}
+
+	public void setActivatedPosition(int position) {
+		if (position == ListView.INVALID_POSITION) {
+			getListView().setItemChecked(activatedPosition, false);
+		} else {
+			getListView().setItemChecked(position, true);
+		}
+
+		activatedPosition = position;
+	}
+
+	/** Refreshes this view's BaseAdaptor subclass. */
+	protected void refreshListAdaptor() {
+		((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	public void update(Observable observable, Object ignored) {
+		/* Tell our list adaptor that the data has changed. */
+		refreshListAdaptor();
+	}
 }

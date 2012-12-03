@@ -30,8 +30,10 @@ import ca.ualberta.cs.c301f12t01.R;
  *
  */
 public class TextResponseObtainer extends ResponseObtainer {
-	
-	
+
+	private static int textViewResourceID = R.id.edit_text_fulfill;
+
+
 	/**
 	 * @param view
 	 */
@@ -45,15 +47,50 @@ public class TextResponseObtainer extends ResponseObtainer {
 	 */
 	public Response getResponse() {
 		// TODO Auto-generated method stub
-		int textID = R.id.edit_text_fulfill;
-		
-		TextView textView = (TextView) getView().findViewById(textID);
-		
-		String textMedia = textView.getText().toString();
-		
-		return new TextResponse(textMedia);
+		String textMedia = getText();
 
+		return new TextResponse(textMedia);
 	}
 
 
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupFulfillRequest()
+	 */
+	@Override
+	public void setupFulfillRequest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#setupDisplayResponse(ca.ualberta.cs.c301f12t01.common.Response)
+	 */
+	@Override
+	public void setupDisplayResponse(Response response) {
+		// TODO Auto-generated method stub
+
+		TextView textView = (TextView) getView().findViewById(R.id.text_response);
+
+		/* Set these things up to make it look prettier! */
+		textView.setText(response.getResponseData().toString());
+		textView.setPadding(20, 10, 20, 10);
+		textView.setTextSize(18);
+		
+	}
+	
+	private String getText() {
+		TextView textView = (TextView) getView().findViewById(textViewResourceID);
+
+		return textView.getText().toString();
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.c301f12t01.gui.helper.ResponseObtainer#hasBeenFulfilled()
+	 */
+	@Override
+	public boolean hasBeenFulfilled() {
+		// TODO Auto-generated method stub
+		return !getText().equals("");
+	}
 }

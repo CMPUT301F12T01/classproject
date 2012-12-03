@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import ca.ualberta.cs.c301f12t01.common.Sharing;
+
 
 /**
  * Report -- Contains Responses that fulfill Tasks.
@@ -157,11 +159,11 @@ public class Report implements Iterable<Response> {
      * @return Returns a string of the types of responses
      */
     public String responseTypes () {
-    	String mediaTypes = null;
+    	String mediaTypes = "";
     	Iterator<Response> responseIterator = iterator();
     	while(responseIterator.hasNext()) {
     		Response response = responseIterator.next();
-    		mediaTypes = mediaTypes.concat(response.getMediaType().toString() + " ");
+    		mediaTypes = mediaTypes.concat((response.getMediaType().toString() + " "));
     	}
     	return mediaTypes;
     }
@@ -201,7 +203,7 @@ public class Report implements Iterable<Response> {
 		this.timestamp = timestamp;
 	}
 	
-	/** @deprecated when desperation calls, toString()! */
+	/**  when desperation calls, toString()! */
 	public String toString() {
 	    String s = "Report with {";
 	    for (Response r : this) {

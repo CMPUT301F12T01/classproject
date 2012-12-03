@@ -34,6 +34,8 @@ public interface Response {
     /** Returns the MediaType of this subclass of Response. */
     public MediaType getMediaType();
     
+    public MediaType mediaType = MediaType.TEXT;
+    
     /** Returns the Response data as a Serializable object. */
     public Serializable getResponseData();
     

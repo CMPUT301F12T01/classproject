@@ -22,6 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:maxLines="2"
+    android:background="@drawable/report_listitem_bg"
     android:orientation="vertical"
     android:padding="16dp"
 

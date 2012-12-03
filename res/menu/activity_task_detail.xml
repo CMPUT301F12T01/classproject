@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_view_reports"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_view_reports">
+    </item>
+    <item
+        android:id="@+id/menu_fulfill_task"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_fulfill_task"
+        android:titleCondensed="@string/menu_fulfill_task_short">
+    </item>
+    <item android:id="@+id/menu_edit_task" 
+        android:showAsAction="never|withText"
+        android:titleCondensed="@string/menu_edit_task_short" 
+        android:title="@string/menu_edit_task" >
+    </item>
+    <item android:id="@+id/menu_delete_task" 
+        android:showAsAction="never|withText"
+        android:titleCondensed="@string/menu_delete_task_short" 
+        android:title="@string/menu_delete_task" >
+    </item>
+
+</menu>

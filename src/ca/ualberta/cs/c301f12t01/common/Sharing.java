@@ -26,11 +26,23 @@ public enum Sharing {
     /** The item is visible only to the user who created it. */
     LOCAL,
     /** The item should be published, and be visible by all users. */
-    GLOBAL,
+    GLOBAL {
+        @Override
+        public boolean isLocal() { return false; }
+        @Override
+        public boolean isGlobal() { return true; }
+    },
     /**
      * Designates that a Report should be shared only with the Task fulfiller
      * and the Task creator. This should only affect a Report. If this applied
      * to a Task, it has the same effect as {@link #LOCAL}.
      */
-    TASK_CREATOR
+    TASK_CREATOR {
+        @Override
+        public boolean isPrivate() { return true; }
+    };
+
+    public boolean isLocal() { return true; }
+    public boolean isGlobal() { return false; }
+    public boolean isPrivate() { return false; }
 }
