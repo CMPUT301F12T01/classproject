@@ -23,7 +23,9 @@ import java.util.UUID;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 import ca.ualberta.cs.c301f12t01.common.Report;
 import ca.ualberta.cs.c301f12t01.common.Task;
 import ca.ualberta.cs.c301f12t01.localStorage.DeviceStorage;
@@ -45,11 +47,7 @@ public class TaskSourceApplication extends Application {
 	private ReportManager reportManager = null;
 	private String user = null;
 	private DeviceStorage localStorage;
-	
-	/** TODO: Fix NetworkOnMainThreadException!
-	 *  Then we can uncomment some lines near the bottom of this file.
-	 * */
-	
+
 	private ServerStorage serverStorage;
 
 	private static TaskSourceApplication app = null;
@@ -77,14 +75,17 @@ public class TaskSourceApplication extends Application {
 	public static void addTask(Task newTask) {
 		app.addTaskFromInstance(newTask);
 	}
+
 	/** Modifies the given task. */
 	public static void modifyTask(Task oldTask, Task newTask) {
 		app.modifyTaskFromInstance(oldTask, newTask);
 	}
+
 	/** Gets the task with the give task ID from the TaskManager. */
 	public static Task getTask(UUID taskId) {
 		return app.getTaskFromInstance(taskId);
 	}
+
 	/** Removes the task, from where ever it may exist. */
 	public static void removeTask(Task task) {
 		app.removeTaskFromInstance(task);
@@ -104,12 +105,12 @@ public class TaskSourceApplication extends Application {
 	public static TaskCollection getGlobalTaskCollection() {
 		return app.getGlobalTaskCollectionFromInstance();
 	}
-	
+
 	/** Adds a report to be tracked by the singleton ReportManager instance. */
 	public static void addReport(Report newReport) {
-		 app.addReportFromInstance(newReport);
+		app.addReportFromInstance(newReport);
 	}
-	
+
 	/** Gets reports for the given Task from the singleton ReportManager. */
 	public static Report getReport(UUID reportId) {
 		return app.getReportFromInstance(reportId);
@@ -134,6 +135,7 @@ public class TaskSourceApplication extends Application {
 
 	/**
 	 * Returns the singleton TaskSourceApplication instance.
+	 * 
 	 * @return
 	 */
 	public static TaskSourceApplication getInstance() {
@@ -149,10 +151,10 @@ public class TaskSourceApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		app = this;
-        android.util.Log.d("App-LIFECYCLE", "TaskListApplication - onCreate ");
-        
-        localStorage = new DeviceStorage(getApplicationContext());
-        serverStorage = new ServerStorage();
+		android.util.Log.d("App-LIFECYCLE", "TaskListApplication - onCreate ");
+
+		localStorage = new DeviceStorage(getApplicationContext());
+		serverStorage = new ServerStorage();
 
 		/* I LIED! Let's eagerly set everything up. */
 		// setupReportManager();
@@ -178,10 +180,12 @@ public class TaskSourceApplication extends Application {
 		setupTaskManager();
 		taskManager.addTask(newTask);
 	}
+
 	public void modifyTaskFromInstance(Task oldTask, Task newTask) {
 		setupTaskManager();
 		taskManager.modifyTask(oldTask, newTask);
 	}
+
 	public void removeTaskFromInstance(Task task) {
 		setupTaskManager();
 		taskManager.removeTask(task);
@@ -304,7 +308,6 @@ public class TaskSourceApplication extends Application {
 		 */
 		taskManager.getLocalTaskCollection().addObserver(localStorage);
 		taskManager.getGlobalTaskCollection().addObserver(localStorage);
-		//TODO: fix server, then uncomment this:
 		taskManager.getGlobalTaskCollection().addObserver(serverStorage);
 
 		return taskManager;
@@ -316,16 +319,72 @@ public class TaskSourceApplication extends Application {
 			return reportManager;
 		}
 
-        android.util.Log.d("Lifefcycle", "setting up report manager.");
-	
+		/* Initialize the ReportManager. */
 		reportManager = new ReportManager(localStorage.getAllReports());
 
+		
+		fetchOnlineTasks();
+		//fetchOnlineReports();
+
 		reportManager.addObserver(localStorage);
-		//TODO: fix server, then uncomment this:
 		reportManager.addObserver(serverStorage);
 
 		return reportManager;
 
 	}
+	
+	/*
+	 * Online internet buisness stuff.
+	 */
+
+	
+	private void fetchOnlineTasks() {
+		new AsyncTask<Void, Void, Collection<Task>>() {
+
+			@Override
+			protected Collection<Task> doInBackground(Void... params) {
+				return serverStorage.getGlobalTasks().values();
+			}
+
+			@Override
+			protected void onPostExecute(Collection<Task> tasks) {
+				for (Task task : tasks) {
+					UUID taskID = task.getId();
+					if (getTask(taskID) == null) {
+						addTask(task);
+					}
+				}
+				Toast.makeText(getBaseContext(), "Got all tasks",
+						Toast.LENGTH_SHORT).show();
+			}
+
+		}.execute();
+		
+	}
+
+	
+	private void fetchOnlineReports() {
+		new AsyncTask<Void, Void, List<Report>>() {
+
+			@Override
+			protected List<Report> doInBackground(Void... params) {
+				return serverStorage.getAllReports();
+			}
+
+			@Override
+			protected void onPostExecute(List<Report> reports) {
+				for (Report report : reports) {
+					UUID reportID = report.getId();
+					if (getReport(reportID) == null) {
+						addReport(report);
+					}
+				}
+				Toast.makeText(getBaseContext(), "Got all reports",
+						Toast.LENGTH_SHORT).show();
+			}
+
+		}.execute();	
+	}
+	 
 
 }
