@@ -32,7 +32,9 @@ import java.io.Serializable;
 public class TextResponse implements Response {
 
     private String text;
-
+    
+    private MediaType mediaType = MediaType.TEXT;
+    
     /**
      * Takes in a string of text and calls setText with that text.
      * This is used by the GUI.
